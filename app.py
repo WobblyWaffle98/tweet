@@ -643,7 +643,7 @@ with tab3:
     @st.cache_data
     def convert_to_excel(formatted_df, df_selected_sheet):
         # Create Excel writer object
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        with pd.ExcelWriter(engine='xlsxwriter') as writer:
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
             
