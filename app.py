@@ -8,8 +8,8 @@ import plotly.graph_objects as go
 import numpy as np
 import datetime as dt
 from datetime import datetime
-
-
+import base64
+import io
 
 
 
@@ -49,6 +49,7 @@ all_dealers = ['All'] + all_dealers.tolist()
 # Set default selections to include "All"
 selected_counterparties = st.sidebar.multiselect("Counterparty", all_counterparties, default=['All'])
 selected_portfolios = st.sidebar.multiselect("Portfolio", all_portfolios, default=['FY2024 PCHP'])
+
 selected_dealers = st.sidebar.multiselect("Dealer", all_dealers, default=['All'])
 
 # Update the selected options if "All" is selected
@@ -66,6 +67,7 @@ if 'All' in selected_dealers:
     selected_dealers = all_dealers[1:]  # Exclude "All"
 else:
     selected_dealers = selected_dealers
+
 # Filter data based on selected counterparties, portfolios, and date range
 filtered_df = df[(df['FO.CounterpartyName'].isin(selected_counterparties)) &
                   (df['Portfolio'].isin(selected_portfolios))]
@@ -122,124 +124,34 @@ filtered_df = filtered_df[(filtered_df['FO.TradeDate'] >= start_date) &
 #Title
 
 st.title("Group Commodity Exposure Management Dashboard")
-tab1, tab2 = st.tabs(["Market", "Execution data"])
+tab1, tab2, tab3 = st.tabs(["Overall Data", "Overview", "MTM"])
 
-
-# Get the size of the primary monitor
-default_height = 540
-default_width = 1056
-# DatMarket chart sizee
-st.sidebar.header("Market Chart Size")
-height = st.sidebar.slider("Height", 200, 1500,default_height , 50)
-width = st.sidebar.slider("Width", 200, 1500, default_width, 50)
 
 with tab1:
-    # Ticker Tape
-    st.subheader("Live Price and News")
-    st.components.v1.html(
-        """
-        <style>
-            .tradingview-widget-container {
-                background-color: transparent !important;
-            }
-        </style>
-        <!-- TradingView Widget BEGIN -->
-        <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <div class="tradingview-widget-copyright">
-                <a href="https://www.tradingview.com" rel="noopener" target="_blank">
-                    <span class="blue-text"></span>
-                </a>
-            </div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-            {
-                "symbols": [
-                    {
-                        "proName": "VELOCITY:BRENT",
-                        "title": "Spot Brent"
-                    },
-                    {
-                        "proName": "CAPITALCOM:DXY",
-                        "title": "Dollar Index"
-                    },
-                    {
-                        "proName": "FOREXCOM:SPXUSD",
-                        "title": "S&P 500"
-                    },
-                    {
-                        "proName": "FOREXCOM:NSXUSD",
-                        "title": "Nasdaq 100"
-                    }
-                ],
-                "colorTheme": "dark",
-                "isTransparent": false,
-                "displayMode": "adaptive",
-                "locale": "en"
-            }
-            </script>
-        </div>
-        <!-- TradingView Widget END -->
-        """,
-        width=None,
-        height=None,
-        scrolling=False,
-    )
+    # Display PCHP Data
+    st.title("PCHP Execution Data")
 
-    col1,col2= st.columns((2))
+    # Create a formatted copy of the filtered DataFrame to preserve the original data
+    formatted_df = filtered_df.copy()
 
-    with col1:
-        st.subheader("Brent Spot Price")
-        st.components.v1.html(f"""<!-- TradingView Widget BEGIN -->
-        <div class="tradingview-widget-container">
-        <div id="tradingview_36ce6"></div>
-        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script type="text/javascript">
-        new TradingView.widget(
-        {{
-        "width": {width},
-        "height": {height},
-        "symbol": "VELOCITY:BRENT",
-        "interval": "15",
-        "timezone": "Asia/Hong_Kong",
-        "theme": "dark",
-        "style": "1",
-        "locale": "en",
-        "enable_publishing": false,
-        "hide_legend": true,
-        "withdateranges": true,
-        "container_id": "tradingview_36ce6"
-        }}
-        );
-        </script>
-        </div>
-        <!-- TradingView Widget END -->""",
-        width=width, height=height, scrolling=False)
-    
+    # Format date columns for better readability
+    date_columns = ['FO.TradeDate', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']
+    for column in date_columns:
+        formatted_df[column] = formatted_df[column].dt.strftime('%d %b %Y')
 
-        st.subheader("Economic Data")
-        st.components.v1.html(f"""<!-- TradingView Widget BEGIN -->
-        <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-        {{
-        "width": {width},
-        "height": {height},
-        "colorTheme": "dark",
-        "isTransparent": false,
-        "locale": "en",
-        "importanceFilter": "-1,0,1",
-        "currencyFilter": "USD,CNY,EUR,MYR,GBP"
-        }}
-        </script>
-        </div>
-        <!-- TradingView Widget END -->""",
-                    
-                    width=width, height=height, scrolling=False)
+    # Specify columns to display in the table
+    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName', 'FO.Position_Quantity',
+                          'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.PremiumStrike1', 'FO.PremiumStrike2', 'FO.NetPremium',
+                          'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']
 
+    # Reset index to start from 1
+    formatted_df = formatted_df.reset_index(drop=True)
 
+    # Start index from 1
+    formatted_df.index = formatted_df.index + 1
 
+    # Show the formatted DataFrame using st.dataframe
+    st.dataframe(formatted_df[columns_to_display],height=500, use_container_width = True)
 
 with tab2:
     st.title('Execution Overview')
@@ -395,26 +307,28 @@ with tab2:
 
         # Add the target trace to the figure
         fig_quantity.add_trace(target_trace)
+        if len(selected_portfolios) == 1:
+            # Calculate unexecuted volumes by subtracting executed volumes from the targeted value
+            df_grouped['Unexecuted'] = targeted_value - df_grouped['Value']
 
-        # Calculate unexecuted volumes by subtracting executed volumes from the targeted value
-        df_grouped['Unexecuted'] = targeted_value - df_grouped['Value']
+            if selected_portfolios == ['FY2024 PCHP']:
+                # Create a stacked bar chart with custom colors
+                fig_stacked_bar = px.bar(df_grouped, x='Month', y=['Value', 'Unexecuted'],
+                                        title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
+                                        labels={'Value': 'Executed', 'Unexecuted': 'Unexecuted'},
+                                        barmode='stack')
+            else:
+                # Create a stacked bar chart with custom colors
+                fig_stacked_bar = px.bar(df_grouped, x='Month', y=['Value'], color='Portfolio',
+                                        title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
+                                        barmode='stack')
 
-        if selected_portfolios == ['FY2024 PCHP']:
-            # Create a stacked bar chart with custom colors
-            fig_stacked_bar = px.bar(df_grouped, x='Month', y=['Value', 'Unexecuted'],
-                                    title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
-                                    labels={'Value': 'Executed', 'Unexecuted': 'Unexecuted'},
-                                    barmode='stack')
+            # Set the color for "Unexecuted" bars to red
+            fig_stacked_bar.update_traces(marker_color='red', selector=dict(name='Unexecuted'))
+
+            st.plotly_chart(fig_stacked_bar, use_container_width=True, height=200)
         else:
-            # Create a stacked bar chart with custom colors
-            fig_stacked_bar = px.bar(df_grouped, x='Month', y=['Value'], color='Portfolio',
-                                    title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
-                                    barmode='stack')
-
-        # Set the color for "Unexecuted" bars to red
-        fig_stacked_bar.update_traces(marker_color='red', selector=dict(name='Unexecuted'))
-
-        st.plotly_chart(fig_stacked_bar, use_container_width=True, height=200)
+            st.write("No data available for visualization.")
 
     with col2:
         st.subheader("Counterparty Monthly Volume Executed")
@@ -437,3 +351,321 @@ with tab2:
                             labels={'Value': 'Quantity'})
 
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
+
+
+# Assuming selected_portfolio is a list
+if len(selected_portfolios) > 0 and 'All' not in selected_portfolios:
+    # Ensure only one element in selected_portfolio
+    selected_portfolio = [selected_portfolios[0]]
+
+def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
+    if not filtered_df.empty:
+        # Remove rows with NaN values in the "FO.TransactionNumber" column
+        filtered_df = filtered_df.dropna(subset=['FO.TransactionNumber'])
+
+        # Remove rows with NaN values in the "Total Outstanding" column
+        filtered_df = filtered_df.dropna(subset=['Total Outstanding'])
+
+        # Check if "Total Outstanding" column is not empty
+        if not filtered_df['Total Outstanding'].empty:
+            # Remove rows with 0 values in the "Total Outstanding" column
+            filtered_df = filtered_df[filtered_df['Total Outstanding'] != 0]
+
+            # Extract relevant columns for visualization
+            months = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+            monthly_data = filtered_df[months]
+
+            # Group by strike_price_column and sum the data
+            grouped_data = filtered_df.groupby(strike_price_column)[months].sum()
+
+            # Check if grouped_data is not empty
+            if not grouped_data.empty:
+                # Transpose the data for plotting
+                transposed_data = grouped_data.transpose()
+
+                # Plotting the data using Plotly
+                fig = go.Figure()
+
+                for col in transposed_data.columns:
+                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col))
+
+                fig.update_layout(
+                    xaxis_title="Months",
+                    yaxis_title="Total Barrels Executed",
+                    xaxis_tickangle=-45,
+                    barmode='stack',
+                    legend=dict(title=strike_price_name, x=1, y=1)
+                )
+
+                # Display the Plotly chart
+                st.plotly_chart(fig, use_container_width=True)
+
+                # Display table
+                st.subheader("Volume Breakdown")
+                st.dataframe(grouped_data,height=150, use_container_width = True)
+
+            else:
+                st.write("No data available for visualization.")
+        else:
+            st.write("No data available for visualization. Total Outstanding column is empty.")
+    else:
+        st.write("No data available for visualization.")
+
+
+def strike_data(st, filtered_df, strike_price_column, strike_price_name):
+    if not filtered_df.empty:
+        # Remove rows with NaN values in the "FO.TransactionNumber" column
+        filtered_df = filtered_df.dropna(subset=['FO.TransactionNumber'])
+
+        # Remove rows with NaN values in the "Total Outstanding" column
+        filtered_df = filtered_df.dropna(subset=['Total Outstanding'])
+
+        # Check if "Total Outstanding" column is not empty
+        if not filtered_df['Total Outstanding'].empty:
+            # Remove rows with 0 values in the "Total Outstanding" column
+            filtered_df = filtered_df[filtered_df['Total Outstanding'] != 0]
+
+            # Extract relevant columns for visualization
+            months = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+            monthly_data = filtered_df[months]
+
+            # Group by strike_price_column and sum the data
+            grouped_data = filtered_df.groupby(strike_price_column)[months].sum()
+
+            # Check if grouped_data is not empty
+            if not grouped_data.empty:
+                # Transpose the data for plotting
+                transposed_data = grouped_data.transpose()
+
+                return grouped_data
+                
+with tab3:
+    st.title("Mark to Market Data")
+    col1, col2 = st.columns((2))
+    
+    # Check if "Total Outstanding" column is not empty
+    if not filtered_df['Total Outstanding'].empty:
+        with col1:
+            st.subheader("Upper Strike Level")
+            visualize_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
+        with col2:
+            st.subheader("Lower Strike Level")
+            visualize_data(st, filtered_df, 'FO.StrikePrice2', 'FO.StrikePrice2')
+    else:
+        st.write("No data available for visualization.")
+
+    st.divider()
+    st.title("BBG Option Price and Valuation")
+    try:
+        # Read the Excel file
+        df_BBG = pd.read_excel("BBG_Output.xlsx", sheet_name=None)
+
+        # Get all sheet names
+        sheet_names = list(df_BBG.keys())
+
+        # Create a dropdown to select sheet
+        selected_sheet = st.selectbox("Select a sheet", sheet_names)
+
+        # Show the selected sheet data
+        st.write("Data Refreshed:", selected_sheet)
+
+        # Rename the first column
+        df_selected_sheet = df_BBG[selected_sheet].rename(columns={df_BBG[selected_sheet].columns[0]: 'Strike Price'})
+
+        # Convert numerical values in the first column (except the last one) to integers with one decimal place
+        for i in range(len(df_selected_sheet) - 1):
+            value = df_selected_sheet.iloc[i, 0]
+            if isinstance(value, (int, float)):
+                df_selected_sheet.iloc[i, 0] = round(float(value), 1)
+
+        # Convert the rounded numerical values to integers
+        df_selected_sheet.iloc[:-1, 0] = df_selected_sheet.iloc[:-1, 0].astype(int)
+
+        st.dataframe(df_selected_sheet, use_container_width=True, hide_index=True)
+    except Exception as e:
+        st.error(f"Error: {e}")
+
+    st.divider()
+
+    def process_dataframe(df1, df2):
+        # Find common values in the first column of both dataframes
+        common_values = df1.iloc[:, 0].isin(df2.iloc[:, 0])
+        
+        # Filter df1 and df2 based on common values in the first column
+        df1_filtered = df1[df1.iloc[:, 0].isin(df2.iloc[:, 0])]
+        df2_filtered = df2[df2.iloc[:, 0].isin(df1.iloc[:, 0])]
+        
+        df1_filtered = df1_filtered.reset_index(drop=True)
+        df2_filtered = df2_filtered.reset_index(drop=True)
+        # Reindex df2 to match the row and column indices of df1
+        df2_reindexed = df2_filtered.reindex(index=df1_filtered.index, columns=df1_filtered.columns)
+       
+        # Multiply corresponding elements from df1 and df2
+        result_df = df1_filtered * df2_reindexed
+
+        # Assign the first column from df2 to the corresponding column in the result_df
+        result_df[df1_filtered.columns[0]] = df1_filtered[df1_filtered.columns[0]]
+
+        # Replace NaN values in result_df with 0
+        result_df.fillna(0, inplace=True)
+
+        return result_df
+
+
+    # Process the first set of data
+    df1 = df_selected_sheet
+    df2 = strike_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
+    df2.reset_index(inplace=True)
+    for column in df2.columns:
+        df2[column] = df2[column].astype(int)
+    df_Upper = process_dataframe(df1, df2)
+
+    # Process the second set of data
+    df1 = df_selected_sheet
+    df3 = strike_data(st, filtered_df, 'FO.StrikePrice2', 'FO.StrikePrice2')
+    df3.reset_index(inplace=True)
+    for column in df3.columns:
+        df3[column] = df3[column].astype(int)
+    df_Lower = process_dataframe(df1, df3)
+
+    # Display the results
+    col3, col4 = st.columns((2))
+    
+    with col3:
+        
+        # Transpose the DataFrame to have months as columns and Strike Price as index
+        df_Upper_transposed = df_Upper.set_index('Strike Price').transpose()
+
+        # Create a Plotly bar chart
+        fig = go.Figure()
+
+        # Add bar trace for each Strike Price
+        for strike_price in df_Upper_transposed.columns:
+            fig.add_trace(go.Bar(x=df_Upper_transposed.index, y=df_Upper_transposed[strike_price], name=f'Strike Price {strike_price}'))
+
+        # Update layout with axis labels and title
+        fig.update_layout(xaxis_title='Tenure',
+                        yaxis_title='Value, USD',
+                        title='Valuation of Lower Put Options',legend=dict(x=0, y=1.0))
+
+        # Show plot
+        st.plotly_chart(fig)
+        # Print DataFrame
+        st.dataframe(df_Upper, height=150, use_container_width=True, hide_index=True)
+
+        
+    with col4:
+        # Transpose the DataFrame to have months as columns and Strike Price as index
+        df_Lower_transposed = df_Lower.set_index('Strike Price').transpose()
+
+        # Create a Plotly bar chart
+        fig2 = go.Figure()
+
+        # Add bar trace for each Strike Price
+        for strike_price in df_Lower_transposed.columns:
+            fig2.add_trace(go.Bar(x=df_Lower_transposed.index, y=df_Lower_transposed[strike_price], name=f'Strike Price {strike_price}'))
+
+        # Update layout with axis labels and title
+        fig2.update_layout(xaxis_title='Tenure',
+                        yaxis_title='Value, USD',
+                        title='Valuation of Upper Put Options',legend=dict(x=0, y=1.0))
+
+        # Show plot
+        st.plotly_chart(fig2)
+        # Print DataFrame
+        st.dataframe(df_Lower, height=150, use_container_width=True, hide_index=True)
+
+    st.divider()
+
+     # Display PCHP Data
+    st.title("Trade by trade Evaluation")
+
+    # Create a formatted copy of the filtered DataFrame to preserve the original data
+    formatted_df = filtered_df.copy()
+    formatted_df_option = df_selected_sheet.copy()
+
+
+        # Function to get list of months between two dates
+    def get_months_between_dates(start_date, end_date):
+        months = pd.date_range(start=start_date, end=end_date, freq='MS').strftime('%B').tolist()
+        return months
+
+    # Format date columns for better readability
+    date_columns = ['FO.TradeDate', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']
+    for column in date_columns:
+        formatted_df[column] = formatted_df[column].dt.strftime('%d %b %Y')
+
+    # Create a new column 'MonthsBetween' containing list of months between start and end fix dates
+    formatted_df['Tenure'] = formatted_df.apply(lambda row: get_months_between_dates(row['FO.StartFixDate'], row['FO.EndFixDate']), axis=1)
+
+    # Specify columns to display in the table
+    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName', 'FO.Position_Quantity',
+                        'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.NetPremium',
+                        'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
+                        'E.August','E.September','E.November','E.December']
+
+    # Reset index to start from 1
+    formatted_df = formatted_df.reset_index(drop=True)
+
+    # Start index from 1
+    formatted_df.index = formatted_df.index + 1
+    
+
+    # Find common months between both DataFrames
+    common_months = [col for col in formatted_df_option.columns if col.startswith('E.')]
+
+    # Iterate over each row in formatted_df
+    for index, row in formatted_df.iterrows():
+        # Get the Strike Price from formatted_df
+        strike_price_1 = row['FO.StrikePrice1']
+        strike_price_2 = row['FO.StrikePrice2']
+
+        # Find corresponding row in formatted_df_option
+        option_row_1 = formatted_df_option[formatted_df_option['Strike Price'] == strike_price_1]
+        option_row_2 = formatted_df_option[formatted_df_option['Strike Price'] == strike_price_2]
+        
+
+        # Check if option_row is not empty
+        if not option_row_1.empty and not option_row_2.empty:
+            # Multiply the values in common months and update the row in formatted_df
+            for month in common_months:
+                formatted_df.at[index, month] = formatted_df.at[index, month] * option_row_1[month].iloc[0] - formatted_df.at[index, month] * option_row_2[month].iloc[0] 
+
+
+    # Now the values in formatted_df are updated according to the conditions specified
+
+    # Now the values in formatted_df_option are updated according to the conditions specified
+    with st.container():
+        # Show the formatted DataFrame using st.dataframe
+        st.dataframe(formatted_df[columns_to_display], height=500 ,use_container_width=True)
+
+    # buffer to use for excel writer
+    buffer = io.BytesIO()
+    # Download Button
+    @st.cache_data
+    def convert_to_excel(formatted_df, df_selected_sheet):
+        # Create Excel writer object
+        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+            # Write formatted_df to the first sheet
+            formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
+            
+            # Write df_selected_sheet to the second sheet
+            df_selected_sheet.to_excel(writer, sheet_name='Option Data', index=False)
+            
+            # Close the Pandas Excel writer
+            writer.close()
+
+        return buffer.getvalue()
+
+    excel_data = convert_to_excel(formatted_df, df_selected_sheet)
+
+    # Download button to download Excel file
+    download_button = st.download_button(
+        label="Download data as Excel",
+        data=excel_data,
+        file_name='data.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+
+    
