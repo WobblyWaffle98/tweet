@@ -5,5 +5,5 @@ plotly
 openpyxl
 numpy
 datetime
-collections
+
 io
