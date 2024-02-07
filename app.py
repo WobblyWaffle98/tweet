@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import numpy as np
 import datetime as dt
 from datetime import datetime
-import io
+
 
 
 
@@ -637,8 +637,8 @@ with tab3:
         # Show the formatted DataFrame using st.dataframe
         st.dataframe(formatted_df[columns_to_display], height=500 ,use_container_width=True)
 
-    # buffer to use for excel writer
-    buffer = io.BytesIO()
+    '''# buffer to use for excel writer
+    buffer = io.BytesIO()'''
     # Download Button
     @st.cache_data
     def convert_to_excel(formatted_df, df_selected_sheet):
