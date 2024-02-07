@@ -5,3 +5,6 @@ plotly
 openpyxl
 numpy
 datetime
+base64
+collections
+io
