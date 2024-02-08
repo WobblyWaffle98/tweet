@@ -637,33 +637,32 @@ with tab3:
         # Show the formatted DataFrame using st.dataframe
         st.dataframe(formatted_df[columns_to_display], height=500 ,use_container_width=True)
 
-    '''# buffer to use for excel writer
-    buffer = io.BytesIO()'''
     # Download Button
     @st.cache_data
     def convert_to_excel(formatted_df, df_selected_sheet):
+        # Create a temporary file path
+        temp_file_path = "temp_data.xlsx"
+        
         # Create Excel writer object
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        with pd.ExcelWriter(temp_file_path, engine='xlsxwriter') as writer:
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
             
             # Write df_selected_sheet to the second sheet
             df_selected_sheet.to_excel(writer, sheet_name='Option Data', index=False)
-            
-            # Close the Pandas Excel writer
-            writer.close()
+        
+        return temp_file_path
 
-        return buffer.getvalue()
-
-    excel_data = convert_to_excel(formatted_df, df_selected_sheet)
+    excel_file_path = convert_to_excel(formatted_df, df_selected_sheet)
 
     # Download button to download Excel file
     download_button = st.download_button(
         label="Download data as Excel",
-        data=excel_data,
+        data=open(excel_file_path, 'rb').read(),
         file_name='data.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+
 
 
     
