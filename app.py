@@ -598,7 +598,7 @@ with tab3:
 
     # Specify columns to display in the table
     columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName', 'FO.Position_Quantity',
-                        'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.NetPremium',
+                        'FO.StrikePrice1', 'FO.StrikePrice2',
                         'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
 
@@ -640,8 +640,8 @@ with tab3:
     columns_to_display.append('Value at inception')
 
     # Add a new column 'Total' containing the sum of values in the month columns
-    formatted_df['Total Value'] = formatted_df[month_columns].sum(axis=1)
-    columns_to_display.append('Total Value')
+    formatted_df['Current Value'] = formatted_df[month_columns].sum(axis=1)
+    columns_to_display.append('Current Value')
 
 
     # Now the values in formatted_df_option are updated according to the conditions specified
@@ -667,7 +667,7 @@ with tab3:
 
         return buffer.getvalue()
 
-    excel_data = convert_to_excel(formatted_df, df_selected_sheet)
+    excel_data = convert_to_excel(formatted_df[columns_to_display], df_selected_sheet)
 
     # Download button to download Excel file
     download_button = st.download_button(
