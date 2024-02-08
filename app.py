@@ -597,7 +597,7 @@ with tab3:
     formatted_df['Tenure'] = formatted_df.apply(lambda row: get_months_between_dates(row['FO.StartFixDate'], row['FO.EndFixDate']), axis=1)
 
     # Specify columns to display in the table
-    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName', 'FO.Position_Quantity',
+    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2',
                         'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
