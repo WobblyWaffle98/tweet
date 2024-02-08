@@ -632,6 +632,13 @@ with tab3:
 
     # Now the values in formatted_df are updated according to the conditions specified
 
+    # List of columns related to the months
+    month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.November', 'E.December']
+
+    # Add a new column 'Total' containing the sum of values in the month columns
+    formatted_df['Total Value'] = formatted_df[month_columns].sum(axis=1)
+    columns_to_display.append('Total Value')
+
     # Now the values in formatted_df_option are updated according to the conditions specified
     with st.container():
         # Show the formatted DataFrame using st.dataframe
