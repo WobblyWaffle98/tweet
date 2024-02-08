@@ -12,7 +12,7 @@ import io
 
 
 # Setting Up
-st.set_page_config(page_title = "DashBoard",page_icon = '4953098.png',layout ="wide")
+st.set_page_config(page_title = "DashBoard",page_icon = r'Resources\4953098.png',layout ="wide")
 
 st.markdown(
     """
@@ -462,7 +462,8 @@ with tab3:
         sheet_names = list(df_BBG.keys())
 
         # Create a dropdown to select sheet
-        selected_sheet = st.selectbox("Select a sheet", sheet_names)
+        default_sheet = sheet_names[-1]  # Set the default value to the last sheet name
+        selected_sheet = st.selectbox("Select a sheet", sheet_names, index=len(sheet_names)-1)
 
         # Show the selected sheet data
         st.write("Data Refreshed:", selected_sheet)

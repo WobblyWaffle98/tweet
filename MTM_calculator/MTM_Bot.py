@@ -142,13 +142,25 @@ def main():
         period = [330 ,310]
         delivery = [280, 340]
         barrel_1 = [280, 470]
-        calc_time = [361 ,274]
+        calc_time = [361 ,250]
         Upper_strike = [570, 470]
         calc = [82, 181]
         prem = [740, 378]
         prem_copy = [756, 400]
         swap = [375,635]
     ##############################
+    def take_screenshot(x):
+        # Get the screen resolution
+        screen_width, screen_height = pyautogui.size()
+
+        # Take a screenshot of the entire screen
+        screenshot = pyautogui.screenshot()
+
+        # Save the screenshot to a file with the specified name
+        screenshot.save(f'SCREENSHOT/screenshot_{x}.png')
+
+        print(f"Screenshot taken and saved as 'screenshot_{x}.png'.")
+
 
     def checklevel(IN):
         if IN == '0' or not re.search(r"\d+\.\d+", IN):
@@ -189,6 +201,10 @@ def main():
     pyautogui.click()
     pyautogui.write('1')
 
+    pyautogui.moveTo(calc_time, duration = 0.5)
+    pyautogui.click()
+    pyautogui.write('06:00')
+
 
     def get_premium_data(Month, Strike):
         
@@ -215,7 +231,7 @@ def main():
             pyautogui.click()
 
             Premium[i][1] = checklevel (pyperclip.paste())
-
+            take_screenshot( str(Month)+'_'+str(k))
             time.sleep(2)
         return Premium
 
