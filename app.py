@@ -635,9 +635,14 @@ with tab3:
     # List of columns related to the months
     month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.November', 'E.December']
 
+    # Assuming you have a DataFrame named 'data' containing your dataset
+    formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
+    columns_to_display.append('Value at inception')
+
     # Add a new column 'Total' containing the sum of values in the month columns
     formatted_df['Total Value'] = formatted_df[month_columns].sum(axis=1)
     columns_to_display.append('Total Value')
+
 
     # Now the values in formatted_df_option are updated according to the conditions specified
     with st.container():
