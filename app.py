@@ -639,7 +639,7 @@ with tab3:
         # Show the formatted DataFrame using st.dataframe
         st.dataframe(formatted_df[columns_to_display], height=500 ,use_container_width=True)
 
-    # Download Button
+    """# Download Button
     @st.cache_data
     def convert_to_excel(formatted_df, df_selected_sheet):
         # Create a temporary file path
@@ -664,7 +664,7 @@ with tab3:
         file_name='data.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-
+"""
 
 
     
