@@ -10,6 +10,8 @@ from datetime import datetime
 import io
 import time
 import xlsxwriter
+from fpdf import FPDF
+import base64
 
 
 # Setting Up
@@ -711,8 +713,7 @@ with tab3:
     )
 
 with tab4:
-    from fpdf import FPDF
-    import base64
+    
     
     def create_download_link(val, filename):
         b64 = base64.b64encode(val)  # val looks like b'...'
