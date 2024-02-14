@@ -18,6 +18,10 @@ import pymsteams
 import pandas as pd
 from itertools import product
 
+#Time:
+current_date_time = datetime.datetime.now()
+formatted_date_time = current_date_time.strftime('%d-%m-%Y')
+
 # Replace 'your_excel_file.xlsx' with the path to your Excel file
 excel_file = pd.ExcelFile('PCHP Data.xlsx')
 
@@ -49,8 +53,6 @@ unique_values_FO_StrikePrice2 = filtered_df['FO.StrikePrice2'].dropna().astype(i
 print("Months with Unmatured Volumes:", columns_with_values)
 print("Unique values in FO.StrikePrice1:", unique_values_FO_StrikePrice1)
 print("Unique values in FO.StrikePrice2:", unique_values_FO_StrikePrice2)
-
-
 
 
 
@@ -105,7 +107,7 @@ def main():
 
 
     #Choose Your Monitor and Location (Use Coordinate.py to recalibration position of option calc in BBG)
-    Monitor = 'Office Monitor'
+    Monitor = 'Probook'
     #LOCATIONS
     if Monitor == 'BBG Laptop': #make sure resolution is (1280,720)
         search_bar = [32, 75]
@@ -149,6 +151,14 @@ def main():
         prem_copy = [756, 400]
         swap = [375,635]
     ##############################
+    # Create a folder with the name formatted_date_time if it doesn't exist
+    folder_name = formatted_date_time
+    screenshot_folder = 'SCREENSHOT'
+    folder_path = os.path.join(os.getcwd(), screenshot_folder, folder_name)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+
     def take_screenshot(x):
         # Get the screen resolution
         screen_width, screen_height = pyautogui.size()
@@ -157,7 +167,8 @@ def main():
         screenshot = pyautogui.screenshot()
 
         # Save the screenshot to a file with the specified name
-        screenshot.save(f'SCREENSHOT/screenshot_{x}.png')
+        screenshot_path = os.path.join(folder_path, f'screenshot_{x}.png')
+        screenshot.save(screenshot_path)
 
         print(f"Screenshot taken and saved as 'screenshot_{x}.png'.")
 
@@ -251,9 +262,7 @@ def main():
 
     Strike = unique_strike_values
 
-    #Create the sheet:
-    current_date_time = datetime.datetime.now()
-    formatted_date_time = current_date_time.strftime('%d-%m-%Y')
+    
     # Get the sheet title from Day_data
     sheet_title = str(formatted_date_time)
 
