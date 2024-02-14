@@ -8,6 +8,7 @@ import numpy as np
 import datetime as dt
 from datetime import datetime
 import io
+import time
 import xlsxwriter
 
 
@@ -138,9 +139,12 @@ with tab1:
         formatted_df[column] = formatted_df[column].dt.strftime('%d %b %Y')
 
     # Specify columns to display in the table
-    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName', 'FO.Position_Quantity',
-                          'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.PremiumStrike1', 'FO.PremiumStrike2', 'FO.NetPremium',
-                          'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']
+    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.NetPremium', 'FO.Position_Quantity',
+                        'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
+                        'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
+                        'E.August','E.September','E.November','E.December']
+    
+    
 
     # Reset index to start from 1
     formatted_df = formatted_df.reset_index(drop=True)
@@ -510,7 +514,7 @@ with tab3:
 
         return result_df
 
-
+    
     # Process the first set of data
     df1 = df_selected_sheet
     df2 = strike_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
@@ -582,6 +586,7 @@ with tab3:
     # Create a formatted copy of the filtered DataFrame to preserve the original data
     formatted_df = filtered_df.copy()
     formatted_df_option = df_selected_sheet.copy()
+    
 
 
         # Function to get list of months between two dates
@@ -608,7 +613,7 @@ with tab3:
 
     # Start index from 1
     formatted_df.index = formatted_df.index + 1
-    
+    formatted_df_option_E = formatted_df.copy()
 
     # Find common months between both DataFrames
     common_months = [col for col in formatted_df_option.columns if col.startswith('E.')]
@@ -634,16 +639,43 @@ with tab3:
     # Now the values in formatted_df are updated according to the conditions specified
 
     # List of columns related to the months
-    month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.November', 'E.December']
+    month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October','E.November', 'E.December']
+    month_columns_value = ['V.January', 'V.February', 'V.March', 'V.April', 'V.May', 'V.June', 'V.July', 'V.August', 'V.September', 'V.October','V.November', 'V.December']
+
+    
+
+    # Assuming 'formatted_df' is your DataFrame
+    formatted_df.rename(columns={
+        'E.January': 'V.January',
+        'E.February': 'V.February',
+        'E.March': 'V.March',
+        'E.April': 'V.April',
+        'E.May': 'V.May',
+        'E.June': 'V.June',
+        'E.July': 'V.July',
+        'E.August': 'V.August',
+        'E.September': 'V.September',
+        'E.October': 'V.October',
+        'E.November': 'V.November',
+        'E.December': 'V.December'
+    }, inplace=True)
+
+    
+    # Create new columns with default value 0 in formatted_df
+    for col in month_columns:
+        formatted_df[col] = 0
+
+    # Assign values from formatted_df_option_E to formatted_df
+    formatted_df[month_columns] = formatted_df_option_E[month_columns]  
+    columns_to_display.extend(month_columns_value)
 
     # Assuming you have a DataFrame named 'data' containing your dataset
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
     columns_to_display.append('Value at inception')
 
     # Add a new column 'Total' containing the sum of values in the month columns
-    formatted_df['Current Value'] = formatted_df[month_columns].sum(axis=1)
+    formatted_df['Current Value'] = formatted_df[month_columns_value].sum(axis=1)
     columns_to_display.append('Current Value')
-
 
     # Now the values in formatted_df_option are updated according to the conditions specified
     with st.container():
@@ -677,7 +709,7 @@ with tab3:
         file_name='data.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-"""
+
 with tab4:
     from fpdf import FPDF
     import base64
@@ -763,4 +795,3 @@ with tab4:
     html = create_download_link(pdf_output, "annual_performance_report")
     st.markdown(html, unsafe_allow_html=True)
 
-  """  
