@@ -5,4 +5,4 @@ plotly
 openpyxl
 numpy
 datetime
-xlsxwriter
+xlsxwriter==1.4.5
