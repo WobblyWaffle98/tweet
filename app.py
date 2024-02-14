@@ -677,7 +677,7 @@ with tab3:
         file_name='data.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-
+"""
 with tab4:
     from fpdf import FPDF
     import base64
@@ -742,9 +742,9 @@ with tab4:
         pdf.ln(15)
 
     # Add table and visualisations to the PDF
-    """pdf.image("./resources/annual_sales.png", w=170)
-    pdf.image("resources/heicoders_annual_sales.png", 5, 200, WIDTH/2-10)
-    pdf.image("resources/heicoders_2016_sales_breakdown.png", WIDTH/2, 200, WIDTH/2-10)"""
+    #pdf.image("./resources/annual_sales.png", w=170)
+    #pdf.image("resources/heicoders_annual_sales.png", 5, 200, WIDTH/2-10)
+    #pdf.image("resources/heicoders_2016_sales_breakdown.png", WIDTH/2, 200, WIDTH/2-10)
     pdf.ln(10)
 
     # Add Page
@@ -762,3 +762,5 @@ with tab4:
     pdf_output = pdf.output(dest="S").encode("latin-1")
     html = create_download_link(pdf_output, "annual_performance_report")
     st.markdown(html, unsafe_allow_html=True)
+
+  """  
