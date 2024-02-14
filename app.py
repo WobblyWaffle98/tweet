@@ -8,7 +8,7 @@ import numpy as np
 import datetime as dt
 from datetime import datetime
 import io
-
+import time
 
 
 # Setting Up
@@ -122,7 +122,7 @@ filtered_df = filtered_df[(filtered_df['FO.TradeDate'] >= start_date) &
 #Title
 
 st.title("Group Commodity Exposure Management Dashboard")
-tab1, tab2, tab3 = st.tabs(["Overall Data", "Overview", "MTM"])
+tab1, tab2, tab3, tab4 = st.tabs(["Overall Data", "Overview", "MTM", "Report"])
 
 
 with tab1:
@@ -678,5 +678,87 @@ with tab3:
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-
+with tab4:
+    from fpdf import FPDF
+    import base64
     
+    def create_download_link(val, filename):
+        b64 = base64.b64encode(val)  # val looks like b'...'
+        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
+
+    def create_letterhead(pdf, WIDTH):
+        pdf.image(r"Resources\4953098.png", 0, 0, WIDTH)
+
+    def create_title(title, pdf):
+        # Add main title
+        pdf.set_font('Helvetica', 'b', 20)  
+        pdf.ln(40)
+        pdf.write(5, title)
+        pdf.ln(10)
+        # Add date of report
+        pdf.set_font('Helvetica', '', 14)
+        pdf.set_text_color(r=128,g=128,b=128)
+        today = time.strftime("%d/%m/%Y")
+        pdf.write(4, f'{today}')
+        # Add line break
+        pdf.ln(10)
+
+    def write_to_pdf(pdf, words):
+        # Set text colour, font size, and font type
+        pdf.set_text_color(r=0,g=0,b=0)
+        pdf.set_font('Helvetica', '', 12)
+        pdf.write(5, words)
+
+    class PDF(FPDF):
+        def footer(self):
+            self.set_y(-15)
+            self.set_font('Helvetica', 'I', 8)
+            self.set_text_color(128)
+            self.cell(0, 10, 'Page ' + str(self.page_no()), 0, 0, 'C')
+
+    # Global Variables
+    TITLE = "Monthly Business Report"
+    WIDTH = 210
+    HEIGHT = 297
+
+    # Create PDF
+    pdf = PDF() # A4 (210 by 297 mm)
+
+    # Add Page
+    pdf.add_page()
+
+    # Add lettterhead and title
+    create_letterhead(pdf, WIDTH)
+    create_title(TITLE, pdf)
+
+    # Add some content to the PDF
+    content = [
+        "1. The table below illustrates the annual sales of Heicoders Academy:",
+        "2. The visualisations below show the trend of total sales for Heicoders Academy and the breakdown of revenue for year 2016:"
+    ]
+
+    for item in content:
+        write_to_pdf(pdf, item)
+        pdf.ln(15)
+
+    # Add table and visualisations to the PDF
+    """pdf.image("./resources/annual_sales.png", w=170)
+    pdf.image("resources/heicoders_annual_sales.png", 5, 200, WIDTH/2-10)
+    pdf.image("resources/heicoders_2016_sales_breakdown.png", WIDTH/2, 200, WIDTH/2-10)"""
+    pdf.ln(10)
+
+    # Add Page
+    pdf.add_page()
+
+    # Add lettterhead
+    create_letterhead(pdf, WIDTH)
+
+    # Add conclusion to the PDF
+    conclusion = "3. In conclusion, the year-on-year sales of Heicoders Academy continue to show a healthy upward trend. Majority of the sales could be attributed to the global sales which accounts for 58.0% of sales in 2016."
+    write_to_pdf(pdf, conclusion)
+    pdf.ln(15)
+
+    # Generate the PDF and provide download link
+    pdf_output = pdf.output(dest="S").encode("latin-1")
+    html = create_download_link(pdf_output, "annual_performance_report")
+    st.markdown(html, unsafe_allow_html=True)

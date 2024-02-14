@@ -205,7 +205,7 @@ def main():
     pyautogui.click()
     pyautogui.write('06:00')
 
-
+    time.sleep(5)
     def get_premium_data(Month, Strike):
         
         Premium = [[strike, 'BBG value'] for strike in Strike]
