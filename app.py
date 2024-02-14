@@ -15,7 +15,7 @@ import base64
 
 
 # Setting Up
-st.set_page_config(page_title = "DashBoard",page_icon = r'Resources\4953098.png',layout ="wide")
+st.set_page_config(page_title = "DashBoard",page_icon = 'Resources/4953098.png',layout ="wide")
 
 st.markdown(
     """
