@@ -6,3 +6,4 @@ openpyxl
 numpy
 datetime
 Xlsxwriter
+fpdf
