@@ -15,7 +15,7 @@ import base64
 
 
 # Setting Up
-st.set_page_config(page_title = "DashBoard",page_icon = 'Resources/4953098.png',layout ="wide")
+st.set_page_config(page_title = "DashBoard",page_icon = r'Resources/4953098.png',layout ="wide")
 
 st.markdown(
     """
@@ -719,7 +719,7 @@ with tab4:
         return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
 
     def create_letterhead(pdf, WIDTH):
-        pdf.image(r"Resources\4953098.png", 0, 0, WIDTH)
+        pdf.image(r"Resources/4953098.png", 0, 0, WIDTH)
 
     def create_title(title, pdf):
         # Add main title
