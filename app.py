@@ -604,9 +604,12 @@ with tab3:
     # Create a new column 'MonthsBetween' containing list of months between start and end fix dates
     formatted_df['Tenure'] = formatted_df.apply(lambda row: get_months_between_dates(row['FO.StartFixDate'], row['FO.EndFixDate']), axis=1)
 
+    # Assuming 'formatted_df' is your DataFrame
+    formatted_df.rename(columns={'Row Labels':'Trade Number'}, inplace=True)
+
     # Specify columns to display in the table
-    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.NetPremium', 'FO.Position_Quantity',
-                        'FO.StrikePrice1', 'FO.StrikePrice2',
+    columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.StructureType_label','FO.NetPremium', 'FO.Position_Quantity',
+                        'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
                         'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
 
@@ -629,6 +632,8 @@ with tab3:
         # Find corresponding row in formatted_df_option
         option_row_1 = formatted_df_option[formatted_df_option['Strike Price'] == strike_price_1]
         option_row_2 = formatted_df_option[formatted_df_option['Strike Price'] == strike_price_2]
+
+        print(strike_price_1,option_row_1)
         
 
         # Check if option_row is not empty
@@ -642,25 +647,27 @@ with tab3:
 
     # List of columns related to the months
     month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October','E.November', 'E.December']
-    month_columns_value = ['V.January', 'V.February', 'V.March', 'V.April', 'V.May', 'V.June', 'V.July', 'V.August', 'V.September', 'V.October','V.November', 'V.December']
+    month_columns_value = ['January,USD', 'February,USD', 'March,USD', 'April,USD', 'May,USD', 'June,USD', 'July,USD', 'August,USD', 'September,USD', 'October,USD', 'November,USD', 'December,USD']
+
 
     
 
     # Assuming 'formatted_df' is your DataFrame
     formatted_df.rename(columns={
-        'E.January': 'V.January',
-        'E.February': 'V.February',
-        'E.March': 'V.March',
-        'E.April': 'V.April',
-        'E.May': 'V.May',
-        'E.June': 'V.June',
-        'E.July': 'V.July',
-        'E.August': 'V.August',
-        'E.September': 'V.September',
-        'E.October': 'V.October',
-        'E.November': 'V.November',
-        'E.December': 'V.December'
+        'E.January': 'January,USD',
+        'E.February': 'February,USD',
+        'E.March': 'March,USD',
+        'E.April': 'April,USD',
+        'E.May': 'May,USD',
+        'E.June': 'June,USD',
+        'E.July': 'July,USD',
+        'E.August': 'August,USD',
+        'E.September': 'September,USD',
+        'E.October': 'October,USD',
+        'E.November': 'November,USD',
+        'E.December': 'December,USD'
     }, inplace=True)
+
 
     
     # Create new columns with default value 0 in formatted_df
@@ -670,6 +677,24 @@ with tab3:
     # Assign values from formatted_df_option_E to formatted_df
     formatted_df[month_columns] = formatted_df_option_E[month_columns]  
     columns_to_display.extend(month_columns_value)
+
+    formatted_df.rename(columns={
+        'E.January': 'January,bbls',
+        'E.February': 'February,bbls',
+        'E.March': 'March,bbls',
+        'E.April': 'April,bbls',
+        'E.May': 'May,bbls',
+        'E.June': 'June,bbls',
+        'E.July': 'July,bbls',
+        'E.August': 'August,bbls',
+        'E.September': 'September,bbls',
+        'E.October': 'October,bbls',
+        'E.November': 'November,bbls',
+        'E.December': 'December,bbls'
+    }, inplace=True)
+
+    columns_to_display = [f"{column.split('.')[1]},bbls" if column.startswith('E.') else column for column in columns_to_display]
+
 
     # Assuming you have a DataFrame named 'data' containing your dataset
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
@@ -719,7 +744,7 @@ with tab4:
         return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
 
     def create_letterhead(pdf, WIDTH):
-        pdf.image(r"Resources/4953098.png", 0, 0, WIDTH)
+        pdf.image(r"Resources/Blue Modern Business Letterhead.jpg", 0, 0, WIDTH)
 
     def create_title(title, pdf):
         # Add main title
@@ -784,6 +809,7 @@ with tab4:
 
     # Add lettterhead
     create_letterhead(pdf, WIDTH)
+    create_title(TITLE, pdf)
 
     # Add conclusion to the PDF
     conclusion = "3. In conclusion, the year-on-year sales of Heicoders Academy continue to show a healthy upward trend. Majority of the sales could be attributed to the global sales which accounts for 58.0% of sales in 2016."
@@ -792,6 +818,6 @@ with tab4:
 
     # Generate the PDF and provide download link
     pdf_output = pdf.output(dest="S").encode("latin-1")
-    html = create_download_link(pdf_output, "annual_performance_report")
+    html = create_download_link(pdf_output, "report")
     st.markdown(html, unsafe_allow_html=True)
 
