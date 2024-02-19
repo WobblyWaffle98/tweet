@@ -107,7 +107,7 @@ def main():
 
 
     #Choose Your Monitor and Location (Use Coordinate.py to recalibration position of option calc in BBG)
-    Monitor = 'Office Monitor'
+    Monitor = 'Probook'
     #LOCATIONS
     if Monitor == 'BBG Laptop': #make sure resolution is (1280,720)
         search_bar = [32, 75]
@@ -130,7 +130,7 @@ def main():
         period = [343,319]
         delivery = [223, 332]
         barrel_1 = [289, 474]
-        calc_time = [400 ,236]
+        calc_time = [400 ,250]
         Upper_strike = [594, 474]
         calc = [80, 172]
         prem = [795, 382]
@@ -216,7 +216,6 @@ def main():
     pyautogui.click()
     pyautogui.write('06:00')
 
-    time.sleep(5)
     def get_premium_data(Month, Strike):
         
         Premium = [[strike, 'BBG value'] for strike in Strike]
@@ -234,7 +233,7 @@ def main():
             pyautogui.moveTo(calc, duration = 0.5)
             pyautogui.click()
 
-            time.sleep(3)
+            time.sleep(5)
 
             pyautogui.moveTo(prem, duration = 0.5)
             pyautogui.click(button='right')
@@ -287,7 +286,6 @@ def main():
 
     #start taking data from BBG
     for i, m in enumerate(updated_months):
-        print (i,m)
         Premium= get_premium_data( m ,Strike)
         pyautogui.vscroll(-100)
         time.sleep(1)
