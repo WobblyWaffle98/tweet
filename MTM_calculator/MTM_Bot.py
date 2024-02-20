@@ -107,7 +107,7 @@ def main():
 
 
     #Choose Your Monitor and Location (Use Coordinate.py to recalibration position of option calc in BBG)
-    Monitor = 'Probook'
+    Monitor = 'Office Monitor'
     #LOCATIONS
     if Monitor == 'BBG Laptop': #make sure resolution is (1280,720)
         search_bar = [32, 75]
@@ -233,7 +233,10 @@ def main():
             pyautogui.moveTo(calc, duration = 0.5)
             pyautogui.click()
 
-            time.sleep(5)
+            if i == 0:
+                time.sleep(7)
+            else:
+                time.sleep(2)
 
             pyautogui.moveTo(prem, duration = 0.5)
             pyautogui.click(button='right')
@@ -339,7 +342,7 @@ def main():
     workbook.save(file_path)
 
     print("Data transposed and saved successfully to the same sheet.")
-
+    ctypes.windll.user32.MessageBoxW(0, "Bot is Done!!", "Pricing Bot",  0x1000)
 
 if __name__ == '__main__':
     main()
