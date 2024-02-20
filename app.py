@@ -633,9 +633,6 @@ with tab3:
         option_row_1 = formatted_df_option[formatted_df_option['Strike Price'] == strike_price_1]
         option_row_2 = formatted_df_option[formatted_df_option['Strike Price'] == strike_price_2]
 
-        print(strike_price_1,option_row_1)
-        
-
         # Check if option_row is not empty
         if not option_row_1.empty and not option_row_2.empty:
             # Multiply the values in common months and update the row in formatted_df
@@ -711,6 +708,7 @@ with tab3:
 
     # buffer to use for excel writer
     buffer = io.BytesIO()
+
     # Download Button
     @st.cache_data
     def convert_to_excel(formatted_df, df_selected_sheet):
@@ -718,22 +716,61 @@ with tab3:
         with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
-            
+
             # Write df_selected_sheet to the second sheet
             df_selected_sheet.to_excel(writer, sheet_name='Option Data', index=False)
-            
+
+            # Get the xlsxwriter workbook and worksheet objects
+            workbook = writer.book
+            worksheet1 = writer.sheets['Portfolio Sum']
+            worksheet2 = writer.sheets['Option Data']
+
+            # Define cell formats
+            header_format = workbook.add_format({
+                'bold': True,
+                'text_wrap': True,
+                'valign': 'vcenter',
+                'align': 'center',
+                'border': 1,
+                'font_color': 'white',  # Set font color to white
+                'bg_color': '#38B09D'  # Set background color to 38B09D
+            })
+            data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1})
+
+            # Apply formatting to first sheet (Portfolio Sum)
+            for col_num, value in enumerate(formatted_df.columns.values):
+                worksheet1.write(0, col_num, value, header_format)
+                worksheet1.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
+
+            # Apply formatting to second sheet (Option Data)
+            for col_num, value in enumerate(df_selected_sheet.columns.values):
+                worksheet2.write(0, col_num, value, header_format)
+                worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
+
+             # Set row height in points (1 point ≈ 0.75 pixels)
+            row_height_in_points = 50
+            worksheet1.set_default_row(row_height_in_points)  # Set default row height for the first sheet
+            worksheet2.set_default_row(row_height_in_points)  # Set default row height for the second sheet
+
+            # Freeze the header row
+            worksheet1.freeze_panes(1, 0)  # Freeze the first row in the first sheet
+
             # Close the Pandas Excel writer
             writer.close()
 
         return buffer.getvalue()
 
+
     excel_data = convert_to_excel(formatted_df[columns_to_display], df_selected_sheet)
+
+    # Get today's date and format it
+    today_date = datetime.now().strftime('%d-%m-%Y')
 
     # Download button to download Excel file
     download_button = st.download_button(
         label="Download data as Excel",
         data=excel_data,
-        file_name='data.xlsx',
+        file_name=f"{today_date}_MTM.xlsx",  # Set file name with today's date
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
