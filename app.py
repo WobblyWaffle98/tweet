@@ -631,7 +631,7 @@ with tab3:
         # Update layout with axis labels and title
         fig2.update_layout(xaxis_title='Tenure',
                         yaxis_title='Value, USD',
-                        title='Valuation of ULower Put Options',legend=dict(x=0, y=1.0))
+                        title='Valuation of Lower Put Options',legend=dict(x=0, y=1.0))
 
         # Show plot
         st.plotly_chart(fig2)
