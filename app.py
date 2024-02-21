@@ -232,7 +232,7 @@ with tab2:
     )
 
      # Convert the chart to an image with higher resolution
-    image = fig_Brent.to_image(format="png", width=1200, height=800, scale=2.0)
+    image = fig_Brent.to_image(format="png", width=1200, height=500, scale=2.0)
 
     # Save the image to a file
     image_path = r"Resources\Plots\Brent.png"
@@ -912,7 +912,7 @@ with tab4:
     # Add lettterhead and title
     create_letterhead(pdf, WIDTH)
     create_title(TITLE, pdf)
-    pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=150)
+    pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
 
     
     pdf.ln(10)
