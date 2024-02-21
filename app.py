@@ -231,8 +231,8 @@ with tab2:
         )
     )
 
-     # Convert the chart to an image
-    image = fig_Brent.to_image(format="png")
+     # Convert the chart to an image with higher resolution
+    image = fig_Brent.to_image(format="png", width=1200, height=800, scale=2.0)
 
     # Save the image to a file
     image_path = r"Resources\Plots\Brent.png"
@@ -913,16 +913,6 @@ with tab4:
     create_letterhead(pdf, WIDTH)
     create_title(TITLE, pdf)
     pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
-    
-    # Add some content to the PDF
-    content = [
-        "1. The table below illustrates the annual sales of Heicoders Academy:",
-        "2. The visualisations below show the trend of total sales for Heicoders Academy and the breakdown of revenue for year 2016:"
-    ]
-
-    for item in content:
-        write_to_pdf(pdf, item)
-        pdf.ln(15)
 
     
     pdf.ln(10)
