@@ -15,7 +15,19 @@ import base64
 
 
 
-
+# Define your discrete color sequence PETRONAS COLORS
+color_discrete_sequence = [
+    "#00b1a9",  # Original color - R000 G177 B169
+    "#763f98",  # Original color - R118 G063 B152
+    "#20419a",  # Original color - R032 G065 B154
+    "#fdb924",  # Original color - R253 G185 B036
+    "#bfd730",  # Original color - R191 G215 B048
+    "#007b73",  # Shade of R000 G177 B169
+    "#3a1d4c",  # Shade of R118 G063 B152
+    "#101e4a",  # Shade of R032 G065 B154
+    "#cc8b1c",  # Shade of R253 G185 B036
+    "#8e9c1b"   # Shade of R191 G215 B048
+]
 
 # Setting Up
 st.set_page_config(page_title = "DashBoard",page_icon = r'Resources/4953098.png',layout ="wide")
@@ -550,8 +562,16 @@ with tab3:
         fig = go.Figure()
 
         # Add bar trace for each Strike Price
-        for strike_price in df_Upper_transposed.columns:
-            fig.add_trace(go.Bar(x=df_Upper_transposed.index, y=df_Upper_transposed[strike_price], name=f'Strike Price {strike_price}'))
+        for i, strike_price in enumerate(df_Upper_transposed.columns):
+            fig.add_trace(go.Bar(
+                x=df_Upper_transposed.index,
+                y=df_Upper_transposed[strike_price],
+                name=f'Strike Price {strike_price}',
+                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
+                text=df_Upper_transposed[strike_price],  # Use y-values as text
+                textposition='outside',
+                texttemplate='%{text:.2s}',
+            ))
 
         # Update layout with axis labels and title
         fig.update_layout(xaxis_title='Tenure',
