@@ -592,7 +592,7 @@ with tab3:
             fig2.add_trace(go.Bar(x=df_Lower_transposed.index,
                                 y=df_Lower_transposed[strike_price],
                                 name=f'Strike Price {strike_price}',
-                                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)]))
+                                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)], text_auto=True))
 
         # Update layout with axis labels and title
         fig2.update_layout(xaxis_title='Tenure',
