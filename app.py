@@ -588,7 +588,12 @@ with tab3:
         # Print DataFrame
         st.dataframe(df_Lower, height=150, use_container_width=True, hide_index=True)
 
-        fig2.write_image("fig1.png")
+        # Add a button to download the chart as an image
+        if st.button("Download Image"):
+            # Convert the chart to an image
+            image = fig2.to_image(format="png")
+            # Save or display the image as needed
+            st.image(image, caption='Plotly Chart as Image', use_column_width=True)
 
     st.divider()
 
