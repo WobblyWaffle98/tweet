@@ -277,6 +277,15 @@ with tab2:
     # Add margin-bottom to reduce space after the table
     st.plotly_chart(fig3, use_container_width=True, height=200)
 
+     # Convert the chart to an image with higher resolution
+    image = fig3.to_image(format="png", width=1200, scale=2.0)
+
+    # Save the image to a file
+    image_path = r"Resources\Plots\Execution_table.png"
+    with open(image_path, "wb") as f:
+        f.write(image)
+
+
     st.divider()
 
     col1, col2 = st.columns((2))
@@ -899,7 +908,7 @@ with tab4:
             self.cell(0, 10, 'Page ' + str(self.page_no()), 0, 0, 'C')
 
     # Global Variables
-    TITLE = "PCHP Report"
+    TITLE = "Portfolio Commodity Hedging Program Report"
     WIDTH = 210
     HEIGHT = 297
 
@@ -913,9 +922,9 @@ with tab4:
     create_letterhead(pdf, WIDTH)
     create_title(TITLE, pdf)
     pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
-
-    
     pdf.ln(10)
+    pdf.image(r"Resources\Plots\Execution_table.png", x=5, y=pdf.get_y(), w=200)
+
 
     # Add Page
     pdf.add_page()
