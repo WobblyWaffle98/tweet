@@ -12,9 +12,8 @@ import time
 import xlsxwriter
 from fpdf import FPDF
 import base64
-from plotly.offline import plot
-import seaborn as sns
-import matplotlib.pyplot as plt
+
+
 
 
 
