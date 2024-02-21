@@ -589,11 +589,15 @@ with tab3:
 
         # Add bar trace for each Strike Price
         for i, strike_price in enumerate(df_Lower_transposed.columns):
-            fig2.add_trace(go.Bar(x=df_Lower_transposed.index,
-                                y=df_Lower_transposed[strike_price],
-                                name=f'Strike Price {strike_price}',
-                                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],text=df_Lower_transposed[strike_price],  # Use y-values as text
-            textposition='inside'))
+            fig2.add_trace(go.Bar(
+                x=df_Lower_transposed.index,
+                y=df_Lower_transposed[strike_price],
+                name=f'Strike Price {strike_price}',
+                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
+                text=df_Lower_transposed[strike_price],  # Use y-values as text
+                textposition='outside',
+                texttemplate='%{text:.2s}',
+            ))
 
         # Update layout with axis labels and title
         fig2.update_layout(xaxis_title='Tenure',
