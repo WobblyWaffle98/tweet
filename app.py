@@ -570,7 +570,7 @@ with tab3:
         # Convert the image to bytes
         image_bytes = io.BytesIO(image)
         # Trigger the download
-        st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png")
+        st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png", key="download_button_1")
 
         
     with col4:
@@ -629,7 +629,7 @@ with tab3:
         # Convert the image to bytes
         image_bytes = io.BytesIO(image)
         # Trigger the download
-        st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png")
+        st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png", key="download_button_2")
 
     st.divider()
 
