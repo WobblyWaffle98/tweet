@@ -574,9 +574,12 @@ with tab3:
 
         # Define your discrete color sequence
         color_discrete_sequence = [
-            "#0068c9", "#83c9ff", "#ff2b2b", "#ffabab", "#29b09d",
-            "#7defa1", "#ff8700", "#ffd16a", "#6d3fc0", "#d5dae5"
-        ]
+        "#00b1a9", "#007b73", "#00463d",  # Shades of R000 G177 B169
+        "#763f98", "#3a1d4c",             # Additional shades
+        "#20419a", "#101e4a",             # Shades of R032 G065 B154
+        "#fdb924", "#cc8b1c",             # Shades of R253 G185 B036
+        "#bfd730", "#8e9c1b"              # Shades of R191 G215 B048
+    ]
 
         # Add bar trace for each Strike Price
         for i, strike_price in enumerate(df_Lower_transposed.columns):
