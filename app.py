@@ -571,9 +571,19 @@ with tab3:
         # Create a Plotly bar chart
         fig2 = go.Figure()
 
+
+        # Define your discrete color sequence
+        color_discrete_sequence = [
+            "#0068c9", "#83c9ff", "#ff2b2b", "#ffabab", "#29b09d",
+            "#7defa1", "#ff8700", "#ffd16a", "#6d3fc0", "#d5dae5"
+        ]
+
         # Add bar trace for each Strike Price
-        for strike_price in df_Lower_transposed.columns:
-            fig2.add_trace(go.Bar(x=df_Lower_transposed.index, y=df_Lower_transposed[strike_price], name=f'Strike Price {strike_price}'))
+        for i, strike_price in enumerate(df_Lower_transposed.columns):
+            fig2.add_trace(go.Bar(x=df_Lower_transposed.index,
+                                y=df_Lower_transposed[strike_price],
+                                name=f'Strike Price {strike_price}',
+                                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)]))
 
         # Update layout with axis labels and title
         fig2.update_layout(xaxis_title='Tenure',
