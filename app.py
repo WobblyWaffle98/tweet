@@ -219,8 +219,17 @@ with tab2:
             )
         )
 
-    # Update the layout to include the markers and show legend
-    fig_Brent.update_layout(showlegend=True)
+    # Update the layout to include the markers and show legend below x-axis
+    fig_Brent.update_layout(
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
 
      # Convert the chart to an image
     image = fig_Brent.to_image(format="png")
