@@ -646,7 +646,7 @@ with tab3:
         image = fig2.to_image(format="png")
 
         # Save the image to a file
-        image_path = r"Resources\Plots\upper_put_options.png"
+        image_path = r"Resources\Plots\lower_put_options.png"
         with open(image_path, "wb") as f:
             f.write(image)
         # Set up the file name
