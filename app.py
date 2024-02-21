@@ -222,6 +222,14 @@ with tab2:
     # Update the layout to include the markers and show legend
     fig_Brent.update_layout(showlegend=True)
 
+     # Convert the chart to an image
+    image = fig_Brent.to_image(format="png")
+
+    # Save the image to a file
+    image_path = r"Resources\Plots\Brent.png"
+    with open(image_path, "wb") as f:
+        f.write(image)
+
     # Display the Plotly chart
     st.plotly_chart(fig_Brent, use_container_width=True, height=400)
 
@@ -895,7 +903,8 @@ with tab4:
     # Add lettterhead and title
     create_letterhead(pdf, WIDTH)
     create_title(TITLE, pdf)
-
+    pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
+    
     # Add some content to the PDF
     content = [
         "1. The table below illustrates the annual sales of Heicoders Academy:",
