@@ -12,6 +12,10 @@ import time
 import xlsxwriter
 from fpdf import FPDF
 import base64
+from plotly.offline import plot
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 
 # Setting Up
@@ -209,6 +213,8 @@ with tab2:
 
     # Display the Plotly chart
     st.plotly_chart(fig_Brent, use_container_width=True, height=400)
+
+
 
     # Calculate Total_Position_Quantity and Weighted_Avg_Net_Premium for each portfolio
     filtered_df['Weighted_Avg_Net_Premium'] = (filtered_df['FO.NetPremium'] * filtered_df['FO.Position_Quantity']) / filtered_df.groupby('Portfolio')['FO.Position_Quantity'].transform('sum')
@@ -577,8 +583,13 @@ with tab3:
 
         # Show plot
         st.plotly_chart(fig2)
+    
+
+
         # Print DataFrame
         st.dataframe(df_Lower, height=150, use_container_width=True, hide_index=True)
+
+        fig2.write_image("fig1.png")
 
     st.divider()
 
@@ -588,7 +599,6 @@ with tab3:
     # Create a formatted copy of the filtered DataFrame to preserve the original data
     formatted_df = filtered_df.copy()
     formatted_df_option = df_selected_sheet.copy()
-    
 
 
         # Function to get list of months between two dates
@@ -775,6 +785,7 @@ with tab3:
     )
 
 with tab4:
+    
     
     def create_download_link(val, filename):
         b64 = base64.b64encode(val)  # val looks like b'...'
