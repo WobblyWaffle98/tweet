@@ -616,8 +616,12 @@ with tab3:
         if st.button("Download Image"):
             # Convert the chart to an image
             image = fig2.to_image(format="png")
-            # Save or display the image as needed
-            st.image(image, caption='Plotly Chart as Image', use_column_width=True)
+            # Set up the file name
+            filename = "plotly_chart.png"
+            # Convert the image to bytes
+            image_bytes = image.encode()
+            # Trigger the download
+            st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png")
 
     st.divider()
 
