@@ -899,7 +899,7 @@ with tab4:
             self.cell(0, 10, 'Page ' + str(self.page_no()), 0, 0, 'C')
 
     # Global Variables
-    TITLE = "Monthly Business Report"
+    TITLE = "PCHP Report"
     WIDTH = 210
     HEIGHT = 297
 
@@ -912,7 +912,7 @@ with tab4:
     # Add lettterhead and title
     create_letterhead(pdf, WIDTH)
     create_title(TITLE, pdf)
-    pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
+    pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=150)
 
     
     pdf.ln(10)
