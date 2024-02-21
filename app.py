@@ -563,6 +563,15 @@ with tab3:
         # Print DataFrame
         st.dataframe(df_Upper, height=150, use_container_width=True, hide_index=True)
 
+        # Convert the chart to an image
+        image = fig.to_image(format="png")
+        # Set up the file name
+        filename = "plotly_chart.png"
+        # Convert the image to bytes
+        image_bytes = io.BytesIO(image)
+        # Trigger the download
+        st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png")
+
         
     with col4:
         # Transpose the DataFrame to have months as columns and Strike Price as index
