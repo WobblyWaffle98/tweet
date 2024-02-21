@@ -278,7 +278,7 @@ with tab2:
     st.plotly_chart(fig3, use_container_width=True, height=200)
 
      # Convert the chart to an image with higher resolution
-    image = fig3.to_image(format="png")
+    image = fig3.to_image(format="jpeg")
 
     # Save the image to a file
     image_path = r"Resources\Plots\Execution_table.png"
