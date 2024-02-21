@@ -612,16 +612,15 @@ with tab3:
         # Print DataFrame
         st.dataframe(df_Lower, height=150, use_container_width=True, hide_index=True)
 
-        # Add a button to download the chart as an image
-        if st.button("Download Image"):
-            # Convert the chart to an image
-            image = fig2.to_image(format="png")
-            # Set up the file name
-            filename = "plotly_chart.png"
-            # Convert the image to bytes
-            image_bytes = io.BytesIO(image)
-            # Trigger the download
-            st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png")
+
+        # Convert the chart to an image
+        image = fig2.to_image(format="png")
+        # Set up the file name
+        filename = "plotly_chart.png"
+        # Convert the image to bytes
+        image_bytes = io.BytesIO(image)
+        # Trigger the download
+        st.download_button(label="Download Image", data=image_bytes, file_name=filename, mime="image/png")
 
     st.divider()
 
