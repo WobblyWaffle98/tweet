@@ -268,6 +268,8 @@ with tab2:
         # Calculate Volume executed versus Counterparty
         st.subheader("Volume executed versus Counterparty")
         fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Position_Quantity', color='FO.DealerID',title='Sum of Volume Executed',)
+        # Update the color mapping to use your defined colors
+        fig1.update_traces(marker=dict(color=color_discrete_sequence))  
         fig1.update_xaxes(categoryorder='total descending')
         st.plotly_chart(fig1, use_container_width=True, height=200)
         
