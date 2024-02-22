@@ -331,15 +331,8 @@ with tab2:
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
 
-        # Add text traces
-        for i, row in filtered_df.iterrows():
-            fig1.add_trace(go.Scatter(
-                x=[row['FO.Acronym']],
-                y=[row['FO.Position_Quantity']],
-                text=[row['FO.Position_Quantity']],  # Text to display
-                mode='text',
-                showlegend=False,
-            ))
+        # Add values at the top of each bar
+        fig1.update_traces(texttemplate='%{y}', textposition='outside')
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
