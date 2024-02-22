@@ -433,7 +433,7 @@ with tab2:
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
 
          # Convert the chart to an image
-        image = fig_quantity.to_image(format="png", width=1200, height=700, scale=2.0)
+        image = fig_quantity.to_image(format="png", width=1200, height=600, scale=2.0)
 
         # Save the image to a file
         image_path = r"Resources\Plots\volume_cp.png"
