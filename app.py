@@ -331,22 +331,18 @@ with tab2:
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
 
-        # Add text inside the histogram for the values of Quantity for each dealer in each counterparties
-        text_values_dict = {}
-        for idx, row in filtered_df.iterrows():
-            text_values_dict[(row['FO.Acronym'], row['FO.DealerID'])] = str(row['FO.Position_Quantity'])
+        # Calculate text values for each dealer in each counterparty
+        text_values = filtered_df[['FO.Acronym', 'FO.DealerID', 'FO.Position_Quantity']].copy()
+
+        # Convert 'FO.Position_Quantity' to string for display purposes
+        text_values['text'] = text_values['FO.Position_Quantity'].astype(str)
 
         # Update the histogram trace to include text values for each dealer
-        fig1.update_traces(text=[text_values_dict[(acronym, dealer_id)] for acronym, dealer_id in zip(filtered_df['FO.Acronym'], filtered_df['FO.DealerID'])], textposition='inside', texttemplate='%{text:.2s}', insidetextanchor='start')
+        fig1.update_traces(text=text_values['text'], textposition='inside', texttemplate='%{text:.2s}', insidetextanchor='start')
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
 
-
-
-
-        # Show the Plotly figure in Streamlit
-        st.plotly_chart(fig1, use_container_width=True, height=200)
 
         # Convert the chart to an image
         image = fig1.to_image(format="png", width=1200, height=550, scale=2.0)
