@@ -277,8 +277,8 @@ with tab2:
     # Adding the color sequence
     marker=dict(color=color_discrete_sequence)
 
-    # Add margin-bottom to reduce space after the table
-    st.plotly_chart(fig3, use_container_width=True, height=200)
+    """# Add margin-bottom to reduce space after the table
+    st.plotly_chart(fig3, use_container_width=True, height=200)"""
 
      # Convert the chart to an image with higher resolution
     image = fig3.to_image(format="jpeg")
