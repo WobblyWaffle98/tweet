@@ -322,11 +322,11 @@ with tab2:
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
         # Create the histogram with custom colors
-        fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Position_Quantity', color='FO.DealerID', title='Sum of Volume Executed', color_discrete_map=dealer_colors)
+        fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Acronym', color='FO.DealerID', title='Sum of Volume Executed', color_discrete_map=dealer_colors)
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
-        fig1.update_xaxes(labelalias=dict(Sat="Citibank Bhd", Sun="Sunday"))
+       
 
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
