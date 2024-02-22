@@ -306,7 +306,7 @@ with tab2:
     col1, col2 = st.columns((2))
 
     with col1:
-                # Custom colors for each dealer
+        # Custom colors for each dealer
         dealer_colors = {
             'HZ': '#00b1a9',
             'DS': '#763f98',
@@ -321,32 +321,29 @@ with tab2:
         # Add a column for custom colors based on DealerID
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
-        # Create the histogram with custom colors
-        fig1 = go.Figure()
-
         # Calculate the sum of quantities for each dealer
         sum_quantities = filtered_df.groupby('FO.DealerID')['FO.Position_Quantity'].sum()
 
-        # Add text inside the bars with the sum of quantities
-        for dealer_id in dealer_colors:
-            dealer_data = filtered_df[filtered_df['FO.DealerID'] == dealer_id]
+        # Create the histogram with custom colors
+        fig1 = go.Figure()
+
+        # Add bars for each dealer
+        for dealer_id, color in dealer_colors.items():
+            sum_quantity = sum_quantities.get(dealer_id, 0)
             fig1.add_trace(
                 go.Bar(
-                    x=dealer_data['FO.Acronym'],
-                    y=dealer_data['FO.Position_Quantity'],
-                    text=sum_quantities[dealer_id],  # Use sum of quantities as text
+                    x=[dealer_id],  # Use dealer ID as x value
+                    y=[sum_quantity],  # Use sum of quantities as y value
+                    text=[sum_quantity],  # Use sum of quantities as text
                     textposition='inside',
                     texttemplate='%{text:.2s}',
                     name=dealer_id,
-                    marker_color=dealer_colors[dealer_id]  # Maintain original bar colors
+                    marker_color=color  # Use predefined color for each dealer
                 )
             )
 
-        # Update layout to stack bars
-        fig1.update_layout(barmode='stack')
-
-        # Update the x-axis category order
-        fig1.update_xaxes(categoryorder='total descending')
+        # Update x-axis properties
+        fig1.update_xaxes(tickvals=list(dealer_colors.keys()), ticktext=list(dealer_colors.keys()))  # Use dealer IDs as x tick labels
 
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
@@ -361,29 +358,7 @@ with tab2:
         # Save the image to a file
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
-            f.write(image)
-
-        
-
-    with col1:
-        df_refresh = pd.read_excel("PCHP Data.xlsx", "Sheet_Info")
-
-        # Assuming 'Date_today' contains a single date value in the DataFrame
-        date_today_value = df_refresh['Date_today'].iloc[0]
-
-        # Convert to a datetime object and format it
-        date_limit = datetime.strptime(str(date_today_value), "%Y-%m-%d %H:%M:%S.%f")
-
-        # Format the datetime object to the desired format
-        formatted_date_limit = date_limit.strftime("%d %b %Y")
-
-        df_limits = pd.read_excel("PCHP Data.xlsx","Credit_Limit_data")
-        st.subheader("Available Limits")
-        df_limits = pd.read_excel("PCHP Data.xlsx","Credit_Limit_data")
-        fig_limits = px.bar(df_limits, x='Counterparty', y=['Available Volume Limit', 'Volume Utilised'],
-                title='Volume Limit and Volume Utilized by Counterparty as of '+ formatted_date_limit)
-        #fig_limits .update_xaxes(categoryorder='total descending')
-        st.plotly_chart(fig_limits, use_container_width=True, height=200)       
+            f.write(image)       
 
     with col2:
         st.subheader("Monthly Volume Executed")
