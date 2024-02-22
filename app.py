@@ -322,7 +322,7 @@ with tab2:
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
         # Create the histogram with custom colors
-        fig1 = px.histogram(filtered_df, x='FO.Acronym', y='FO.Position_Quantity', color='FO.DealerID', title='Sum of Volume Executed', color_discrete_map=dealer_colors)
+        fig1 = go.Figure()
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
@@ -356,6 +356,8 @@ with tab2:
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
             f.write(image)
+
+    
 
 
         
