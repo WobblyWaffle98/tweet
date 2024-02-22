@@ -947,7 +947,7 @@ with tab4:
     pdf.ln(100)
     
     #add page_2
-    pdf.add_page
+    pdf.add_page()
     create_letterhead(pdf,WIDTH)
     create_title(TITLE,pdf)
     pdf.image(r"Resources\Plots\volume_cp.png", x=5, y=pdf.get_y(), w=100)
