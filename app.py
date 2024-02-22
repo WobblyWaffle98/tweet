@@ -306,7 +306,7 @@ with tab2:
     col1, col2 = st.columns((2))
 
     with col1:
-        # Custom colors for each dealer
+                # Custom colors for each dealer
         dealer_colors = {
             'HZ': '#00b1a9',
             'DS': '#763f98',
@@ -330,17 +330,17 @@ with tab2:
         # Add bars for each counterparty
         for counterparty in sum_quantities['FO.Acronym'].unique():
             counterparty_data = sum_quantities[sum_quantities['FO.Acronym'] == counterparty]
-            text_values = [f"{dealer_id}: {quantity:.2f}" for dealer_id, quantity in zip(counterparty_data['FO.DealerID'], counterparty_data['FO.Position_Quantity'])]
-            fig1.add_trace(
-                go.Bar(
-                    x=[counterparty],  # Use counterparty as x value
-                    y=[sum(counterparty_data['FO.Position_Quantity'])],  # Use sum of quantities as y value
-                    text=[', '.join(text_values)],  # Use sum of quantities as text
-                    textposition='inside',
-                    name=counterparty,
-                    marker_color=[dealer_colors[dealer_id] for dealer_id in counterparty_data['FO.DealerID']]  # Use predefined color for each dealer within the counterparty
+            for dealer_id, quantity, color in zip(counterparty_data['FO.DealerID'], counterparty_data['FO.Position_Quantity'], counterparty_data['Color']):
+                fig1.add_trace(
+                    go.Bar(
+                        x=[counterparty],  # Use counterparty as x value
+                        y=[quantity],  # Use sum of quantities as y value
+                        text=[f"{dealer_id}: {quantity:.2f}"],  # Use sum of quantities as text
+                        textposition='inside',
+                        name=dealer_id,
+                        marker_color=color  # Use predefined color for each dealer within the counterparty
+                    )
                 )
-            )
 
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
