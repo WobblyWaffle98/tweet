@@ -308,14 +308,16 @@ with tab2:
     with col1:
         # Calculate Volume executed versus Counterparty
         st.subheader("Volume executed versus Counterparty")
-        fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Position_Quantity', color='FO.DealerID',title='Sum of Volume Executed')
-        # Update the color mapping to use your defined colors  
-        fig1.update_xaxes(categoryorder='total descending')
-        st.plotly_chart(fig1, use_container_width=True, height=200)
+        fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Position_Quantity', color='FO.DealerID', title='Sum of Volume Executed')
 
-        # Update color sequence
-        
+        # Update the color mapping to use your custom colors
         fig1.update_traces(marker=dict(color=color_discrete_sequence))
+
+        # Update the x-axis category order
+        fig1.update_xaxes(categoryorder='total descending')
+
+        # Show the Plotly figure in Streamlit
+        st.plotly_chart(fig1, use_container_width=True, height=200)
 
         # Convert the chart to an image
         image = fig1.to_image(format="png", width=1200, height=550, scale=2.0)
