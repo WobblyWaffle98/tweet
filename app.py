@@ -306,7 +306,7 @@ with tab2:
     col1, col2 = st.columns((2))
 
     with col1:
-        # Custom colors for each dealer
+                # Custom colors for each dealer
         dealer_colors = {
             'HZ': '#00b1a9',
             'DS': '#763f98',
@@ -324,14 +324,17 @@ with tab2:
         # Create the histogram with custom colors
         fig1 = go.Figure()
 
-        # Add text inside the bars
+        # Calculate the sum of quantities for each dealer
+        sum_quantities = filtered_df.groupby('FO.DealerID')['FO.Position_Quantity'].sum()
+
+        # Add text inside the bars with the sum of quantities
         for dealer_id in dealer_colors:
             dealer_data = filtered_df[filtered_df['FO.DealerID'] == dealer_id]
             fig1.add_trace(
                 go.Bar(
                     x=dealer_data['FO.Acronym'],
                     y=dealer_data['FO.Position_Quantity'],
-                    text=dealer_data['FO.Position_Quantity'],  # Use y-values as text
+                    text=sum_quantities[dealer_id],  # Use sum of quantities as text
                     textposition='inside',
                     texttemplate='%{text:.2s}',
                     name=dealer_id,
@@ -359,8 +362,6 @@ with tab2:
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
             f.write(image)
-
-
 
         
 
