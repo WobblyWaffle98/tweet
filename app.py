@@ -1023,14 +1023,6 @@ with tab4:
 
     # Generate the PDF and provide download link
     pdf_output = pdf.output(dest="S").encode("latin-1")
-
-    def create_download_button(pdf_output, filename):
-        """
-        Function to create a download button for downloading the PDF.
-        """
-        button_html = f'<a href="data:application/octet-stream;base64,{pdf_output.decode()}" download="{filename}.pdf"><button>Download PDF</button></a>'
-        return button_html
-
-    html = create_download_button(pdf_output, "report")
+    html = create_download_link(pdf_output, "report")
     st.markdown(html, unsafe_allow_html=True)
 
