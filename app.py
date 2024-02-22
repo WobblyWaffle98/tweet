@@ -326,14 +326,23 @@ with tab2:
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
-    
+
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
 
+        # Add text traces
+        for i, row in filtered_df.iterrows():
+            fig1.add_trace(go.Scatter(
+                x=[row['FO.Acronym']],
+                y=[row['FO.Position_Quantity']],
+                text=[row['FO.Position_Quantity']],  # Text to display
+                mode='text',
+                showlegend=False,
+            ))
+
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
-
 
         # Convert the chart to an image
         image = fig1.to_image(format="png", width=1200, height=550, scale=2.0)
