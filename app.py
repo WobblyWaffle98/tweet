@@ -310,9 +310,10 @@ with tab2:
         dealer_colors = {
             'HZ': '#00b1a9',
             'DS': '#763f98',
-            'EG': '#20419a',
+            'EG': '#FF6F61',
+            'AS': '#FFD166',
             # Add more dealers and colors as needed
-        }
+        } 
         # Calculate Volume executed versus Counterparty
         st.subheader("Volume executed versus Counterparty")
         
