@@ -306,7 +306,7 @@ with tab2:
     col1, col2 = st.columns((2))
 
     with col1:
-                # Custom colors for each dealer
+        # Custom colors for each dealer
         dealer_colors = {
             'HZ': '#00b1a9',
             'DS': '#763f98',
@@ -314,43 +314,36 @@ with tab2:
             'AS': "#fdb924",
             # Add more dealers and colors as needed
         }    
-
+        
         # Calculate Volume executed versus Counterparty
         st.subheader("Volume executed versus Counterparty")
-
+        
         # Add a column for custom colors based on DealerID
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
         # Create the histogram with custom colors
-        fig1 = go.Figure()
-
-        # Calculate the sum of quantities for each dealer
-        sum_quantities = filtered_df.groupby('FO.DealerID')['FO.Position_Quantity'].sum()
-
-        # Add text inside the bars with the sum of quantities
-        for dealer_id in dealer_colors:
-            dealer_data = filtered_df[filtered_df['FO.DealerID'] == dealer_id]
-            fig1.add_trace(
-                go.Bar(
-                    x=dealer_data['FO.Acronym'],
-                    y=dealer_data['FO.Position_Quantity'],
-                    text=sum_quantities[dealer_id],  # Use sum of quantities as text
-                    textposition='inside',
-                    texttemplate='%{text:.2s}',
-                    name=dealer_id,
-                    marker_color=dealer_colors[dealer_id]  # Maintain original bar colors
-                )
-            )
-
-        # Update layout to stack bars
-        fig1.update_layout(barmode='stack')
+        fig1 = px.histogram(filtered_df, x='FO.Acronym', y='FO.Position_Quantity', color='FO.DealerID', title='Sum of Volume Executed', color_discrete_map=dealer_colors)
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
-
+    
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
+        
+        # Add text inside the bars
+        for data in fig1.data:
+            fig1.add_trace(
+                go.Bar(
+                    x=data.x,
+                    y=data.y,
+                    text=data.y,  # Use y-values as text
+                    textposition='inside',
+                    texttemplate='%{text:.2s}',
+                    showlegend=False,  # Prevent duplicating legend entries
+                    marker=dict(color=data.marker.color)  # Maintain original bar colors
+                )
+            )
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
