@@ -970,7 +970,7 @@ with tab4:
     pdf.add_page()
     create_letterhead(pdf,WIDTH)
     create_title(TITLE,pdf)
-    pdf.image(r"Resources\Plots\volume_cp.png", x=5, y=pdf.get_y(), w=100)
+    pdf.image(r"Resources\Plots\volume_cp.png", x=5, y=pdf.get_y(), w=200)
     
 
     # Add Page
