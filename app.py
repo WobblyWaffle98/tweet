@@ -29,6 +29,9 @@ color_discrete_sequence = [
     "#8e9c1b"   # Shade of R191 G215 B048
 ]
 
+color_discrete_sequence_2 = ['#00B1A9', '#763F98', '#FF6F61', '#3B5998', '#FFD166', '#06D6A0', '#118AB2', '#073B4C']
+
+
 # Setting Up
 st.set_page_config(page_title = "DashBoard",page_icon = r'Resources/4953098.png',layout ="wide")
 
@@ -413,7 +416,7 @@ with tab2:
                 x=df_counterparty['Month'],
                 y=df_counterparty['Value'],
                 name=counterparty,
-                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
+                marker_color=color_discrete_sequence[i % len(color_discrete_sequence_2)],
                 text=df_counterparty['Value'],  # Use y-values as text
                 textposition='inside',
                 texttemplate='%{text:.2s}',
@@ -430,7 +433,7 @@ with tab2:
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
 
          # Convert the chart to an image
-        image = fig_quantity.to_image(format="png")
+        image = fig_quantity.to_image(format="png", width=1200, height=500, scale=2.0)
 
         # Save the image to a file
         image_path = r"Resources\Plots\volume_cp.png"
