@@ -29,7 +29,7 @@ color_discrete_sequence = [
     "#8e9c1b"   # Shade of R191 G215 B048
 ]
 
-color_discrete_sequence_2 = ['#00B1A9', '#763F98', '#FF6F61', '#3B5998', '#FFD166', '#06D6A0', '#118AB2', '#073B4C']
+color_discrete_sequence_2 = ['#00B1A9', '#763F98', '#FF6F61', '#3B5998', '#FFD166', '#06D6A0', '#118AB2', '#073B4C', '#A05195', '#2EC4B6', '#FFB703']
 
 
 # Setting Up
