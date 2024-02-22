@@ -332,13 +332,16 @@ with tab2:
         fig1.update_yaxes(title_text='Quantity, bbls')
 
         # Add text inside the histogram for the values of Quantity for each dealer in each counterparties
-        text_values = filtered_df.groupby(['FO.Acronym', 'FO.DealerID'])['FO.Position_Quantity'].sum().reset_index()
-
-        # Update text values to include the respective dealer's quantity for each counterparty
-        text_values['text'] = text_values.apply(lambda row: str(row['FO.Position_Quantity']), axis=1)
+        text_values_dict = {}
+        for idx, row in filtered_df.iterrows():
+            text_values_dict[(row['FO.Acronym'], row['FO.DealerID'])] = str(row['FO.Position_Quantity'])
 
         # Update the histogram trace to include text values for each dealer
-        fig1.update_traces(text=text_values['text'], textposition='inside', texttemplate='%{text:.2s}', insidetextanchor='start')
+        fig1.update_traces(text=[text_values_dict[(acronym, dealer_id)] for acronym, dealer_id in zip(filtered_df['FO.Acronym'], filtered_df['FO.DealerID'])], textposition='inside', texttemplate='%{text:.2s}', insidetextanchor='start')
+
+        # Show the Plotly figure in Streamlit
+        st.plotly_chart(fig1, use_container_width=True, height=200)
+
 
 
 
