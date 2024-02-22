@@ -311,7 +311,7 @@ with tab2:
             'HZ': '#00b1a9',
             'DS': '#763f98',
             'EG': '#FF6F61',
-            'AS': '#FFD166',
+            'AS': "#bfd730",
             # Add more dealers and colors as needed
         } 
         # Calculate Volume executed versus Counterparty
