@@ -409,7 +409,11 @@ with tab2:
         fig_quantity = px.bar(df_grouped, x='Month', y='Value', color='FO.CounterpartyName',
                             color_discrete_sequence=color_discrete_sequence,
                             title='Quantity Comparison by Counterparty for Each Month',
-                            labels={'Value': 'Quantity'})
+                            labels={'Value': 'Quantity'}, text='Value',  # Use y-values as text
+                textposition='inside',
+                texttemplate='%{text:.2s}')
+        
+        
         
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
 
