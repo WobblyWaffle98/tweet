@@ -321,29 +321,26 @@ with tab2:
         # Add a column for custom colors based on DealerID
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
-        # Calculate the sum of quantities for each dealer
-        sum_quantities = filtered_df.groupby('FO.DealerID')['FO.Position_Quantity'].sum()
+        # Calculate the sum of quantities for each dealer and counterparty
+        sum_quantities = filtered_df.groupby(['FO.Acronym', 'FO.DealerID'])['FO.Position_Quantity'].sum().reset_index()
 
         # Create the histogram with custom colors
         fig1 = go.Figure()
 
-        # Add bars for each dealer
-        for dealer_id, color in dealer_colors.items():
-            sum_quantity = sum_quantities.get(dealer_id, 0)
+        # Add bars for each counterparty
+        for counterparty in sum_quantities['FO.Acronym'].unique():
+            counterparty_data = sum_quantities[sum_quantities['FO.Acronym'] == counterparty]
+            text_values = [f"{dealer_id}: {quantity:.2f}" for dealer_id, quantity in zip(counterparty_data['FO.DealerID'], counterparty_data['FO.Position_Quantity'])]
             fig1.add_trace(
                 go.Bar(
-                    x=[dealer_id],  # Use dealer ID as x value
-                    y=[sum_quantity],  # Use sum of quantities as y value
-                    text=[sum_quantity],  # Use sum of quantities as text
+                    x=[counterparty],  # Use counterparty as x value
+                    y=[sum(counterparty_data['FO.Position_Quantity'])],  # Use sum of quantities as y value
+                    text=[', '.join(text_values)],  # Use sum of quantities as text
                     textposition='inside',
-                    texttemplate='%{text:.2s}',
-                    name=dealer_id,
-                    marker_color=color  # Use predefined color for each dealer
+                    name=counterparty,
+                    marker_color=[dealer_colors[dealer_id] for dealer_id in counterparty_data['FO.DealerID']]  # Use predefined color for each dealer within the counterparty
                 )
             )
-
-        # Update x-axis properties
-        fig1.update_xaxes(tickvals=list(dealer_colors.keys()), ticktext=list(dealer_colors.keys()))  # Use dealer IDs as x tick labels
 
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
@@ -358,7 +355,7 @@ with tab2:
         # Save the image to a file
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
-            f.write(image)       
+            f.write(image)
 
     with col2:
         st.subheader("Monthly Volume Executed")
