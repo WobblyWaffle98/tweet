@@ -407,17 +407,18 @@ with tab2:
 
 
         
-        for index, row in df_grouped.iterrows():
+        for i, counterparty in enumerate(df_grouped['FO.CounterpartyName'].unique()):
+            df_counterparty = df_grouped[df_grouped['FO.CounterpartyName'] == counterparty]
+            print(df_counterparty)
             fig_quantity.add_trace(go.Bar(
-                x=[row['Month']],
-                y=[row['Value']],
-                name=row['FO.CounterpartyName'],
-                marker_color=color_discrete_sequence[index % len(color_discrete_sequence)],
-                text=[row['Value']],  # Use y-value as text
+                x=df_counterparty['Month'],
+                y=df_counterparty['Value'],
+                name=counterparty,
+                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
+                text=df_counterparty['Value'],  # Use y-values as text
                 textposition='inside',
                 texttemplate='%{text:.2s}',
             ))
-
 
         fig_quantity.update_layout(
             title='Quantity Comparison by Counterparty for Each Month',
