@@ -409,7 +409,11 @@ with tab2:
         fig_quantity = px.bar(df_grouped, x='Month', y='Value', color='FO.CounterpartyName',
                             color_discrete_sequence=color_discrete_sequence,
                             title='Quantity Comparison by Counterparty for Each Month',
-                            labels={'Value': 'Quantity'}, text='Value',texttemplate='%{text:.2s}')
+                            labels={'Value': 'Quantity'})
+        
+        # Format the text inside the bars
+        text_formatted = df_grouped['Value'].apply(lambda x: f"{x:.2f}")  # Formats to two decimal places
+        fig_quantity.update_traces(text=text_formatted, textposition='inside')
         
         
         
