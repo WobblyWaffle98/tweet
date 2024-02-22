@@ -269,13 +269,16 @@ with tab2:
     grouped_data['Weighted_Avg_Protection_Band'] = grouped_data['Weighted_Avg_Protection_Band'].apply('USD{:,.2f}'.format)
 
     fig3 = go.Figure(data=[go.Table(
-    header=dict(values=['Portfolio','Number of Trades', 'Total Volume Hedged','Total Cost', 'Weighted Average Net Premium','Weighted Average Protection','Weighted Average Lower Protection','Protection Band']),
+    header=dict(
+        values=['Portfolio','Number of Trades', 'Total Volume Hedged','Total Cost', 'Weighted Average Net Premium','Weighted Average Protection','Weighted Average Lower Protection','Protection Band'],
+        # Applying colors to the header cells
+        fill_color=color_discrete_sequence
+    ),
     cells=dict(values=[grouped_data['Portfolio'], grouped_data['Trade_Numbers'],grouped_data['Total_Position_Quantity'],grouped_data['Total_Cost'], grouped_data['Weighted_Avg_Net_Premium']
-                       , grouped_data['Weighted_Avg_Protection'], grouped_data['Weighted_Avg_Lower_Protection'], grouped_data['Weighted_Avg_Protection_Band']])
-    )])
-
-    # Adding the color sequence
+                       , grouped_data['Weighted_Avg_Protection'], grouped_data['Weighted_Avg_Lower_Protection'], grouped_data['Weighted_Avg_Protection_Band']]),
+    # Adding the color sequence for the table body
     marker=dict(color=color_discrete_sequence)
+    )])
 
     # Add margin-bottom to reduce space after the table
     st.plotly_chart(fig3, use_container_width=True)
