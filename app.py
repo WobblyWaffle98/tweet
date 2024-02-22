@@ -407,14 +407,27 @@ with tab2:
 
         fig_quantity = go.Figure()
 
+        # Initialize a variable to keep track of the cumulative sum
+        cumulative_sum = None
+
+        # Iterate over unique counterparty values
         for i, counterparty in enumerate(df_grouped['FO.CounterpartyName'].unique()):
+            # Filter the dataframe for the current counterparty
             df_counterparty = df_grouped[df_grouped['FO.CounterpartyName'] == counterparty]
+            
+            # Calculate cumulative sum for y-values
+            if cumulative_sum is None:
+                cumulative_sum = df_counterparty['Value']
+            else:
+                cumulative_sum += df_counterparty['Value']
+            
+            # Add trace for the current counterparty with cumulative sum as y-values
             fig_quantity.add_trace(go.Bar(
                 x=df_counterparty['Month'],
-                y=df_counterparty['Value'],
+                y=cumulative_sum,
                 name=counterparty,
                 marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
-                text=df_counterparty['Value'],  # Use y-values as text
+                text=cumulative_sum,  # Use cumulative sum as text
                 textposition='inside',
                 texttemplate='%{text:.2s}',
             ))
@@ -423,9 +436,8 @@ with tab2:
             title='Quantity Comparison by Counterparty for Each Month',
             xaxis_title='Month',
             yaxis_title='Quantity',
-            barmode='stack' 
+            barmode='stack'  # Set barmode to 'stack' for stacked bars
         )
-        
         
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
 
