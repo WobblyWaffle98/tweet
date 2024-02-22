@@ -339,7 +339,7 @@ with tab2:
 
         # Add annotations for total 'FO.Position_Quantity' on top of each column
         for i, acronym in enumerate(total_quantity['FO.Acronym']):
-            fig1.add_annotation(
+            fig1.update_traces(
                 x=acronym,
                 y=total_quantity.iloc[i]['FO.Position_Quantity'],
                 text=str(total_quantity.iloc[i]['FO.Position_Quantity']),
