@@ -306,12 +306,21 @@ with tab2:
     col1, col2 = st.columns((2))
 
     with col1:
+        # Custom colors for each dealer
+        dealer_colors = {
+            'HZ': '#00b1a9',
+            'DS': '#763f98',
+            'EG': '#20419a',
+            # Add more dealers and colors as needed
+        }
         # Calculate Volume executed versus Counterparty
         st.subheader("Volume executed versus Counterparty")
-        fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Position_Quantity', color='FO.DealerID', title='Sum of Volume Executed')
+        
+        # Add a column for custom colors based on DealerID
+        filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
-        # Update the color mapping to use your custom colors
-        fig1.update_traces(marker=dict(color=color_discrete_sequence))
+        # Create the histogram with custom colors
+        fig1 = px.histogram(filtered_df, x='FO.CounterpartyName', y='FO.Position_Quantity', color='FO.DealerID', title='Sum of Volume Executed', color_discrete_map=dealer_colors)
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
