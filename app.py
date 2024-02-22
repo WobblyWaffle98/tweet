@@ -314,23 +314,16 @@ with tab2:
             'AS': "#fdb924",
             # Add more dealers and colors as needed
         }    
-        
+
         # Calculate Volume executed versus Counterparty
         st.subheader("Volume executed versus Counterparty")
-        
+
         # Add a column for custom colors based on DealerID
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
         # Create the histogram with custom colors
         fig1 = go.Figure()
 
-        # Update the x-axis category order
-        fig1.update_xaxes(categoryorder='total descending')
-    
-        # Rename x and y labels
-        fig1.update_xaxes(title_text='Counterparties')
-        fig1.update_yaxes(title_text='Quantity, bbls')
-        
         # Add text inside the bars
         for dealer_id in dealer_colors:
             dealer_data = filtered_df[filtered_df['FO.DealerID'] == dealer_id]
@@ -346,6 +339,16 @@ with tab2:
                 )
             )
 
+        # Update layout to stack bars
+        fig1.update_layout(barmode='stack')
+
+        # Update the x-axis category order
+        fig1.update_xaxes(categoryorder='total descending')
+
+        # Rename x and y labels
+        fig1.update_xaxes(title_text='Counterparties')
+        fig1.update_yaxes(title_text='Quantity, bbls')
+
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
 
@@ -357,7 +360,6 @@ with tab2:
         with open(image_path, "wb") as f:
             f.write(image)
 
-    
 
 
         
