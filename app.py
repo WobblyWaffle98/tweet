@@ -364,6 +364,11 @@ with tab2:
         df_limits = pd.read_excel("PCHP Data.xlsx","Credit_Limit_data")
         fig_limits = px.bar(df_limits, x='Counterparty', y=['Available Volume Limit', 'Volume Utilised'],
                 title='Volume Limit and Volume Utilized by Counterparty as of '+ formatted_date_limit)
+        
+        # Rename x and y labels
+        fig_limits.update_yaxes(title_text='Quantity, bbls')
+        # Add values at the top of each bar
+        fig_limits.update_traces(texttemplate='%{y}', textposition='inside')
         #fig_limits .update_xaxes(categoryorder='total descending')
         st.plotly_chart(fig_limits, use_container_width=True, height=200)       
 
