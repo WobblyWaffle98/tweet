@@ -412,6 +412,14 @@ with tab2:
 
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
 
+         # Convert the chart to an image
+        image = fig_quantity.to_image(format="png")
+
+        # Save the image to a file
+        image_path = r"Resources\Plots\volume_cp.png"
+        with open(image_path, "wb") as f:
+            f.write(image)
+
 
 # Assuming selected_portfolio is a list
 if len(selected_portfolios) > 0 and 'All' not in selected_portfolios:
@@ -938,7 +946,12 @@ with tab4:
     pdf.image(r"Resources\Plots\Execution_table.png", x=5, y=150, w=200)
     pdf.ln(100)
     
-
+    #add page_2
+    pdf.add_page
+    create_letterhead(pdf,WIDTH)
+    create_title(TITLE,pdf)
+    pdf.image(r"Resources\Plots\volume_cp.png", x=5, y=pdf.get_y(), w=100)
+    
 
     # Add Page
     pdf.add_page()
