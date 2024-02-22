@@ -434,6 +434,14 @@ with tab2:
 
             st.plotly_chart(fig_stacked_bar, use_container_width=True, height=200)
 
+             # Convert the chart to an image
+            image = fig_stacked_bar.to_image(format="png", width=1200, height=600, scale=2.0)
+
+            # Save the image to a file
+            image_path = r"Resources\Plots\volume_executed.png"
+            with open(image_path, "wb") as f:
+                f.write(image)
+
             
         else:
             st.write("No data available for visualization.")
@@ -1008,7 +1016,9 @@ with tab4:
     create_title(TITLE, pdf)
     pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
     
+    pdf.image(r"Resources\Plots\volume_executed.png", x=5, y=150, w=200)
     pdf.image(r"Resources\Plots\Execution_table.png", x=5, y=150, w=200)
+    
     pdf.ln(100)
     
     #add page_2
