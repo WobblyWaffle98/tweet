@@ -681,7 +681,7 @@ with tab3:
         st.dataframe(df_Upper, height=150, use_container_width=True, hide_index=True)
 
         # Convert the chart to an image
-        image = fig.to_image(format="png")
+        image = fig.to_image(format="png", width=1200, height=550, scale=2.0)
 
         # Save the image to a file
         image_path = r"Resources\Plots\upper_put_options.png"
@@ -731,7 +731,7 @@ with tab3:
 
 
         # Convert the chart to an image
-        image = fig2.to_image(format="png")
+        image = fig2.to_image(format="png", width=1200, height=550, scale=2.0)
 
         # Save the image to a file
         image_path = r"Resources\Plots\lower_put_options.png"
