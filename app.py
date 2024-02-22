@@ -333,8 +333,14 @@ with tab2:
 
         # Add text inside the histogram for the values of Quantity for each dealer in each counterparties
         text_values = filtered_df.groupby(['FO.Acronym', 'FO.DealerID'])['FO.Position_Quantity'].sum().reset_index()
-        text_values['text'] = text_values['FO.Position_Quantity'].astype(str)
-        fig1.update_traces(text=text_values['text'], textposition='inside')
+
+        # Update text values to include the respective dealer's quantity for each counterparty
+        text_values['text'] = text_values.apply(lambda row: str(row['FO.Position_Quantity']), axis=1)
+
+        # Update the histogram trace to include text values for each dealer
+        fig1.update_traces(text=text_values['text'], textposition='inside', texttemplate='%{text:.2s}', insidetextanchor='start')
+
+
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
