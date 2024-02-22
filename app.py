@@ -327,13 +327,14 @@ with tab2:
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
     
-
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
 
         # Add text inside the histogram for the values of Quantity for each dealer in each counterparties
-        fig1.update_traces(text=filtered_df['FO.Position_Quantity'], textposition='inside')
+        text_values = filtered_df.groupby(['FO.Acronym', 'FO.DealerID'])['FO.Position_Quantity'].sum().reset_index()
+        text_values['text'] = text_values['FO.Position_Quantity'].astype(str)
+        fig1.update_traces(text=text_values['text'], textposition='inside')
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
@@ -345,6 +346,7 @@ with tab2:
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
             f.write(image)
+
 
 
     with col1:
