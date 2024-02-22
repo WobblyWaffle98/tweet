@@ -363,7 +363,7 @@ with tab2:
         st.subheader("Available Limits")
         df_limits = pd.read_excel("PCHP Data.xlsx","Credit_Limit_data")
         fig_limits = px.bar(df_limits, x='Counterparty', y=['Available Volume Limit', 'Volume Utilised'],
-                title='Volume Limit and Volume Utilized by Counterparty as of '+ formatted_date_limit)
+                title='Volume Limit and Volume Utilized by Counterparty as of '+ formatted_date_limit,color_discrete_sequence=color_discrete_sequence)
         
         # Rename x and y labels
         fig_limits.update_yaxes(title_text='Quantity, bbls')
