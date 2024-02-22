@@ -275,9 +275,7 @@ with tab2:
         fill_color=color_discrete_sequence
     ),
     cells=dict(values=[grouped_data['Portfolio'], grouped_data['Trade_Numbers'],grouped_data['Total_Position_Quantity'],grouped_data['Total_Cost'], grouped_data['Weighted_Avg_Net_Premium']
-                       , grouped_data['Weighted_Avg_Protection'], grouped_data['Weighted_Avg_Lower_Protection'], grouped_data['Weighted_Avg_Protection_Band']]),
-    # Adding the color sequence for the table body
-    header=dict(color=color_discrete_sequence)
+                       , grouped_data['Weighted_Avg_Protection'], grouped_data['Weighted_Avg_Lower_Protection'], grouped_data['Weighted_Avg_Protection_Band']])
     )])
 
     # Add margin-bottom to reduce space after the table
