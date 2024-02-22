@@ -409,7 +409,7 @@ with tab2:
         fig_quantity = px.bar(df_grouped, x='Month', y='Value', color='FO.CounterpartyName',
                             color_discrete_sequence=color_discrete_sequence,
                             title='Quantity Comparison by Counterparty for Each Month',
-                            labels={'Value': 'Quantity'}, text='Value')
+                            labels={'Value': 'Quantity'}, text='Value',texttemplate='%{text:.2s}')
         
         
         
