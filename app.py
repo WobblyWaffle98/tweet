@@ -422,7 +422,8 @@ with tab2:
         fig_quantity.update_layout(
             title='Quantity Comparison by Counterparty for Each Month',
             xaxis_title='Month',
-            yaxis_title='Quantity'
+            yaxis_title='Quantity',
+            barmode='stack' 
         )
         
         
