@@ -405,11 +405,7 @@ with tab2:
         # Group by Portfolio, Month, and Value type (Quantity or Premium) and sum the values
         df_grouped = df_melted.groupby(['FO.CounterpartyName', 'Month']).sum().reset_index()
 
-        # Create a line chart for quantities and set the color sequence
-        fig_quantity = px.bar(df_grouped, x='Month', y='Value', color='FO.CounterpartyName',
-                            color_discrete_sequence=color_discrete_sequence,
-                            title='Quantity Comparison by Counterparty for Each Month',
-                            labels={'Value': 'Quantity'})
+
         
         for i, counterparty in enumerate(df_grouped['FO.CounterpartyName'].unique()):
             df_counterparty = df_grouped[df_grouped['FO.CounterpartyName'] == counterparty]
