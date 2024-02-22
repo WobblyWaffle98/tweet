@@ -332,16 +332,17 @@ with tab2:
         fig1.update_yaxes(title_text='Quantity, bbls')
         
         # Add text inside the bars
-        for data in fig1.data:
+        for dealer_id in dealer_colors:
+            dealer_data = filtered_df[filtered_df['FO.DealerID'] == dealer_id]
             fig1.add_trace(
                 go.Bar(
-                    x=data.x,
-                    y=data.y,
-                    text=data.y,  # Use y-values as text
+                    x=dealer_data['FO.Acronym'],
+                    y=dealer_data['FO.Position_Quantity'],
+                    text=dealer_data['FO.Position_Quantity'],  # Use y-values as text
                     textposition='inside',
                     texttemplate='%{text:.2s}',
-                    showlegend=False,  # Prevent duplicating legend entries
-                    marker=dict(color=data.marker.color)  # Maintain original bar colors
+                    name=dealer_id,
+                    marker_color=dealer_colors[dealer_id]  # Maintain original bar colors
                 )
             )
 
@@ -355,6 +356,7 @@ with tab2:
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
             f.write(image)
+
 
         
 
