@@ -312,6 +312,14 @@ with tab2:
         # Update the color mapping to use your defined colors  
         fig1.update_xaxes(categoryorder='total descending')
         st.plotly_chart(fig1, use_container_width=True, height=200)
+
+        # Convert the chart to an image
+        image = fig1.to_image(format="png", width=1200, height=600, scale=2.0)
+
+        # Save the image to a file
+        image_path = r"Resources\Plots\volume_dealer.png"
+        with open(image_path, "wb") as f:
+            f.write(image)
         
 
     with col1:
@@ -971,6 +979,7 @@ with tab4:
     create_letterhead(pdf,WIDTH)
     create_title(TITLE,pdf)
     pdf.image(r"Resources\Plots\volume_cp.png", x=5, y=pdf.get_y(), w=200)
+    pdf.image(r"Resources\Plots\volume_dealer.png", x=5, y=150, w=200)
     
 
     # Add Page
