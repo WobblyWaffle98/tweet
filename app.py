@@ -412,12 +412,12 @@ with tab2:
                 fig_stacked_bar = px.bar(df_grouped, x='Month', y=['Value', 'Unexecuted'],
                                         title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
                                         labels={'Value': 'Executed', 'Unexecuted': 'Unexecuted'},
-                                        barmode='stack')
+                                        barmode='stack',color_discrete_sequence=color_discrete_sequence)
             else:
                 # Create a stacked bar chart with custom colors
                 fig_stacked_bar = px.bar(df_grouped, x='Month', y=['Value'], color='Portfolio',
                                         title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
-                                        barmode='stack')
+                                        barmode='stack',color_discrete_sequence=color_discrete_sequence)
 
             # Set the color for "Unexecuted" bars to red
             fig_stacked_bar.update_traces(marker_color='red', selector=dict(name='Unexecuted'))
