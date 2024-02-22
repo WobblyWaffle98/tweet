@@ -1012,12 +1012,13 @@ with tab4:
     pdf.add_page()
 
     # Add lettterhead and title
-    create_letterhead(pdf, WIDTH)
+    
     create_title(TITLE, pdf)
     pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
     
     pdf.image(r"Resources\Plots\volume_executed.png", x=5, y=150, w=200)
     pdf.image(r"Resources\Plots\Execution_table.png", x=5, y=230, w=200)
+    create_letterhead(pdf, WIDTH)
     
     pdf.ln(100)
     
