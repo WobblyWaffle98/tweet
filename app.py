@@ -419,7 +419,7 @@ with tab2:
                 name=counterparty,
                 marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
                 text=df_counterparty['Value'],  # Use y-values as text
-                textposition='outside',
+                textposition='inside',
                 texttemplate='%{text:.2s}',
             ))
 
