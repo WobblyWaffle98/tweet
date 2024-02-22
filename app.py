@@ -326,11 +326,24 @@ with tab2:
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
-       
-
+    
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
+        
+        # Add text inside the bars
+        for data in fig1.data:
+            fig1.add_trace(
+                go.Bar(
+                    x=data.x,
+                    y=data.y,
+                    text=data.y,  # Use y-values as text
+                    textposition='inside',
+                    texttemplate='%{text:.2s}',
+                    showlegend=False,  # Prevent duplicating legend entries
+                    marker=dict(color=data.marker.color)  # Maintain original bar colors
+                )
+            )
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
@@ -342,6 +355,7 @@ with tab2:
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
             f.write(image)
+
         
 
     with col1:
