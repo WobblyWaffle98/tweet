@@ -419,10 +419,17 @@ with tab2:
                                         title='Executed vs. Unexecuted Volumes by Portfolio for Each Month',
                                         barmode='stack',color_discrete_sequence=color_discrete_sequence)
 
+
+            # Rename x and y labels
+            fig_stacked_bar.update_yaxes(title_text='Quantity, bbls')
+            # Add values at the top of each bar
+            fig_stacked_bar.update_traces(texttemplate='%{y}', textposition='inside')
             # Set the color for "Unexecuted" bars to red
             fig_stacked_bar.update_traces(marker_color='red', selector=dict(name='Unexecuted'))
 
             st.plotly_chart(fig_stacked_bar, use_container_width=True, height=200)
+
+            
         else:
             st.write("No data available for visualization.")
 
