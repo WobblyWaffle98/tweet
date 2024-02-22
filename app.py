@@ -934,9 +934,9 @@ with tab4:
     create_letterhead(pdf, WIDTH)
     create_title(TITLE, pdf)
     pdf.image(r"Resources\Plots\Brent.png", x=5, y=pdf.get_y(), w=200)
-    pdf.ln(100)
-    pdf.image(r"Resources\Plots\Execution_table.png", x=5, y=100, w=200)
     
+    pdf.image(r"Resources\Plots\Execution_table.png", x=5, y=200, w=200)
+    pdf.ln(100)
     
 
 
