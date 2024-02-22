@@ -321,26 +321,32 @@ with tab2:
         # Add a column for custom colors based on DealerID
         filtered_df['Color'] = filtered_df['FO.DealerID'].map(dealer_colors)
 
-        # Calculate the sum of quantities for each dealer and counterparty
-        sum_quantities = filtered_df.groupby(['FO.Acronym', 'FO.DealerID'])['FO.Position_Quantity'].sum().reset_index()
-
         # Create the histogram with custom colors
         fig1 = go.Figure()
 
-        # Add bars for each counterparty
-        for counterparty in sum_quantities['FO.Acronym'].unique():
-            counterparty_data = sum_quantities[sum_quantities['FO.Acronym'] == counterparty]
-            for dealer_id, quantity, color in zip(counterparty_data['FO.DealerID'], counterparty_data['FO.Position_Quantity'], counterparty_data['Color']):
-                fig1.add_trace(
-                    go.Bar(
-                        x=[counterparty],  # Use counterparty as x value
-                        y=[quantity],  # Use sum of quantities as y value
-                        text=[f"{dealer_id}: {quantity:.2f}"],  # Use sum of quantities as text
-                        textposition='inside',
-                        name=dealer_id,
-                        marker_color=color  # Use predefined color for each dealer within the counterparty
-                    )
+        # Calculate the sum of quantities for each dealer
+        sum_quantities = filtered_df.groupby('FO.DealerID')['FO.Position_Quantity'].sum()
+
+        # Add text inside the bars with the sum of quantities
+        for dealer_id in dealer_colors:
+            dealer_data = filtered_df[filtered_df['FO.DealerID'] == dealer_id]
+            fig1.add_trace(
+                go.Bar(
+                    x=dealer_data['FO.Acronym'],
+                    y=dealer_data['FO.Position_Quantity'],
+                    text=sum_quantities[dealer_id],  # Use sum of quantities as text
+                    textposition='inside',
+                    texttemplate='%{text:.2s}',
+                    name=dealer_id,
+                    marker_color=dealer_colors[dealer_id]  # Maintain original bar colors
                 )
+            )
+
+        # Update layout to stack bars
+        fig1.update_layout(barmode='stack')
+
+        # Update the x-axis category order
+        fig1.update_xaxes(categoryorder='total descending')
 
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
@@ -356,6 +362,28 @@ with tab2:
         image_path = r"Resources\Plots\volume_dealer.png"
         with open(image_path, "wb") as f:
             f.write(image)
+
+        
+
+    with col1:
+        df_refresh = pd.read_excel("PCHP Data.xlsx", "Sheet_Info")
+
+        # Assuming 'Date_today' contains a single date value in the DataFrame
+        date_today_value = df_refresh['Date_today'].iloc[0]
+
+        # Convert to a datetime object and format it
+        date_limit = datetime.strptime(str(date_today_value), "%Y-%m-%d %H:%M:%S.%f")
+
+        # Format the datetime object to the desired format
+        formatted_date_limit = date_limit.strftime("%d %b %Y")
+
+        df_limits = pd.read_excel("PCHP Data.xlsx","Credit_Limit_data")
+        st.subheader("Available Limits")
+        df_limits = pd.read_excel("PCHP Data.xlsx","Credit_Limit_data")
+        fig_limits = px.bar(df_limits, x='Counterparty', y=['Available Volume Limit', 'Volume Utilised'],
+                title='Volume Limit and Volume Utilized by Counterparty as of '+ formatted_date_limit)
+        #fig_limits .update_xaxes(categoryorder='total descending')
+        st.plotly_chart(fig_limits, use_container_width=True, height=200)       
 
     with col2:
         st.subheader("Monthly Volume Executed")
