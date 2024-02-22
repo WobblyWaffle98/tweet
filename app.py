@@ -326,6 +326,7 @@ with tab2:
 
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
+        fig1.update_xaxes(labelalias=dict(Sat="Citibank Bhd", Sun="Sunday"))
 
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
