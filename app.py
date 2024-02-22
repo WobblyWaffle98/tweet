@@ -411,10 +411,23 @@ with tab2:
                             title='Quantity Comparison by Counterparty for Each Month',
                             labels={'Value': 'Quantity'})
         
-        # Format the text inside the bars
-        text_formatted = df_grouped['Value'].apply(lambda x: f"{x:.2f}")  # Formats to two decimal places
-        fig_quantity.update_traces(text=text_formatted, textposition='inside')
-        
+        for i, counterparty in enumerate(df_grouped['FO.CounterpartyName'].unique()):
+            df_counterparty = df_grouped[df_grouped['FO.CounterpartyName'] == counterparty]
+            fig_quantity.add_trace(go.Bar(
+                x=df_counterparty['Month'],
+                y=df_counterparty['Value'],
+                name=counterparty,
+                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
+                text=df_counterparty['Value'],  # Use y-values as text
+                textposition='outside',
+                texttemplate='%{text:.2s}',
+            ))
+
+        fig_quantity.update_layout(
+            title='Quantity Comparison by Counterparty for Each Month',
+            xaxis_title='Month',
+            yaxis_title='Quantity'
+        )
         
         
         st.plotly_chart(fig_quantity, use_container_width=True, height=200)
