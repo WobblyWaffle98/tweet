@@ -435,7 +435,7 @@ with tab2:
             st.plotly_chart(fig_stacked_bar, use_container_width=True, height=200)
 
              # Convert the chart to an image
-            image = fig_stacked_bar.to_image(format="png", width=1200, height=600, scale=2.0)
+            image = fig_stacked_bar.to_image(format="png", width=1200, height=350, scale=2.0)
 
             # Save the image to a file
             image_path = r"Resources\Plots\volume_executed.png"
