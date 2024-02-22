@@ -331,15 +331,6 @@ with tab2:
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
 
-        # Calculate text values for each dealer in each counterparty
-        text_values = filtered_df[['FO.Acronym', 'FO.DealerID', 'FO.Position_Quantity']].copy()
-
-        # Convert 'FO.Position_Quantity' to string for display purposes
-        text_values['text'] = text_values['FO.Position_Quantity'].astype(str)
-
-        # Update the histogram trace to include text values for each dealer
-        fig1.update_traces(text=text_values['text'], textposition='inside', texttemplate='%{text:.2s}', insidetextanchor='start')
-
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
 
