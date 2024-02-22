@@ -334,7 +334,6 @@ with tab2:
         # Add values at the top of each bar
         fig1.update_traces(texttemplate='%{y}', textposition='inside')
 
-
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
 
