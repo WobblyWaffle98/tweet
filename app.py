@@ -1002,9 +1002,11 @@ with tab4:
     #add page_2
     pdf.add_page()
     create_letterhead(pdf,WIDTH)
+    pdf.ln(10)
     write_to_pdf(pdf, 'Monthly Volume Executed per Counterparty')
+    pdf.ln(10)
     pdf.image(r"Resources\Plots\volume_cp.png", x=5, y=pdf.get_y(), w=200)
-    pdf.ln(150)
+    pdf.ln(10)
     write_to_pdf(pdf, 'Total Volume Executed per Counterparty')
     pdf.image(r"Resources\Plots\volume_dealer.png", x=5, y=150, w=200)
     
