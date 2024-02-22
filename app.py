@@ -334,19 +334,6 @@ with tab2:
         # Add values at the top of each bar
         fig1.update_traces(texttemplate='%{y}', textposition='inside')
 
-          # Calculate the total 'FO.Position_Quantity' for each 'FO.Acronym'
-        total_quantity = filtered_df.groupby('FO.Acronym')['FO.Position_Quantity'].sum().reset_index()
-
-        # Add annotations for total 'FO.Position_Quantity' on top of each column
-        for i, acronym in enumerate(total_quantity['FO.Acronym']):
-            fig1.update_traces(
-                x=acronym,
-                y=total_quantity.iloc[i]['FO.Position_Quantity'],
-                text=str(total_quantity.iloc[i]['FO.Position_Quantity']),
-                font=dict(color='black', size=12),
-                showarrow=False,
-                yshift=10
-            )
 
         # Show the Plotly figure in Streamlit
         st.plotly_chart(fig1, use_container_width=True, height=200)
