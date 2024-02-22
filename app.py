@@ -313,6 +313,10 @@ with tab2:
         fig1.update_xaxes(categoryorder='total descending')
         st.plotly_chart(fig1, use_container_width=True, height=200)
 
+        # Update color sequence
+        
+        fig1.update_traces(marker=dict(color=color_discrete_sequence))
+
         # Convert the chart to an image
         image = fig1.to_image(format="png", width=1200, height=550, scale=2.0)
 
