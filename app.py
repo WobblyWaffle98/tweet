@@ -327,17 +327,6 @@ with tab2:
         # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
 
-        # Change specific x-axis tick labels
-        x_tick_labels = {
-            'CIMB Bank Bhd': 'CIMB',
-            'Macquarie Bank Ltd': 'MACQ',
-            # Add more mappings as needed
-        }
-
-        for tick in fig1.layout.xaxis.ticks:
-            if tick.text in x_tick_labels:
-                tick.text = x_tick_labels[tick.text]
-
         # Rename x and y labels
         fig1.update_xaxes(title_text='Counterparties')
         fig1.update_yaxes(title_text='Quantity, bbls')
