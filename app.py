@@ -1158,13 +1158,13 @@ with tab4:
     
     pdf.image(r"Resources\Plots\Outstanding_FO.StrikePrice1.png", x=5, y=pdf.get_y(), w=100)
     pdf.image(r"Resources\Plots\Outstanding_FO.StrikePrice2.png", x=105, y=pdf.get_y(), w=100)
-    pdf.image(r"Resources\Plots\upper_put_options.png", x=5, y=100, w=100)
+    pdf.image(r"Resources\Plots\upper_put_options.png", x=5, y=130, w=100)
 
-    pdf.image(r"Resources\Plots\lower_put_options.png", x=105, y=100, w=100)
+    pdf.image(r"Resources\Plots\lower_put_options.png", x=105, y=130, w=100)
 
-    pdf.image(r"Resources\Plots\volume_active_1.png", x=5, y=150, w=100)
+    pdf.image(r"Resources\Plots\volume_active_1.png", x=5, y=180, w=100)
 
-    pdf.image(r"Resources\Plots\volume_active_2.png", x=105, y=150, w=100) 
+    pdf.image(r"Resources\Plots\volume_active_2.png", x=105, y=180, w=100) 
     
 
     # Generate the PDF and provide download link
