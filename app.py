@@ -913,7 +913,24 @@ with tab3:
     unique_items = formatted_df['FO.EndFixDate'].unique()
 
     # Define the color sequence
-    color_discrete_sequence_2 = ['#00B1A9', '#763F98', '#FF6F61', '#3B5998', '#FFD166', '#06D6A0', '#118AB2', '#073B4C', '#A05195', '#2EC4B6', '#FFB703','#8A9B0F', '#CD5334', '#6A0572', '#FF8C42', '#00A896']
+    color_discrete_sequence_2 = [
+        "#763f98",  # Original color - R118 G063 B152
+        "#20419a",  # Original color - R032 G065 B154
+        "#fdb924",
+        "#00b1a9",  # Original color - R253 G185 B036
+        "#bfd730",  # Original color - R191 G215 B048
+        "#007b73",  # Shade of R000 G177 B169
+        "#3a1d4c",  # Shade of R118 G063 B152
+        "#101e4a",  # Shade of R032 G065 B154
+        "#cc8b1c",  # Shade of R253 G185 B036
+        "#8e9c1b",  # Shade of R191 G215 B048
+        "#b62e20",  # Background color - Similar theme color
+        "#ff6f61",  # Additional color 1
+        "#4ecdc4",  # Additional color 2
+        "#ff9f51",  # Additional color 3
+        "#2ab7ca"   # Additional color 4
+    ]
+
 
     # Create a dictionary with unique items as keys and corresponding colors
     Month_colors = dict(zip(unique_items, color_discrete_sequence_2[:len(unique_items)]))
