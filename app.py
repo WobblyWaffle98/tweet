@@ -536,6 +536,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                     xaxis_tickangle=-45,
                     barmode='stack',
                     legend=dict(title=strike_price_name, x=1, y=1)
+                    ,color_discrete_sequence=color_discrete_sequence
                 )
                 # Add values at the top of each bar
                 fig.update_traces(texttemplate='%{y}', textposition='inside')
