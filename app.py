@@ -937,12 +937,22 @@ with tab3:
     
     # Calculate Volume executed versus Counterparty
     st.subheader("Current Option Value per Counterparty")
+
+    # Create a checkbox for toggling colorization
+    use_color = st.checkbox('Use Color', value=True)
     
     # Add a column for custom colors based on DealerID
     formatted_df['Color_2'] = formatted_df['FO.EndFixDate'].map(Month_colors)
 
-    # Create the histogram with custom colors
-    fig1 = px.histogram(formatted_df, x='FO.Acronym', y= ['Current Value'], color='FO.EndFixDate', title='Value of Active Volumes', color_discrete_map=Month_colors)
+    if use_color:
+        # If the checkbox is checked, apply colorization
+        fig = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', color='FO.EndFixDate', 
+                           title='Value of Active Volumes by expiration date', 
+                           color_discrete_map=Month_colors)
+    else:
+        # If the checkbox is unchecked, don't apply colorization
+        fig = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', 
+                           title='Value of Active Volumes by expiration date')
 
     # Update the x-axis category order
     fig1.update_xaxes(categoryorder='total descending')
