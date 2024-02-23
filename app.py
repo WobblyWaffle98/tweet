@@ -527,13 +527,13 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 # Plotting the data using Plotly
                 fig = go.Figure()
 
-                
+
 
                 # Add bar trace for each Strike Price
                 for i, strike_price in enumerate(transposed_data.columns):
                     fig.add_trace(go.Bar(
                         x=transposed_data.index,
-                        y=transposed_data[col],
+                        y=transposed_data[strike_price],
                         name=f'Strike Price {strike_price}',
                         marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
                         text=transposed_data[strike_price],  # Use y-values as text
