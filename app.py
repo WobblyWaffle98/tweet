@@ -528,7 +528,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 fig = go.Figure()
 
                 for col in transposed_data.columns:
-                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col, color_discrete_sequence=color_discrete_sequence))
+                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col, marker_color=color_discrete_sequence))
 
                 fig.update_layout(
                     xaxis_title="Months",
