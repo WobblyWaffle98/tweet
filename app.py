@@ -909,23 +909,23 @@ with tab3:
 
 
 
-    # Custom colors for each dealer
-    Month = {
-        'HZ': '#00b1a9',
-        'DS': '#763f98',
-        'EG': "#20419a",
-        'AS': "#fdb924",
-        # Add more dealers and colors as needed
-    }    
+    # Extract unique items from 'FO.EndFixDate'
+    unique_items = formatted_df['FO.EndFixDate'].unique()
+
+    # Define the color sequence
+    color_discrete_sequence_2 = ['#00B1A9', '#763F98', '#FF6F61', '#3B5998', '#FFD166', '#06D6A0', '#118AB2', '#073B4C', '#A05195', '#2EC4B6', '#FFB703','#8A9B0F', '#CD5334', '#6A0572', '#FF8C42', '#00A896']
+
+    # Create a dictionary with unique items as keys and corresponding colors
+    Month_colors = dict(zip(unique_items, color_discrete_sequence_2[:len(unique_items)]))
     
     # Calculate Volume executed versus Counterparty
     st.subheader("Current Option Value per Counterparty")
     
     # Add a column for custom colors based on DealerID
-    formatted_df['Color_2'] = formatted_df['FO.EndFixDate'].map(dealer_colors)
+    formatted_df['Color_2'] = formatted_df['FO.EndFixDate'].map(Month_colors)
 
     # Create the histogram with custom colors
-    fig1 = px.histogram(formatted_df, x='FO.Acronym', y= ['Value at inception','Current Value'], color='FO.EndFixDate', title='Value of Active Volumes', color_discrete_map=dealer_colors)
+    fig1 = px.histogram(formatted_df, x='FO.Acronym', y= ['Current Value'], color='FO.EndFixDate', title='Value of Active Volumes', color_discrete_map=Month_colors)
 
     # Update the x-axis category order
     fig1.update_xaxes(categoryorder='total descending')
