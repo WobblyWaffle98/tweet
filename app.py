@@ -939,7 +939,7 @@ with tab3:
     st.subheader("Current Option Value per Counterparty")
 
     # Create a checkbox for toggling colorization
-    use_color = st.checkbox('Use Color', value=True)
+    use_color = st.checkbox('Separation by Expiration Date', value=True)
     
     # Add a column for custom colors based on DealerID
     formatted_df['Color_2'] = formatted_df['FO.EndFixDate'].map(Month_colors)
@@ -952,7 +952,7 @@ with tab3:
     else:
         # If the checkbox is unchecked, don't apply colorization
         fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', 
-                           title='Value of Active Volumes by expiration date')
+                           title='Value of Active Volumes by expiration date',color_discrete_map=color_discrete_sequence)
 
     # Update the x-axis category order
     fig1.update_xaxes(categoryorder='total descending')
