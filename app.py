@@ -544,6 +544,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 fig.update_layout(
                     xaxis_title="Months",
                     yaxis_title="Total Barrels Executed, bbls",
+                    title='Total Volume according to Strike Levels',
                     xaxis_tickangle=-45,
                     barmode='stack',
                     legend=dict(title=strike_price_name, x=1, y=1),
