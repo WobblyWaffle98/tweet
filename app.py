@@ -909,15 +909,44 @@ with tab3:
 
 
 
-    fig_value = px.bar(formatted_df, x='FO.Acronym', y=['Current Value'],
-                title='test',color_discrete_sequence=color_discrete_sequence)
-        
+    # Custom colors for each dealer
+    Month = {
+        'HZ': '#00b1a9',
+        'DS': '#763f98',
+        'EG': "#20419a",
+        'AS': "#fdb924",
+        # Add more dealers and colors as needed
+    }    
+    
+    # Calculate Volume executed versus Counterparty
+    st.subheader("Current Option Value per Counterparty")
+    
+    # Add a column for custom colors based on DealerID
+    formatted_df['Color_2'] = formatted_df['FO.DealerID'].map(dealer_colors)
+
+    # Create the histogram with custom colors
+    fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', color='FO.DealerID', title='Value of Active Volumes', color_discrete_map=dealer_colors)
+
+    # Update the x-axis category order
+    fig1.update_xaxes(categoryorder='total descending')
+
     # Rename x and y labels
-    fig_value.update_yaxes(title_text='Value, USD')
+    fig1.update_xaxes(title_text='Counterparties')
+    fig1.update_yaxes(title_text='Value, USD')
+
     # Add values at the top of each bar
-    fig_value.update_traces(texttemplate='%{y}', textposition='inside')
-    #fig_limits .update_xaxes(categoryorder='total descending')
-    st.plotly_chart(fig_value, use_container_width=True, height=200) 
+    fig1.update_traces(texttemplate='%{y}', textposition='inside')
+
+    # Show the Plotly figure in Streamlit
+    st.plotly_chart(fig1, use_container_width=True, height=200)
+
+    # Convert the chart to an image
+    image = fig1.to_image(format="png", width=1200, height=600, scale=2.0)
+
+    # Save the image to a file
+    image_path = r"Resources\Plots\volume_active.png"
+    with open(image_path, "wb") as f:
+        f.write(image)
 
 
 
