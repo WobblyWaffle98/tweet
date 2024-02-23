@@ -952,7 +952,7 @@ with tab3:
     else:
         # If the checkbox is unchecked, don't apply colorization
         fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', 
-                           title='Value of Active Volumes by expiration date',color_discrete_sequence=['indianred'])
+                           title='Value of Active Volumes by expiration date',color_discrete_sequence=["#00b1a9"])
 
     # Update the x-axis category order
     fig1.update_xaxes(categoryorder='total descending')
