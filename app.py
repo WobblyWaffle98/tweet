@@ -697,6 +697,9 @@ with tab3:
         fig.update_layout(xaxis_title='Tenure',
                         yaxis_title='Value, USD',
                         title='Valuation of Upper Put Options',legend=dict(x=0, y=1.0))
+        
+        # Add values at the top of each bar
+        fig.update_traces(texttemplate='%{y}', textposition='inside')
 
         # Show plot
         st.plotly_chart(fig)
