@@ -525,10 +525,10 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 transposed_data = grouped_data.transpose()
 
                 # Plotting the data using Plotly
-                fig = go.Figure(color_discrete_sequence=color_discrete_sequence)
+                fig = go.Figure()
 
                 for col in transposed_data.columns:
-                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col))
+                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col, color_discrete_sequence=color_discrete_sequence))
 
                 fig.update_layout(
                     xaxis_title="Months",
