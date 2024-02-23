@@ -922,10 +922,10 @@ with tab3:
     st.subheader("Current Option Value per Counterparty")
     
     # Add a column for custom colors based on DealerID
-    formatted_df['Color_2'] = formatted_df['FO.DealerID'].map(dealer_colors)
+    formatted_df['Color_2'] = formatted_df['FO.EndFixDate'].map(dealer_colors)
 
     # Create the histogram with custom colors
-    fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', color='FO.EndFixDate', title='Value of Active Volumes', color_discrete_map=dealer_colors)
+    fig1 = px.histogram(formatted_df, x='FO.Acronym', y= ['Value at inception','Current Value'], color='FO.EndFixDate', title='Value of Active Volumes', color_discrete_map=dealer_colors)
 
     # Update the x-axis category order
     fig1.update_xaxes(categoryorder='total descending')
