@@ -528,15 +528,15 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 fig = go.Figure()
 
                 for col in transposed_data.columns:
-                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col))
+                    fig.add_trace(go.Bar(x=transposed_data.index, y=transposed_data[col], name=col,color_discrete_sequence=color_discrete_sequence))
 
                 fig.update_layout(
                     xaxis_title="Months",
                     yaxis_title="Total Barrels Executed",
                     xaxis_tickangle=-45,
                     barmode='stack',
-                    legend=dict(title=strike_price_name, x=1, y=1)
-                    ,color_discrete_sequence=color_discrete_sequence
+                    legend=dict(title=strike_price_name, x=1, y=1),
+                    
                 )
                 # Add values at the top of each bar
                 fig.update_traces(texttemplate='%{y}', textposition='inside')
