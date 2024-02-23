@@ -550,7 +550,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                     
                 )
                 # Add values at the top of each bar
-                fig.update_traces(texttemplate='%{y}', textposition='inside')
+                fig.update_traces(texttemplate='%{y:.2s}', textposition='inside')
 
                 # Display the Plotly chart
                 st.plotly_chart(fig, use_container_width=True)
