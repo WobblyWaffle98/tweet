@@ -338,7 +338,7 @@ with tab2:
         st.plotly_chart(fig1, use_container_width=True, height=200)
 
         # Convert the chart to an image
-        image = fig1.to_image(format="png", width=1200, height=600, scale=2.0)
+        image = fig1.to_image(format="png", width=1200, height=550, scale=2.0)
 
         # Save the image to a file
         image_path = r"Resources\Plots\volume_dealer.png"
@@ -713,7 +713,7 @@ with tab3:
                         title='Valuation of Upper Put Options',legend=dict(x=0, y=1.0))
         
         # Add values at the top of each bar
-        fig.update_traces(texttemplate='%{y}', textposition='inside')
+        fig.update_traces(texttemplate='%{y:.2s}', textposition='outside')
 
         # Show plot
         st.plotly_chart(fig)
@@ -958,7 +958,7 @@ with tab3:
         fig1.update_yaxes(title_text='Value, USD')
 
         # Add values at the top of each bar
-        fig1.update_traces(texttemplate='%{y}', textposition='inside')
+        fig1.update_traces(texttemplate='%{y:.2s}', textposition='inside')
 
         # Convert the chart to an image
         image = fig1.to_image(format="png", width=1200, height=600, scale=2.0)
@@ -980,7 +980,7 @@ with tab3:
         fig1.update_yaxes(title_text='Value, USD')
 
         # Add values at the top of each bar
-        fig1.update_traces(texttemplate='%{y}', textposition='inside')
+        fig1.update_traces(texttemplate='%{y:.2s}', textposition='inside')
 
         # Convert the chart to an image
         image = fig1.to_image(format="png", width=1200, height=600, scale=2.0)
