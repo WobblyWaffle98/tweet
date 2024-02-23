@@ -543,7 +543,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
 
                 fig.update_layout(
                     xaxis_title="Months",
-                    yaxis_title="Total Barrels Executed",
+                    yaxis_title="Total Barrels Executed, bbls",
                     xaxis_tickangle=-45,
                     barmode='stack',
                     legend=dict(title=strike_price_name, x=1, y=1),
@@ -601,10 +601,10 @@ with tab3:
     # Check if "Total Outstanding" column is not empty
     if not filtered_df['Total Outstanding'].empty:
         with col1:
-            st.subheader("Upper Strike Level")
+            st.subheader("Active Upper Strike Level")
             visualize_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
         with col2:
-            st.subheader("Lower Strike Level")
+            st.subheader("Active Lower Strike Level")
             visualize_data(st, filtered_df, 'FO.StrikePrice2', 'FO.StrikePrice2')
     else:
         st.write("No data available for visualization.")
@@ -906,6 +906,21 @@ with tab3:
     # Add a new column 'Total' containing the sum of values in the month columns
     formatted_df['Current Value'] = formatted_df[month_columns_value].sum(axis=1)
     columns_to_display.append('Current Value')
+
+
+
+    fig_value = px.bar(formatted_df, x='FO.Acronym', y=['Current Value'],
+                title='test',color_discrete_sequence=color_discrete_sequence)
+        
+    # Rename x and y labels
+    fig_value.update_yaxes(title_text='Value, USD')
+    # Add values at the top of each bar
+    fig_value.update_traces(texttemplate='%{y}', textposition='inside')
+    #fig_limits .update_xaxes(categoryorder='total descending')
+    st.plotly_chart(fig_value, use_container_width=True, height=200) 
+
+
+
 
     # Now the values in formatted_df_option are updated according to the conditions specified
     with st.container():
