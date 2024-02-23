@@ -537,6 +537,8 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                     barmode='stack',
                     legend=dict(title=strike_price_name, x=1, y=1)
                 )
+                # Add values at the top of each bar
+                fig.update_traces(texttemplate='%{y}', textposition='inside')
 
                 # Display the Plotly chart
                 st.plotly_chart(fig, use_container_width=True)
