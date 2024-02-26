@@ -824,12 +824,16 @@ with tab3:
 
     # Define a function to determine the option structure
     def get_option_structure(row):
-        if pd.notna(row['FO.StrikePrice1']) and pd.isna(row['FO.StrikePrice2']):
+        if row['FO.StrikePrice1'] != 0 and row['FO.StrikePrice2'] == 0:
             return 'Vanilla Options'
-        elif pd.notna(row['FO.StrikePrice1']) and pd.notna(row['FO.StrikePrice2']):
+        elif row['FO.StrikePrice1'] != 0 and row['FO.StrikePrice2'] != 0:
             return 'Put Spreads Options'
         else:
             return 'Unknown'
+
+    # Add a new column 'OptionStructure'
+    formatted_df['OptionStructure'] = formatted_df.apply(lambda row: get_option_structure(row), axis=1)
+
 
     # Add a new column 'OptionStructure'
     formatted_df['OptionStructure'] = formatted_df.apply(lambda row: get_option_structure(row), axis=1)
