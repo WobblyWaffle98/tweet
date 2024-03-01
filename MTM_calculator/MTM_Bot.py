@@ -116,6 +116,7 @@ def main():
         period = [316,278]
         delivery = [223, 298]
         barrel_1 = [267, 431]
+        premium_1 = [760, 431]
         calc_time = [400 ,236]
         Upper_strike = [551, 430]
         calc = [98, 140]
@@ -144,6 +145,7 @@ def main():
         period = [330 ,310]
         delivery = [280, 340]
         barrel_1 = [280, 470]
+        premium_1 = [780, 470]
         calc_time = [361 ,250]
         Upper_strike = [570, 470]
         calc = [82, 181]
@@ -238,10 +240,14 @@ def main():
             else:
                 time.sleep(2)
 
-            pyautogui.moveTo(prem, duration = 0.5)
+            pyautogui.moveTo(premium_1, duration = 0.5)  
+            pyautogui.click()
+            pyautogui.hotkey('ctrl', 'c')
+
+            """pyautogui.moveTo(prem, duration = 0.5)
             pyautogui.click(button='right')
             pyautogui.moveTo(prem_copy, duration = 0.5)
-            pyautogui.click()
+            pyautogui.click()"""
 
             Premium[i][1] = checklevel (pyperclip.paste())
             take_screenshot( str(Month)+'_'+str(k))
