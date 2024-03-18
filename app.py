@@ -561,13 +561,11 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
 
                 # Display the Plotly chart
                 st.plotly_chart(fig, use_container_width=True)
-                # Create a new DataFrame with custom tick labels as index
-                custom_index_df = grouped_data.copy()  # Make a copy to keep the original DataFrame intact
-                custom_index_df.index = custom_tick_labels
+                
 
                 # Display table
                 st.subheader("Volume Breakdown")
-                st.dataframe(custom_index_df,height=150, use_container_width = True)
+                st.dataframe(grouped_data,height=150, use_container_width = True)
 
                 # Convert the chart to an image
                 image = fig.to_image(format="png", width=1200, height=600, scale=2.0)
