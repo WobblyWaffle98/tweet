@@ -161,7 +161,7 @@ with tab1:
     # Specify columns to display in the table
     columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
-                        'January Outstanding','E.February','E.March','E.April','E.May','E.June','E.July',
+                        'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
     
     
@@ -513,7 +513,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
             filtered_df = filtered_df[filtered_df['Total Outstanding'] != 0]
 
             # Extract relevant columns for visualization
-            months = ['January Outstanding', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+            months = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
             monthly_data = filtered_df[months]
 
             # Group by strike_price_column and sum the data
@@ -590,7 +590,7 @@ def strike_data(st, filtered_df, strike_price_column, strike_price_name):
             filtered_df = filtered_df[filtered_df['Total Outstanding'] != 0]
 
             # Extract relevant columns for visualization
-            months = ['January Outstanding', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+            months = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
             monthly_data = filtered_df[months]
 
             # Group by strike_price_column and sum the data
@@ -841,7 +841,7 @@ with tab3:
     # Specify columns to display in the table
     columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
-                        'January Outstanding','E.February','E.March','E.April','E.May','E.June','E.July',
+                        'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
 
     # Reset index to start from 1
@@ -874,15 +874,13 @@ with tab3:
     # Now the values in formatted_df are updated according to the conditions specified
 
     # List of columns related to the months
-    month_columns = ['January Outstanding', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October','E.November', 'E.December']
+    month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October','E.November', 'E.December']
     month_columns_value = ['January,USD', 'February,USD', 'March,USD', 'April,USD', 'May,USD', 'June,USD', 'July,USD', 'August,USD', 'September,USD', 'October,USD', 'November,USD', 'December,USD']
-
-
     
 
     # Assuming 'formatted_df' is your DataFrame
     formatted_df.rename(columns={
-        'January Outstanding': 'January,USD',
+        'E.January': 'January,USD',
         'E.February': 'February,USD',
         'E.March': 'March,USD',
         'E.April': 'April,USD',
@@ -907,7 +905,7 @@ with tab3:
     columns_to_display.extend(month_columns_value)
 
     formatted_df.rename(columns={
-        'January Outstanding': 'January,bbls',
+        'E.January': 'January,bbls',
         'E.February': 'February,bbls',
         'E.March': 'March,bbls',
         'E.April': 'April,bbls',
