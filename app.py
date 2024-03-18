@@ -730,6 +730,11 @@ with tab3:
         # Add values at the top of each bar
         fig.update_traces(texttemplate='%{y:.2s}', textposition='outside')
 
+        custom_tick_labels = ['January Outstanding', 'February Outstanding', 'March Outstanding', 'April Outstanding', 'May Outstanding', 'June Outstanding', 'July Outstanding', 'August Outstanding', 'September Outstanding', 'October Outstanding', 'November Outstanding', 'December Outstanding']
+
+        # Set custom tick values and labels for the x-axis
+        fig.update_xaxes(tickvals=df_Upper_transposed.index, ticktext=custom_tick_labels)
+
         # Show plot
         st.plotly_chart(fig)
         # Print DataFrame
@@ -775,6 +780,11 @@ with tab3:
         fig2.update_layout(xaxis_title='Tenure',
                         yaxis_title='Value, USD',
                         title='Valuation of Lower Put Options',legend=dict(x=0, y=1.0))
+        
+        custom_tick_labels = ['January Outstanding', 'February Outstanding', 'March Outstanding', 'April Outstanding', 'May Outstanding', 'June Outstanding', 'July Outstanding', 'August Outstanding', 'September Outstanding', 'October Outstanding', 'November Outstanding', 'December Outstanding']
+
+        # Set custom tick values and labels for the x-axis
+        fig.update_xaxes(tickvals=df_Lower_transposed.index, ticktext=custom_tick_labels)
 
         # Show plot
         st.plotly_chart(fig2)
