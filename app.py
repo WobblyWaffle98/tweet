@@ -784,7 +784,7 @@ with tab3:
         custom_tick_labels = ['January Outstanding', 'February Outstanding', 'March Outstanding', 'April Outstanding', 'May Outstanding', 'June Outstanding', 'July Outstanding', 'August Outstanding', 'September Outstanding', 'October Outstanding', 'November Outstanding', 'December Outstanding']
 
         # Set custom tick values and labels for the x-axis
-        fig.update_xaxes(tickvals=df_Lower_transposed.index, ticktext=custom_tick_labels)
+        fig2.update_xaxes(tickvals=df_Lower_transposed.index, ticktext=custom_tick_labels)
 
         # Show plot
         st.plotly_chart(fig2)
