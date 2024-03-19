@@ -159,7 +159,7 @@ with tab1:
         formatted_df[column] = formatted_df[column].dt.strftime('%d %b %Y')
 
     # Specify columns to display in the table
-    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.NetPremium', 'FO.Position_Quantity',
+    columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.PremiumStrike1','FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
                         'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
