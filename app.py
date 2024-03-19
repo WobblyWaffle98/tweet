@@ -850,7 +850,7 @@ with tab3:
     formatted_df['OptionStructure'] = formatted_df.apply(lambda row: get_option_structure(row), axis=1)
 
     # Specify columns to display in the table
-    columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.StrikePremium1', 'FO.StrikePremium2','FO.NetPremium', 'FO.Position_Quantity',
+    columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.PremiumStrike1', 'FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
                         'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
