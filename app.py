@@ -543,7 +543,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
 
                 fig.update_layout(
                     xaxis_title="Months",
-                    yaxis_title="Total Barrels Executed, bbls",
+                    yaxis_title="Total Outstanding Barrels, bbls",
                     title='Total Volume according to Strike Levels',
                     xaxis_tickangle=-45,
                     barmode='stack',
@@ -553,7 +553,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 # Add values at the top of each bar
                 fig.update_traces(texttemplate='%{y:.2s}', textposition='inside')
 
-                custom_tick_labels = ['January Outstanding', 'February Outstanding', 'March Outstanding', 'April Outstanding', 'May Outstanding', 'June Outstanding', 'July Outstanding', 'August Outstanding', 'September Outstanding', 'October Outstanding', 'November Outstanding', 'December Outstanding']
+                custom_tick_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
                 # Set custom tick values and labels for the x-axis
                 fig.update_xaxes(tickvals=transposed_data.index, ticktext=custom_tick_labels)
@@ -850,7 +850,7 @@ with tab3:
     formatted_df['OptionStructure'] = formatted_df.apply(lambda row: get_option_structure(row), axis=1)
 
     # Specify columns to display in the table
-    columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.NetPremium', 'FO.Position_Quantity',
+    columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.StrikePremium1', 'FO.StrikePremium2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
                         'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
                         'E.August','E.September','E.November','E.December']
@@ -1189,8 +1189,6 @@ with tab4:
     pdf.image(r"Resources\Plots\lower_put_options.png", x=105, y=130, w=100)
 
     pdf.image(r"Resources\Plots\volume_active_1.png", x=5, y=180, w=100)
-
-    pdf.image(r"Resources\Plots\volume_active_2.png", x=105, y=180, w=100) 
     
 
     # Generate the PDF and provide download link
