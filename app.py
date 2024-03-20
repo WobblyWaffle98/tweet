@@ -956,13 +956,15 @@ with tab3:
                 non_zero_headers.append(col)
         
         # Join the list of non-zero header names into a single string and append it to the header_names list
-        header_names.append(', '.join(non_zero_headers))
+        header_names.append(', '.join(non_zero_headers) if non_zero_headers else "None")
 
     # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
     formatted_df['Market Upper Premium'] = header_names
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium')
+
+
 
 
     # Add a new column 'Total' containing the sum of values in the month columns
