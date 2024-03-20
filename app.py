@@ -940,8 +940,24 @@ with tab3:
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
     columns_to_display.append('Value at inception')
 
-    # Create an empty list to store header names containing non-zero values
+        # Create an empty list to store header names containing non-zero values
     header_names = []
+
+    # Mapping dictionary for renaming column headers
+    column_mapping = {
+        'January,USD': 'O.January',
+        'February,USD': 'O.February',
+        'March,USD': 'O.March',
+        'April,USD': 'O.April',
+        'May,USD': 'O.May',
+        'June,USD': 'O.June',
+        'July,USD': 'O.July',
+        'August,USD': 'O.August',
+        'September,USD': 'O.September',
+        'October,USD': 'O.October',
+        'November,USD': 'O.November',
+        'December,USD': 'O.December'
+    }
 
     # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
@@ -952,8 +968,8 @@ with tab3:
         for col in month_columns_value:
             # Check if there's any value in the current column
             if not pd.isnull(row[col]):
-                # If there's a value, add the column name to the list
-                non_zero_headers.append(col)
+                # If there's a value, add the original column name to the list
+                non_zero_headers.append(column_mapping[col])
         
         # Join the list of non-zero header names into a single string and append it to the header_names list
         header_names.append(', '.join(non_zero_headers) if non_zero_headers else "None")
@@ -963,6 +979,7 @@ with tab3:
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium')
+
 
 
 
