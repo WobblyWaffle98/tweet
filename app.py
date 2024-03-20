@@ -619,10 +619,10 @@ with tab3:
     # Check if "Total Outstanding" column is not empty
     if not filtered_df['Total Outstanding'].empty:
         with col1:
-            st.subheader("Active Upper Strike Level")
+            st.subheader("Outstanding Upper Strike Level")
             visualize_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
         with col2:
-            st.subheader("Active Lower Strike Level")
+            st.subheader("Outstanding Lower Strike Level")
             visualize_data(st, filtered_df, 'FO.StrikePrice2', 'FO.StrikePrice2')
     else:
         st.write("No data available for visualization.")
@@ -940,6 +940,10 @@ with tab3:
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
     columns_to_display.append('Value at inception')
 
+    # Add a new column 'Current Upper Strike Premium' containing the sum of values in the month columns
+    formatted_df['Current Upper Strike Premium'] = 0
+    columns_to_display.append('Current Upper Strike Premium')
+
     # Add a new column 'Total' containing the sum of values in the month columns
     formatted_df['Current Value'] = formatted_df[month_columns_value].sum(axis=1)
     columns_to_display.append('Current Value')
@@ -984,7 +988,7 @@ with tab3:
     if use_color:
         # If the checkbox is checked, apply colorization
         fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', color='FO.EndFixDate', 
-                           title='Value of Active Volumes by expiration date', 
+                           title='Value of Outstanding Volumes by expiration date', 
                            color_discrete_map=Month_colors)
         
          # Update the x-axis category order
@@ -1007,7 +1011,7 @@ with tab3:
     else:
         # If the checkbox is unchecked, don't apply colorization
         fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', 
-                           title='Total Value of Active Volume',color_discrete_sequence=["#00b1a9"])
+                           title='Total Value of Outstanding Volume',color_discrete_sequence=["#00b1a9"])
         
          # Update the x-axis category order
         fig1.update_xaxes(categoryorder='total descending')
