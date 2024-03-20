@@ -984,6 +984,8 @@ with tab3:
 
                 # Extract values from selected_row for columns present in selected_values
                 selected_row_values = selected_row[selected_values]
+
+                st.write(selected_row_values)
                 
 
     
