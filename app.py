@@ -940,9 +940,30 @@ with tab3:
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
     columns_to_display.append('Value at inception')
 
-    # Add a new column 'Current Upper Strike Premium' containing the sum of values in the month columns
-    formatted_df['Current Upper Strike Premium'] = 0
-    columns_to_display.append('Current Upper Strike Premium')
+    # Create an empty list to store header names containing non-zero values
+    header_names = []
+
+    # Iterate through each row in the DataFrame
+    for index, row in formatted_df.iterrows():
+        # Initialize a list to store header names containing non-zero values for the current row
+        non_zero_headers = []
+        
+        # Iterate through each column in the row
+        for col in month_columns:
+            # Check if the value in the current column is non-zero
+            if row[col] != 0:
+                # If non-zero, add the column name to the list
+                non_zero_headers.append(col)
+        
+        # Join the list of non-zero header names into a single string and append it to the header_names list
+        header_names.append(', '.join(non_zero_headers))
+
+    # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
+    formatted_df['Market Upper Premium'] = header_names
+
+    # Append the name 'Market Upper Premium' to columns_to_display
+    columns_to_display.append('Market Upper Premium')
+
 
     # Add a new column 'Total' containing the sum of values in the month columns
     formatted_df['Current Value'] = formatted_df[month_columns_value].sum(axis=1)
