@@ -939,43 +939,54 @@ with tab3:
     # Assuming you have a DataFrame named 'data' containing your dataset
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
     columns_to_display.append('Value at inception')
-    
-    # Create an empty list to store values for the 'Market Upper Premium' column
-    market_upper_premium_values = []
+
+    # Create an empty list to store header names containing non-zero values
+    header_names = []
+
+    # Mapping dictionary for renaming column headers
+    column_mapping = {
+        'January,USD': 'O.January',
+        'February,USD': 'O.February',
+        'March,USD': 'O.March',
+        'April,USD': 'O.April',
+        'May,USD': 'O.May',
+        'June,USD': 'O.June',
+        'July,USD': 'O.July',
+        'August,USD': 'O.August',
+        'September,USD': 'O.September',
+        'October,USD': 'O.October',
+        'November,USD': 'O.November',
+        'December,USD': 'O.December'
+    }
 
     # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
-        # Extract 'FO.StrikePrice1' value from the current row
+        # Initialize a list to store values for the current row
+        selected_values = []
+        
+        # Extract FO.StrikePrice1 from formatted_df
         strike_price = row['FO.StrikePrice1']
         
-        # Find the row in df_selected_sheet where 'Strike Price' matches the 'FO.StrikePrice1'
+        # Find the corresponding row in df_selected_sheet based on Strike Price
         selected_row = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
         
         # If a corresponding row is found
         if not selected_row.empty:
-            # Initialize a list to store values for the specified months
-            selected_month_values = []
-            
-            # Iterate through the month columns in the original DataFrame
-            for month_col in formatted_df.columns:
-                # Check if the column is a month column
-                if month_col.startswith('O.') and month_col != 'FO.StrikePrice1':
-                    # Extract the value for the specified month from the selected row
-                    value = selected_row[month_col].iloc[0]  # Get the value from the first row (assuming there's only one matching row)
-                    selected_month_values.append(value)
-            
-            # Append the values for the specified months to market_upper_premium_values
-            market_upper_premium_values.append(selected_month_values)
-        else:
-            # If no corresponding row is found, append NaN values for the specified months
-            market_upper_premium_values.append([np.nan] * (len(formatted_df.columns) - 1))  # Subtract 1 for 'FO.StrikePrice1'
+            # Iterate through each column in month_columns_value
+            for col in month_columns_value:
+                # Check if there's any value in the current column
+                if not pd.isnull(row[col]):
+                    # If there's a value, add the corresponding column name from column_mapping to the list
+                    selected_values.append(column_mapping[col])
+        
+        # Join the list of selected values into a single string and append it to the header_names list
+        header_names.append(', '.join(selected_values) if selected_values else "None")
 
-    # Assign the values to the 'Market Upper Premium' column in the DataFrame
-    formatted_df['Market Upper Premium'] = market_upper_premium_values
+    # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
+    formatted_df['Market Upper Premium'] = header_names
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium')
-
 
 
 
