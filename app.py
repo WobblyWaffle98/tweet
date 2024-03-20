@@ -984,11 +984,9 @@ with tab3:
 
                 # Extract values from selected_row for columns present in selected_values
                 selected_row_values = selected_row[selected_values]
+                header_names.append(selected_row_value)
+                
 
-
-    
-        # Join the list of selected values into a single string and append it to the header_names list
-        header_names.append(', '.join(selected_row_value) if selected_row_value else "None")
 
     # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
     formatted_df['Market Upper Premium'] = header_names
