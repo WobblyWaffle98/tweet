@@ -1043,7 +1043,7 @@ with tab3:
 
 
     # Add a new column 'Total' containing the sum of values in the month columns
-    formatted_df['Current Value'] = formatted_df[month_columns_value].sum(axis=1)
+    formatted_df['Current Value, USD'] = formatted_df[month_columns_value].sum(axis=1)
     columns_to_display.append('Current Value, USD')
 
 
