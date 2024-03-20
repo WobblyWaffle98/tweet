@@ -940,7 +940,7 @@ with tab3:
     formatted_df['Value at inception'] = formatted_df['FO.NetPremium'] * formatted_df['FO.Position_Quantity']
     columns_to_display.append('Value at inception')
 
-        # Create an empty list to store header names containing non-zero values
+    # Create an empty list to store header names containing non-zero values
     header_names = []
 
     # Mapping dictionary for renaming column headers
@@ -961,26 +961,32 @@ with tab3:
 
     # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
-        # Initialize a list to store header names containing non-zero values for the current row
-        non_zero_headers = []
+        # Initialize a list to store values for the current row
+        selected_values = []
         
-        # Iterate through each column in the row
-        for col in month_columns_value:
-            # Check if there's any value in the current column
-            if not pd.isnull(row[col]):
-                # If there's a value, add the original column name to the list
-                non_zero_headers.append(column_mapping[col])
+        # Extract FO.StrikePrice1 from formatted_df
+        strike_price = row['FO.StrikePrice1']
         
-        # Join the list of non-zero header names into a single string and append it to the header_names list
-        header_names.append(', '.join(non_zero_headers) if non_zero_headers else "None")
+        # Find the corresponding row in df_selected_sheet based on Strike Price
+        selected_row = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
+        
+        # If a corresponding row is found
+        if not selected_row.empty:
+            # Iterate through each column in month_columns_value
+            for col in month_columns_value:
+                # Check if there's any value in the current column
+                if not pd.isnull(row[col]):
+                    # If there's a value, add the corresponding column name from column_mapping to the list
+                    selected_values.append(column_mapping[col])
+        
+        # Join the list of selected values into a single string and append it to the header_names list
+        header_names.append(', '.join(selected_values) if selected_values else "None")
 
     # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
     formatted_df['Market Upper Premium'] = header_names
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium')
-
-
 
 
 
