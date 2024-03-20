@@ -985,7 +985,7 @@ with tab3:
                 selected_row_value = selected_row[selected_values]
                     
                 # Join the list of selected values into a single string and append it to the header_names list
-                header_names.append(', '.join(selected_values) if selected_values else "None")
+                header_names.append(', '.join(selected_row_value) if selected_row_value else "None")
 
         else:
             header_names.append("None")
