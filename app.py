@@ -970,6 +970,7 @@ with tab3:
         # Find the corresponding row(s) in df_selected_sheet based on Strike Price
         selected_rows = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
 
+        selected_row_value = []
         # If corresponding rows are found
         if not selected_rows.empty:
             # Iterate through each row in selected_rows
@@ -982,14 +983,12 @@ with tab3:
                         selected_values.append(column_mapping[col])
 
                 # Extract values from selected_row for columns present in selected_values
-                selected_row_value = selected_row[selected_values]
-                    
-                # Join the list of selected values into a single string and append it to the header_names list
-                header_names.append(', '.join(selected_row_value) if selected_row_value else "None")
+                selected_row_values = selected_row[selected_values]
 
-        else:
-            header_names.append("None")
 
+    
+        # Join the list of selected values into a single string and append it to the header_names list
+        header_names.append(', '.join(selected_row_value) if selected_row_value else "None")
 
     # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
     formatted_df['Market Upper Premium'] = header_names
