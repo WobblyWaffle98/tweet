@@ -970,6 +970,8 @@ with tab3:
         # Find the corresponding row in df_selected_sheet based on Strike Price
         selected_row = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
         
+        st.write(selected_row)
+
         # If a corresponding row is found
         if not selected_row.empty:
             # Iterate through each column in month_columns_value
@@ -979,7 +981,6 @@ with tab3:
                     # If there's a value, add the corresponding column name from column_mapping to the list
                     selected_values.append(column_mapping[col])
 
-        st.write(selected_values)
         
         # Join the list of selected values into a single string and append it to the header_names list
         header_names.append(', '.join(selected_values) if selected_values else "None")
