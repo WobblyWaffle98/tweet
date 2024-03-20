@@ -1085,7 +1085,7 @@ with tab3:
 
     if use_color:
         # If the checkbox is checked, apply colorization
-        fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', color='FO.EndFixDate', 
+        fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value, USD', color='FO.EndFixDate', 
                            title='Value of Outstanding Volumes by expiration date', 
                            color_discrete_map=Month_colors)
         
@@ -1108,7 +1108,7 @@ with tab3:
             f.write(image)
     else:
         # If the checkbox is unchecked, don't apply colorization
-        fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value', 
+        fig1 = px.histogram(formatted_df, x='FO.Acronym', y='Current Value, USD', 
                            title='Total Value of Outstanding Volume',color_discrete_sequence=["#00b1a9"])
         
          # Update the x-axis category order
