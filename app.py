@@ -959,7 +959,7 @@ with tab3:
         'December,USD': 'O.December'
     }
 
-   # Iterate through each row in the DataFrame
+    # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
         # Initialize a list to store values for the current row
         selected_values = []
@@ -984,16 +984,15 @@ with tab3:
 
                 # Extract values from selected_row for columns present in selected_values
                 selected_row_values = selected_row[selected_values]
-
-                st.write(selected_row_values)
                 
+                # Calculate the average if multiple values exist
+                avg_selected_row_values = np.mean(selected_row_values)
+                
+                # Append the average to selected_row_value
+                selected_row_value.append(avg_selected_row_values)
 
-    
-        # Join the list of selected values into a single string and append it to the header_names list
-        header_names.append(', '.join(selected_row_value) if selected_row_value else "None")
-
-    # Assign the header_names list to the 'Market Upper Premium' column in the DataFrame
-    formatted_df['Market Upper Premium'] = header_names
+        # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
+        formatted_df.at[index, 'Market Upper Premium'] = np.mean(selected_row_value)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium')
