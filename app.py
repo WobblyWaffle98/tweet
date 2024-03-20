@@ -161,8 +161,8 @@ with tab1:
     # Specify columns to display in the table
     columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.PremiumStrike1','FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
-                        'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
-                        'E.August','E.September','E.November','E.December']
+                        'O.January','O.February','O.March','O.April','O.May','O.June','O.July',
+                        'O.August','O.September','O.November','O.December']
     
     
 
@@ -513,7 +513,8 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
             filtered_df = filtered_df[filtered_df['Total Outstanding'] != 0]
 
             # Extract relevant columns for visualization
-            months = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+            months = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
+                        'O.August','O.September','O.November','O.December']
             monthly_data = filtered_df[months]
 
             # Group by strike_price_column and sum the data
@@ -597,7 +598,8 @@ def strike_data(st, filtered_df, strike_price_column, strike_price_name):
             filtered_df = filtered_df[filtered_df['Total Outstanding'] != 0]
 
             # Extract relevant columns for visualization
-            months = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+            months = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
+                        'O.August','O.September','O.November','O.December']
             monthly_data = filtered_df[months]
 
             # Group by strike_price_column and sum the data
@@ -852,8 +854,8 @@ with tab3:
     # Specify columns to display in the table
     columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.PremiumStrike1', 'FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
-                        'E.January','E.February','E.March','E.April','E.May','E.June','E.July',
-                        'E.August','E.September','E.November','E.December']
+                        'O.January','O.February','O.March','O.April','O.May','O.June','O.July',
+                        'O.August','O.September','O.November','O.December']
 
     # Reset index to start from 1
     formatted_df = formatted_df.reset_index(drop=True)
@@ -863,7 +865,7 @@ with tab3:
     formatted_df_option_E = formatted_df.copy()
 
     # Find common months between both DataFrames
-    common_months = [col for col in formatted_df_option.columns if col.startswith('E.')]
+    common_months = [col for col in formatted_df_option.columns if col.startswith('O.')]
 
     # Iterate over each row in formatted_df
     for index, row in formatted_df.iterrows():
@@ -885,24 +887,25 @@ with tab3:
     # Now the values in formatted_df are updated according to the conditions specified
 
     # List of columns related to the months
-    month_columns = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October','E.November', 'E.December']
+    month_columns = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
+                        'O.August','O.September','O.November','O.December']
     month_columns_value = ['January,USD', 'February,USD', 'March,USD', 'April,USD', 'May,USD', 'June,USD', 'July,USD', 'August,USD', 'September,USD', 'October,USD', 'November,USD', 'December,USD']
     
 
     # Assuming 'formatted_df' is your DataFrame
     formatted_df.rename(columns={
-        'E.January': 'January,USD',
-        'E.February': 'February,USD',
-        'E.March': 'March,USD',
-        'E.April': 'April,USD',
-        'E.May': 'May,USD',
-        'E.June': 'June,USD',
-        'E.July': 'July,USD',
-        'E.August': 'August,USD',
-        'E.September': 'September,USD',
-        'E.October': 'October,USD',
-        'E.November': 'November,USD',
-        'E.December': 'December,USD'
+        'O.January': 'January,USD',
+        'O.February': 'February,USD',
+        'O.March': 'March,USD',
+        'O.April': 'April,USD',
+        'O.May': 'May,USD',
+        'O.June': 'June,USD',
+        'O.July': 'July,USD',
+        'O.August': 'August,USD',
+        'O.September': 'September,USD',
+        'O.October': 'October,USD',
+        'O.November': 'November,USD',
+        'O.December': 'December,USD'
     }, inplace=True)
 
 
@@ -916,21 +919,21 @@ with tab3:
     columns_to_display.extend(month_columns_value)
 
     formatted_df.rename(columns={
-        'E.January': 'January,bbls',
-        'E.February': 'February,bbls',
-        'E.March': 'March,bbls',
-        'E.April': 'April,bbls',
-        'E.May': 'May,bbls',
-        'E.June': 'June,bbls',
-        'E.July': 'July,bbls',
-        'E.August': 'August,bbls',
-        'E.September': 'September,bbls',
-        'E.October': 'October,bbls',
-        'E.November': 'November,bbls',
-        'E.December': 'December,bbls'
+        'O.January': 'January,bbls',
+        'O.February': 'February,bbls',
+        'O.March': 'March,bbls',
+        'O.April': 'April,bbls',
+        'O.May': 'May,bbls',
+        'O.June': 'June,bbls',
+        'O.July': 'July,bbls',
+        'O.August': 'August,bbls',
+        'O.September': 'September,bbls',
+        'O.October': 'October,bbls',
+        'O.November': 'November,bbls',
+        'O.December': 'December,bbls'
     }, inplace=True)
 
-    columns_to_display = [f"{column.split('.')[1]},bbls" if column.startswith('E.') else column for column in columns_to_display]
+    columns_to_display = [f"{column.split('.')[1]},bbls" if column.startswith('O.') else column for column in columns_to_display]
 
 
     # Assuming you have a DataFrame named 'data' containing your dataset

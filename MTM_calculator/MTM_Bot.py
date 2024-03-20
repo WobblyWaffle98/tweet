@@ -32,7 +32,7 @@ sheet_name = 'Overall_data'
 df = pd.read_excel(excel_file, sheet_name=sheet_name)
 
 # Specify the headers
-headers = ['E.January', 'E.February', 'E.March', 'E.April', 'E.May', 'E.June', 'E.July', 'E.August', 'E.September', 'E.October', 'E.November', 'E.December']
+headers = ['O.January', 'O.February', 'O.March', 'O.April', 'O.May', 'O.June', 'O.July', 'O.August', 'O.September', 'O.October', 'O.November', 'O.December']
 
 # Initialize a list to store columns with values
 columns_with_values = []
