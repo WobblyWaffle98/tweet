@@ -949,7 +949,7 @@ with tab3:
         non_zero_headers = []
         
         # Iterate through each column in the row
-        for col in month_columns:
+        for col in month_columns_value:
             # Check if the value in the current column is non-zero
             if row[col] != 0:
                 # If non-zero, add the column name to the list
