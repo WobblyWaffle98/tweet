@@ -978,6 +978,8 @@ with tab3:
                 if not pd.isnull(row[col]):
                     # If there's a value, add the corresponding column name from column_mapping to the list
                     selected_values.append(column_mapping[col])
+
+        print(selected_values)
         
         # Join the list of selected values into a single string and append it to the header_names list
         header_names.append(', '.join(selected_values) if selected_values else "None")
