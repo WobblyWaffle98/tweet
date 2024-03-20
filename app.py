@@ -959,7 +959,7 @@ with tab3:
         'December,USD': 'O.December'
     }
 
-    # Iterate through each row in the DataFrame
+   # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
         # Initialize a list to store values for the current row
         selected_values = []
@@ -967,21 +967,30 @@ with tab3:
         # Extract FO.StrikePrice1 from formatted_df
         strike_price = row['FO.StrikePrice1']
         
-        # Find the corresponding row in df_selected_sheet based on Strike Price
-        selected_row = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
+        # Find the corresponding row(s) in df_selected_sheet based on Strike Price
+        selected_rows = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
         
-        st.write(selected_row)
+        # If corresponding rows are found
+        if not selected_rows.empty:
+            # Iterate through each row in selected_rows
+            for selected_index, selected_row in selected_rows.iterrows():
+                # Iterate through each column in month_columns_value
+                for col in month_columns_value:
+                    # Check if there's any value in the current column
+                    if not pd.isnull(row[col]):
+                        # If there's a value, add the corresponding column name from column_mapping to the list
+                        selected_values.append(column_mapping[col])
 
-        # If a corresponding row is found
-        if not selected_row.empty:
-            # Iterate through each column in month_columns_value
-            for col in month_columns_value:
-                # Check if there's any value in the current column
-                if not pd.isnull(row[col]):
-                    # If there's a value, add the corresponding column name from column_mapping to the list
-                    selected_values.append(column_mapping[col])
+                # Extract values from selected_row for columns present in selected_values
+                selected_row_values = selected_row[selected_values]
+                
+                # Now selected_row_values contains the values from selected_row for the columns present in selected_values
+                # You can do whatever you want with these values
+                
+                # For example, you can print them
+                st.write(selected_row_values)
 
-        
+    
         # Join the list of selected values into a single string and append it to the header_names list
         header_names.append(', '.join(selected_values) if selected_values else "None")
 
