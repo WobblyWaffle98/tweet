@@ -950,9 +950,9 @@ with tab3:
         
         # Iterate through each column in the row
         for col in month_columns_value:
-            # Check if the value in the current column is non-zero
-            if row[col] != 0:
-                # If non-zero, add the column name to the list
+            # Check if there's any value in the current column
+            if not pd.isnull(row[col]):
+                # If there's a value, add the column name to the list
                 non_zero_headers.append(col)
         
         # Join the list of non-zero header names into a single string and append it to the header_names list
@@ -963,6 +963,7 @@ with tab3:
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium')
+
 
 
 
