@@ -1035,12 +1035,16 @@ with tab3:
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Lower Premium, USD')
 
+    # Assuming you have a DataFrame named 'data' containing your dataset
+    formatted_df['Market Net Premium, USD'] = formatted_df['Market Upper Premium, USD'] * formatted_df['Market Lower Premium, USD']
+    columns_to_display.append('Market Net Premium, USD')
+
 
 
 
     # Add a new column 'Total' containing the sum of values in the month columns
     formatted_df['Current Value'] = formatted_df[month_columns_value].sum(axis=1)
-    columns_to_display.append('Current Value')
+    columns_to_display.append('Current Value, USD')
 
 
 
