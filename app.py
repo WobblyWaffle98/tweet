@@ -265,11 +265,11 @@ with tab2:
 
     # Apply accounting format to the numeric columns
     grouped_data['Total_Position_Quantity'] = grouped_data['Total_Position_Quantity'].apply('{:,.0f}'.format)
-    grouped_data['Total_Cost'] = grouped_data['Total_Cost'].apply('USD{:,.2f}'.format)
-    grouped_data['Weighted_Avg_Net_Premium'] = grouped_data['Weighted_Avg_Net_Premium'].apply('USD{:,.2f}'.format)
-    grouped_data['Weighted_Avg_Protection'] = grouped_data['Weighted_Avg_Protection'].apply('USD{:,.2f}'.format)
-    grouped_data['Weighted_Avg_Lower_Protection'] = grouped_data['Weighted_Avg_Lower_Protection'].apply('USD{:,.2f}'.format)
-    grouped_data['Weighted_Avg_Protection_Band'] = grouped_data['Weighted_Avg_Protection_Band'].apply('USD{:,.2f}'.format)
+    grouped_data['Total_Cost'] = grouped_data['Total_Cost'].apply('USD {:,.2f}'.format)
+    grouped_data['Weighted_Avg_Net_Premium'] = grouped_data['Weighted_Avg_Net_Premium'].apply('USD {:,.2f}'.format)
+    grouped_data['Weighted_Avg_Protection'] = grouped_data['Weighted_Avg_Protection'].apply('USD {:,.2f}'.format)
+    grouped_data['Weighted_Avg_Lower_Protection'] = grouped_data['Weighted_Avg_Lower_Protection'].apply('USD {:,.2f}'.format)
+    grouped_data['Weighted_Avg_Protection_Band'] = grouped_data['Weighted_Avg_Protection_Band'].apply('USD {:,.2f}'.format)
 
    # Define the color for all cells
     grey_color = '#f6f6f6'
