@@ -706,60 +706,60 @@ with tab3:
 
         # Display the results
         col3, col4 = st.columns((2))
+    
+        with col3:
+            
+            # Transpose the DataFrame to have months as columns and Strike Price as index
+            df_Upper_transposed = df_Upper.set_index('Strike Price').transpose()
+
+            # Create a Plotly bar chart
+            fig = go.Figure()
+
+            # Add bar trace for each Strike Price
+            for i, strike_price in enumerate(df_Upper_transposed.columns):
+                fig.add_trace(go.Bar(
+                    x=df_Upper_transposed.index,
+                    y=df_Upper_transposed[strike_price],
+                    name=f'Strike Price {strike_price}',
+                    marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
+                    text=df_Upper_transposed[strike_price],  # Use y-values as text
+                    textposition='outside',
+                    texttemplate='%{text:.2s}',
+                ))
+
+            # Update layout with axis labels and title
+            fig.update_layout(xaxis_title='Tenure',
+                            yaxis_title='Value, USD',
+                            title='Valuation of Upper Put Options',legend=dict(x=0, y=1.0))
+            
+            # Add values at the top of each bar
+            fig.update_traces(texttemplate='%{y:.2s}', textposition='outside')
+
+            custom_tick_labels = ['January Outstanding', 'February Outstanding', 'March Outstanding', 'April Outstanding', 'May Outstanding', 'June Outstanding', 'July Outstanding', 'August Outstanding', 'September Outstanding', 'October Outstanding', 'November Outstanding', 'December Outstanding']
+
+
+            # Show plot
+            st.plotly_chart(fig)
+            # Print DataFrame
+            st.dataframe(df_Upper, height=150, use_container_width=True, hide_index=True)
+
+            # Convert the chart to an image
+            image = fig.to_image(format="png", width=1200, height=550, scale=2.0)
+
+            # Save the image to a file
+            image_path = r"Resources\Plots\upper_put_options.png"
+            with open(image_path, "wb") as f:
+                f.write(image)
+
+            # Set up the file name
+            filename = "plotly_chart.png"
+            # Convert the image to bytes
+            image_bytes_2 = io.BytesIO(image)
+            # Trigger the download
+            st.download_button(label="Download Image", data=image_bytes_2, file_name=filename, mime="image/png", key="download_button_1")
+
     else:
         st.write('no data')
-    
-    with col3:
-        
-        # Transpose the DataFrame to have months as columns and Strike Price as index
-        df_Upper_transposed = df_Upper.set_index('Strike Price').transpose()
-
-        # Create a Plotly bar chart
-        fig = go.Figure()
-
-        # Add bar trace for each Strike Price
-        for i, strike_price in enumerate(df_Upper_transposed.columns):
-            fig.add_trace(go.Bar(
-                x=df_Upper_transposed.index,
-                y=df_Upper_transposed[strike_price],
-                name=f'Strike Price {strike_price}',
-                marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
-                text=df_Upper_transposed[strike_price],  # Use y-values as text
-                textposition='outside',
-                texttemplate='%{text:.2s}',
-            ))
-
-        # Update layout with axis labels and title
-        fig.update_layout(xaxis_title='Tenure',
-                        yaxis_title='Value, USD',
-                        title='Valuation of Upper Put Options',legend=dict(x=0, y=1.0))
-        
-        # Add values at the top of each bar
-        fig.update_traces(texttemplate='%{y:.2s}', textposition='outside')
-
-        custom_tick_labels = ['January Outstanding', 'February Outstanding', 'March Outstanding', 'April Outstanding', 'May Outstanding', 'June Outstanding', 'July Outstanding', 'August Outstanding', 'September Outstanding', 'October Outstanding', 'November Outstanding', 'December Outstanding']
-
-
-        # Show plot
-        st.plotly_chart(fig)
-        # Print DataFrame
-        st.dataframe(df_Upper, height=150, use_container_width=True, hide_index=True)
-
-        # Convert the chart to an image
-        image = fig.to_image(format="png", width=1200, height=550, scale=2.0)
-
-        # Save the image to a file
-        image_path = r"Resources\Plots\upper_put_options.png"
-        with open(image_path, "wb") as f:
-            f.write(image)
-
-        # Set up the file name
-        filename = "plotly_chart.png"
-        # Convert the image to bytes
-        image_bytes_2 = io.BytesIO(image)
-        # Trigger the download
-        st.download_button(label="Download Image", data=image_bytes_2, file_name=filename, mime="image/png", key="download_button_1")
-
         
     with col4:
         # Transpose the DataFrame to have months as columns and Strike Price as index
