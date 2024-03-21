@@ -289,6 +289,7 @@ with tab2:
         )
     )])
 
+    st.write(grouped_data)
     # Add margin-bottom to reduce space after the table
     st.plotly_chart(fig3, use_container_width=True)
 
