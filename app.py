@@ -290,7 +290,7 @@ with tab2:
     )])
 
     # Display the grouped data with center-aligned values using st.dataframe()
-    st.dataframe(grouped_data, use_container_width=True, hide_index=True).style.set_properties(**{'text-align': 'center'})
+    st.dataframe(grouped_data, use_container_width=True, hide_index=True)
     
     #st.plotly_chart(fig3, use_container_width=True)
 
