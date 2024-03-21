@@ -554,10 +554,10 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                 # Add values at the top of each bar
                 fig.update_traces(texttemplate='%{y:.2s}', textposition='inside')
 
-                custom_tick_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                #custom_tick_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
                 # Set custom tick values and labels for the x-axis
-                fig.update_xaxes(tickvals=transposed_data.index, ticktext=custom_tick_labels)
+                #fig.update_xaxes(tickvals=transposed_data.index, ticktext=custom_tick_labels)
 
 
                 # Display the Plotly chart
