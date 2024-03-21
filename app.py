@@ -271,6 +271,19 @@ with tab2:
     grouped_data['Weighted_Avg_Lower_Protection'] = grouped_data['Weighted_Avg_Lower_Protection'].apply('USD {:,.2f}'.format)
     grouped_data['Weighted_Avg_Protection_Band'] = grouped_data['Weighted_Avg_Protection_Band'].apply('USD {:,.2f}'.format)
 
+    # Grouped data with more descriptive column names
+    grouped_data = grouped_data.rename(columns={
+        'Portfolio': 'Portfolio',
+        'Total_Position_Quantity': 'Total Position Quantity',
+        'Trade_Numbers': 'Number of Trades',
+        'Total_Cost': 'Total Cost',
+        'Weighted_Avg_Net_Premium': 'Weighted Average Net Premium',
+        'Weighted_Avg_Protection': 'Weighted Average Protection',
+        'Weighted_Avg_Lower_Protection': 'Weighted Average Lower Protection',
+        'Weighted_Avg_Protection_Band': 'Weighted Average Protection Band'
+    })
+
+
    # Define the color for all cells
     grey_color = '#f6f6f6'
 
