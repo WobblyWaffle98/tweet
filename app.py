@@ -687,25 +687,27 @@ with tab3:
 
         return result_df
 
-    
-    # Process the first set of data
-    df1 = df_selected_sheet
-    df2 = strike_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
-    df2.reset_index(inplace=True)
-    for column in df2.columns:
-        df2[column] = df2[column].astype(int)
-    df_Upper = process_dataframe(df1, df2)
+    if selected_portfolios == ['FY2024 PCHP']:
+        # Process the first set of data
+        df1 = df_selected_sheet
+        df2 = strike_data(st, filtered_df, 'FO.StrikePrice1', 'FO.StrikePrice1')
+        df2.reset_index(inplace=True)
+        for column in df2.columns:
+            df2[column] = df2[column].astype(int)
+        df_Upper = process_dataframe(df1, df2)
 
-    # Process the second set of data
-    df1 = df_selected_sheet
-    df3 = strike_data(st, filtered_df, 'FO.StrikePrice2', 'FO.StrikePrice2')
-    df3.reset_index(inplace=True)
-    for column in df3.columns:
-        df3[column] = df3[column].astype(int)
-    df_Lower = process_dataframe(df1, df3)
+        # Process the second set of data
+        df1 = df_selected_sheet
+        df3 = strike_data(st, filtered_df, 'FO.StrikePrice2', 'FO.StrikePrice2')
+        df3.reset_index(inplace=True)
+        for column in df3.columns:
+            df3[column] = df3[column].astype(int)
+        df_Lower = process_dataframe(df1, df3)
 
-    # Display the results
-    col3, col4 = st.columns((2))
+        # Display the results
+        col3, col4 = st.columns((2))
+    else:
+        st.write('no data')
     
     with col3:
         
