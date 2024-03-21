@@ -459,12 +459,12 @@ with tab2:
         df_melted['Month'] = pd.Categorical(df_melted['Month'], categories=month_order, ordered=True)
 
         # Group by Portfolio, Month, and Value type (Quantity or Premium) and sum the values
-        df_grouped = df_melted.groupby(['FO.CounterpartyName', 'Month']).sum().reset_index()
+        df_grouped = df_melted.groupby(['FO.Acronym', 'Month']).sum().reset_index()
 
         fig_quantity = go.Figure()
 
-        for i, counterparty in enumerate(df_grouped['FO.CounterpartyName'].unique()):
-            df_counterparty = df_grouped[df_grouped['FO.CounterpartyName'] == counterparty]
+        for i, counterparty in enumerate(df_grouped['FO.Acronym'].unique()):
+            df_counterparty = df_grouped[df_grouped['FO.Acronym'] == counterparty]
             fig_quantity.add_trace(go.Bar(
                 x=df_counterparty['Month'],
                 y=df_counterparty['Value'],
