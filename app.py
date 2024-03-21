@@ -263,8 +263,7 @@ with tab2:
     Weighted_Avg_Protection_Band=pd.NamedAgg(column='Weighted_Avg_Protection_Band', aggfunc='sum')
     ).reset_index()
 
-    # Apply text-align: center to all cells in the DataFrame
-    grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
+    
 
     # Apply accounting format to the numeric columns
     grouped_data['Total_Position_Quantity'] = grouped_data['Total_Position_Quantity'].apply('{:,.0f}'.format)
@@ -275,6 +274,8 @@ with tab2:
     grouped_data['Weighted_Avg_Protection_Band'] = grouped_data['Weighted_Avg_Protection_Band'].apply('USD {:,.2f}'.format)
 
 
+    # Apply text-align: center to all cells in the DataFrame
+    grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
 
 
    # Define the color for all cells
