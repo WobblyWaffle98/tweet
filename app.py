@@ -982,8 +982,13 @@ with tab3:
                         # If there's a value, add the corresponding column name from column_mapping to the list
                         selected_values.append(column_mapping[col])
 
-                # Extract values from selected_row for columns present in selected_values
-                selected_row_values = selected_row[selected_values]
+                try:
+                    # Extract values from selected_row for columns present in selected_values
+                    selected_row_values = selected_row[selected_values]
+                except KeyError:
+                    # Handle the KeyError here
+                    selected_row_values = 0  # Or any other default value you want to return
+
                 
                # Check if selected_row_values is not empty
                 if len(selected_row_values) > 0:
