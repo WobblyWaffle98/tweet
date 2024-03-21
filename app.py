@@ -292,6 +292,7 @@ with tab2:
         )
     )])
 
+    grouped_data.style.set_properties(**{'text-align': 'center'}).set_table_styles([{'selector': 'th', 'props': [('text-align', 'center')]}])
         # Grouped data with more descriptive column names
     grouped_data = grouped_data.rename(columns={
         'Portfolio': 'Portfolio',
