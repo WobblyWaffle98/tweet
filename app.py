@@ -987,7 +987,7 @@ with tab3:
                     selected_row_values = selected_row[selected_values]
                 except KeyError:
                     # Handle the KeyError here
-                    selected_row_values = [0]  # Or any other default value you want to return
+                    selected_row_values = 0  # Or any other default value you want to return
 
                 
                # Check if selected_row_values is not empty
