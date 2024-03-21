@@ -274,8 +274,7 @@ with tab2:
     grouped_data['Weighted_Avg_Protection_Band'] = grouped_data['Weighted_Avg_Protection_Band'].apply('USD {:,.2f}'.format)
 
 
-    # Apply text-align: center to all cells in the DataFrame
-    grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
+    
 
 
    # Define the color for all cells
@@ -296,6 +295,8 @@ with tab2:
         )
     )])
 
+    # Apply text-align: center to all cells in the DataFrame
+    grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
     
 
         # Grouped data with more descriptive column names
