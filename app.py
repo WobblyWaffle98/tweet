@@ -959,31 +959,43 @@ with tab3:
         'December,USD': 'O.December'
     }
 
+    # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
-        selected_values = []  # Initialize an empty list for storing values for the current row
+        # Initialize a list to store values for the current row
+        selected_values = []
         
-        strike_price = row['FO.StrikePrice1']  # Extract FO.StrikePrice1 from formatted_df
+        # Extract FO.StrikePrice1 from formatted_df
+        strike_price = row['FO.StrikePrice1']
         
-        selected_rows = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]  # Filter rows from df_selected_sheet based on Strike Price
-        
-        selected_row_value = []  # Initialize an empty list for storing calculated average values
-        
-        if not selected_rows.empty:  # Check if any corresponding rows are found in df_selected_sheet
-            for selected_index, selected_row in selected_rows.iterrows():  # Iterate through each selected row
-                for col in month_columns_value:  # Iterate through each column in month_columns_value
-                    if not pd.isnull(row[col]):  # Check if there's a non-null value in the current column
-                        selected_values.append(column_mapping[col])  # Add the corresponding column name from column_mapping to selected_values
+        # Find the corresponding row(s) in df_selected_sheet based on Strike Price
+        selected_rows = df_selected_sheet[df_selected_sheet['Strike Price'] == strike_price]
 
-                selected_row_values = selected_row[selected_values]  # Extract values from selected_row for columns present in selected_values
-                avg_selected_row_values = np.mean(selected_row_values) if len(selected_row_values) > 0 else 'no value detected'  # Calculate the average of selected_row_values or return 'no value detected' if no values are present
-                selected_row_value.append(avg_selected_row_values)  # Append the average to selected_row_value
-        
+        selected_row_value = []
+        # If corresponding rows are found
+        if not selected_rows.empty:
+            # Iterate through each row in selected_rows
+            for selected_index, selected_row in selected_rows.iterrows():
+                # Iterate through each column in month_columns_value
+                for col in month_columns_value:
+                    # Check if there's any value in the current column
+                    if not pd.isnull(row[col]):
+                        # If there's a value, add the corresponding column name from column_mapping to the list
+                        selected_values.append(column_mapping[col])
+
+                # Extract values from selected_row for columns present in selected_values
+                selected_row_values = selected_row[selected_values]
+                
+                # Calculate the average if multiple values exist
+                avg_selected_row_values = np.mean(selected_row_values)
+                
+                # Append the average to selected_row_value
+                selected_row_value.append(avg_selected_row_values)
+
         # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
         formatted_df.at[index, 'Market Upper Premium, USD'] = np.mean(selected_row_value)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium, USD')
-
 
     # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
