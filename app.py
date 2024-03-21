@@ -985,8 +985,13 @@ with tab3:
                 # Extract values from selected_row for columns present in selected_values
                 selected_row_values = selected_row[selected_values]
                 
-                # Calculate the average if multiple values exist
-                avg_selected_row_values = np.mean(selected_row_values)
+               # Check if selected_row_values is not empty
+                if len(selected_row_values) > 0:
+                    # Calculate the average if multiple values exist
+                    avg_selected_row_values = np.mean(selected_row_values)
+                else:
+                    # Handle the case when selected_row_values is empty
+                    avg_selected_row_values = np.nan  # or any other default value or handling you prefer
                 
                 # Append the average to selected_row_value
                 selected_row_value.append(avg_selected_row_values)
@@ -1023,8 +1028,13 @@ with tab3:
                 # Extract values from selected_row for columns present in selected_values
                 selected_row_values = selected_row[selected_values]
                 
-                # Calculate the average if multiple values exist
-                avg_selected_row_values = np.mean(selected_row_values)
+                               # Check if selected_row_values is not empty
+                if len(selected_row_values) > 0:
+                    # Calculate the average if multiple values exist
+                    avg_selected_row_values = np.mean(selected_row_values)
+                else:
+                    # Handle the case when selected_row_values is empty
+                    avg_selected_row_values = np.nan  # or any other default value or handling you prefer
                 
                 # Append the average to selected_row_value
                 selected_row_value.append(avg_selected_row_values)
