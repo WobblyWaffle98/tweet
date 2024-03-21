@@ -255,12 +255,12 @@ with tab2:
     filtered_df['Total_Cost'] = (filtered_df['FO.NetPremium'] * filtered_df['FO.Position_Quantity'])
     grouped_data = filtered_df.groupby('Portfolio').agg(
     Total_Position_Quantity=pd.NamedAgg(column='FO.Position_Quantity', aggfunc='sum'),
+    Trade_Numbers=pd.NamedAgg(column='Portfolio', aggfunc='count'),
     Total_Cost=pd.NamedAgg(column='Total_Cost', aggfunc='sum'),
     Weighted_Avg_Net_Premium=pd.NamedAgg(column='Weighted_Avg_Net_Premium', aggfunc='sum'),
     Weighted_Avg_Protection=pd.NamedAgg(column='Weighted_Avg_Protection', aggfunc='sum'),
     Weighted_Avg_Lower_Protection=pd.NamedAgg(column='Weighted_Avg_Lower_Protection', aggfunc='sum'),
-    Weighted_Avg_Protection_Band=pd.NamedAgg(column='Weighted_Avg_Protection_Band', aggfunc='sum'),
-    Trade_Numbers=pd.NamedAgg(column='Portfolio', aggfunc='count')
+    Weighted_Avg_Protection_Band=pd.NamedAgg(column='Weighted_Avg_Protection_Band', aggfunc='sum')
     ).reset_index()
 
     # Apply accounting format to the numeric columns
