@@ -314,9 +314,9 @@ with tab2:
     grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
 
     # Display the grouped data with center-aligned values using st.dataframe()
-    st.dataframe(grouped_data, use_container_width=True, hide_index=True)
+    #st.dataframe(grouped_data, use_container_width=True, hide_index=True)
     
-    #st.plotly_chart(fig3, use_container_width=True)
+    st.plotly_chart(fig3, use_container_width=True)
 
      # Convert the chart to an image with higher resolution
     image = fig3.to_image(format="png", width=1200, height=250, scale=2.0)
