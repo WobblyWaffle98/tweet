@@ -295,8 +295,7 @@ with tab2:
         )
     )])
 
-    # Apply text-align: center to all cells in the DataFrame
-    grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
+    
     
 
         # Grouped data with more descriptive column names
@@ -311,7 +310,8 @@ with tab2:
         'Weighted_Avg_Protection_Band': 'Weighted Average Protection Band'
     })
 
-    
+    # Apply text-align: center to all cells in the DataFrame
+    grouped_data = grouped_data.style.set_properties(**{'text-align': 'center'})
 
     # Display the grouped data with center-aligned values using st.dataframe()
     st.dataframe(grouped_data, use_container_width=True, hide_index=True)
