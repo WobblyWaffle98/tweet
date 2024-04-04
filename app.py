@@ -881,7 +881,7 @@ with tab3:
 
     # Specify columns to display in the table
     columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.PremiumStrike1', 'FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
-                        'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
+                        'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate','Tenor', 'FO.Settlement_DeliveryDate',
                         'O.January','O.February','O.March','O.April','O.May','O.June','O.July',
                         'O.August','O.September','O.November','O.December']
 
