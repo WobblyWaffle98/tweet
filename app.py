@@ -1241,6 +1241,9 @@ with tab3:
             for col_num, value in enumerate(formatted_df.columns.values):
                 worksheet1.write(0, col_num, value, header_format)
                 if value in ['FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']:
+                    # Convert date strings to datetime objects
+                    formatted_df[value] = pd.to_datetime(formatted_df[value], format='%d %b %Y')
+                    # Apply custom date format to the column
                     worksheet1.set_column(col_num, col_num, 15, data_format)
 
              # Set row height in points (1 point ≈ 0.75 pixels)
