@@ -1242,8 +1242,6 @@ with tab3:
                 worksheet1.write(0, col_num, value, header_format)
                 if value in ['FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']:
                     worksheet1.set_column(col_num, col_num, 15, data_format)
-                else:
-                    worksheet1.set_column(col_num, col_num, 15, data_format)
 
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
