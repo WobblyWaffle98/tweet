@@ -1231,6 +1231,20 @@ with tab3:
                 worksheet2.write(0, col_num, value, header_format)
                 worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
 
+            # Define custom date format
+            date_format = 'dd-mmm-yy'
+
+            # Define data format with custom date format
+            data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1, 'num_format': date_format})
+
+            # Apply formatting to first sheet (Portfolio Sum)
+            for col_num, value in enumerate(formatted_df.columns.values):
+                worksheet1.write(0, col_num, value, header_format)
+                if value in ['FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']:
+                    worksheet1.set_column(col_num, col_num, 15, data_format)
+                else:
+                    worksheet1.set_column(col_num, col_num, 15, data_format)
+
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
             worksheet1.set_default_row(row_height_in_points)  # Set default row height for the first sheet
