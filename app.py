@@ -1231,28 +1231,6 @@ with tab3:
                 worksheet2.write(0, col_num, value, header_format)
                 worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
 
-            # Define custom date format
-            date_format = 'dd-mmm-yy'
-
-            # Define data format with custom date format
-            data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1, 'num_format': date_format})
-
-           # Apply formatting to first sheet (Portfolio Sum)
-            for col_num, value in enumerate(formatted_df.columns.values):
-                worksheet1.write(0, col_num, value, header_format)
-                if value in ['FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']:
-                    # Convert date strings to datetime objects
-                    formatted_df[value] = pd.to_datetime(formatted_df[value], format='%d %b %Y')
-                    # Convert datetime objects to custom date format strings
-                    formatted_df[value] = formatted_df[value].dt.strftime('%m/%d/%Y')
-                    # Write formatted dates to Excel worksheet
-                    for row_num, date_value in enumerate(formatted_df[value], start=1):
-                        worksheet1.write(row_num, col_num, date_value)
-                else:
-                    # Write non-date values directly to Excel worksheet
-                    for row_num, non_date_value in enumerate(formatted_df[value], start=1):
-                        worksheet1.write(row_num, col_num, non_date_value)
-
 
 
              # Set row height in points (1 point ≈ 0.75 pixels)
