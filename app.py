@@ -1243,9 +1243,16 @@ with tab3:
                 if value in ['FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']:
                     # Convert date strings to datetime objects
                     formatted_df[value] = pd.to_datetime(formatted_df[value], format='%d %b %Y')
-                    # Apply custom date format to the column
+                    # Convert datetime objects to custom date format strings
                     formatted_df[value] = formatted_df[value].dt.strftime('%m/%d/%Y')
-                    worksheet1.set_column(col_num, col_num, 15)  # No need to specify format here
+                    # Write formatted dates to Excel worksheet
+                    for row_num, date_value in enumerate(formatted_df[value], start=1):
+                        worksheet1.write(row_num, col_num, date_value)
+                else:
+                    # Write non-date values directly to Excel worksheet
+                    for row_num, non_date_value in enumerate(formatted_df[value], start=1):
+                        worksheet1.write(row_num, col_num, non_date_value)
+
 
 
              # Set row height in points (1 point ≈ 0.75 pixels)
