@@ -1244,8 +1244,9 @@ with tab3:
                     # Convert date strings to datetime objects
                     formatted_df[value] = pd.to_datetime(formatted_df[value], format='%d %b %Y')
                     # Apply custom date format to the column
-                    date_format = workbook.add_format({'num_format': 'm/d/yyyy'})
-                    worksheet1.set_column(col_num, col_num, 15, date_format)
+                    formatted_df[value] = formatted_df[value].dt.strftime('%m/%d/%Y')
+                    worksheet1.set_column(col_num, col_num, 15)  # No need to specify format here
+
 
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
