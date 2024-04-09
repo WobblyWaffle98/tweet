@@ -1200,7 +1200,7 @@ with tab3:
             formatted_df['FO.TradeDate'] = pd.to_datetime(formatted_df['FO.TradeDate'], format='%d %b %Y')
 
             # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
-            formatted_df['FO.TradeDate'] = formatted_df['FO.TradeDate'].dt.strftime('%d %b %Y')
+            formatted_df['FO.TradeDate'] = formatted_df['FO.TradeDate'].dt.strftime('%d/%m/%Y')
 
             # Display the column FO.TradeDate with the new format
             st.write(formatted_df['FO.TradeDate'])
