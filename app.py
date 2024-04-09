@@ -1237,14 +1237,15 @@ with tab3:
             # Define data format with custom date format
             data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1, 'num_format': date_format})
 
-            # Apply formatting to first sheet (Portfolio Sum)
+           # Apply formatting to first sheet (Portfolio Sum)
             for col_num, value in enumerate(formatted_df.columns.values):
                 worksheet1.write(0, col_num, value, header_format)
                 if value in ['FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']:
                     # Convert date strings to datetime objects
                     formatted_df[value] = pd.to_datetime(formatted_df[value], format='%d %b %Y')
                     # Apply custom date format to the column
-                    worksheet1.set_column(col_num, col_num, 15, data_format)
+                    date_format = workbook.add_format({'num_format': 'm/d/yyyy'})
+                    worksheet1.set_column(col_num, col_num, 15, date_format)
 
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
