@@ -1195,6 +1195,13 @@ with tab3:
     def convert_to_excel(formatted_df, df_selected_sheet):
         # Create Excel writer object
         with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+
+            # Convert the text format to datetime format
+            formatted_df['FO.TradeDate'] = pd.to_datetime(formatted_df['FO.TradeDate'])
+            # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
+            formatted_df['FO.TradeDate'] = pd.to_datetime(formatted_df['FO.TradeDate']).dt.strftime('%d %b %Y')
+
+            # Display the column FO.TradeDate with the new format
             st.write(formatted_df['FO.TradeDate'])
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
