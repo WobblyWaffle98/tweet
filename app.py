@@ -1195,7 +1195,7 @@ with tab3:
     def convert_to_excel(formatted_df, df_selected_sheet):
         # Create Excel writer object
         with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-            print(formatted_df['FO.TradeDate'])
+            st.write(formatted_df['FO.TradeDate'])
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
 
