@@ -1182,9 +1182,6 @@ with tab3:
 
     
 
-
-
-
     # Now the values in formatted_df_option are updated according to the conditions specified
     with st.container():
         # Show the formatted DataFrame using st.dataframe
@@ -1198,6 +1195,8 @@ with tab3:
     def convert_to_excel(formatted_df, df_selected_sheet):
         # Create Excel writer object
         with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+
+            st.write(formatted_df.head())
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
 
