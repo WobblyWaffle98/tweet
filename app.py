@@ -162,7 +162,7 @@ with tab1:
     columns_to_display = ['FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.PremiumStrike1','FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate',
                         'O.January','O.February','O.March','O.April','O.May','O.June','O.July',
-                        'O.August','O.September','O.November','O.December']
+                        'O.August','O.September','O.October','O.November','O.December']
     
     
 
@@ -540,7 +540,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
 
             # Extract relevant columns for visualization
             months = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
-                        'O.August','O.September','O.November','O.December']
+                        'O.August','O.September','O.October','O.November','O.December']
             monthly_data = filtered_df[months]
 
             # Group by strike_price_column and sum the data
@@ -625,7 +625,7 @@ def strike_data(st, filtered_df, strike_price_column, strike_price_name):
 
             # Extract relevant columns for visualization
             months = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
-                        'O.August','O.September','O.November','O.December']
+                        'O.August','O.September','O.October','O.November','O.December']
             monthly_data = filtered_df[months]
 
             # Group by strike_price_column and sum the data
@@ -883,7 +883,7 @@ with tab3:
     columns_to_display = ['Trade Number','Portfolio','FO.TradeDate','FO.DealerID', 'FO.CounterpartyName','FO.OptionTypeLabel','OptionStructure','FO.PremiumStrike1', 'FO.PremiumStrike2','FO.NetPremium', 'FO.Position_Quantity',
                         'FO.StrikePrice1', 'FO.StrikePrice2', 'FO.StartFixDate', 'FO.EndFixDate','Tenor', 'FO.Settlement_DeliveryDate',
                         'O.January','O.February','O.March','O.April','O.May','O.June','O.July',
-                        'O.August','O.September','O.November','O.December']
+                        'O.August','O.September', 'O.October','O.November','O.December']
 
     # Reset index to start from 1
     formatted_df = formatted_df.reset_index(drop=True)
@@ -916,7 +916,7 @@ with tab3:
 
     # List of columns related to the months
     month_columns = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
-                        'O.August','O.September','O.November','O.December']
+                        'O.August','O.September', 'October,USD','O.November','O.December']
     month_columns_value = ['January,USD', 'February,USD', 'March,USD', 'April,USD', 'May,USD', 'June,USD', 'July,USD', 'August,USD', 'September,USD', 'October,USD', 'November,USD', 'December,USD']
     
 
