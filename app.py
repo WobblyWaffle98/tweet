@@ -916,7 +916,7 @@ with tab3:
 
     # List of columns related to the months
     month_columns = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
-                        'O.August','O.September', 'October,USD','O.November','O.December']
+                        'O.August','O.September', 'O.October','O.November','O.December']
     month_columns_value = ['January,USD', 'February,USD', 'March,USD', 'April,USD', 'May,USD', 'June,USD', 'July,USD', 'August,USD', 'September,USD', 'October,USD', 'November,USD', 'December,USD']
     
 
