@@ -107,7 +107,7 @@ def main():
 
 
     #Choose Your Monitor and Location (Use Coordinate.py to recalibration position of option calc in BBG)
-    Monitor = 'Office Monitor'
+    Monitor = 'Probook'
     #LOCATIONS
     if Monitor == 'BBG Laptop': #make sure resolution is (1280,720)
         search_bar = [32, 75]
@@ -125,19 +125,19 @@ def main():
         swap = [360,585]
 
     if Monitor == 'Probook': #make sure resolution is (1280,720)
-        search_bar = [5, 100]
-        CO_1 = [95, 287]
-        date_input = [208, 319]
-        period = [343,319]
-        delivery = [223, 332]
-        barrel_1 = [289, 474]
-        calc_time = [400 ,250]
-        Upper_strike = [594, 474]
-        calc = [80, 172]
-        prem = [795, 382]
-        prem_copy = [821, 409]
-        swap = [399,575]
+        search_bar = [44, 112]
+        CO_1 = [81, 300]
+        date_input = [220, 310]
+        period = [330 ,310]
+        delivery = [280, 340]
+        barrel_1 = [280, 470]
+        premium_1 = [780, 470]
+        calc_time = [361 ,250]
+        Upper_strike = [570, 470]
+        calc = [82, 181] 
+        swap = [399,570]
 
+        
     if Monitor == 'Office Monitor': 
         search_bar = [44, 112]
         CO_1 = [81, 300]
@@ -244,10 +244,6 @@ def main():
             pyautogui.click()
             pyautogui.hotkey('ctrl', 'c')
 
-            """pyautogui.moveTo(prem, duration = 0.5)
-            pyautogui.click(button='right')
-            pyautogui.moveTo(prem_copy, duration = 0.5)
-            pyautogui.click()"""
 
             Premium[i][1] = checklevel (pyperclip.paste())
             take_screenshot( str(Month)+'_'+str(k))
