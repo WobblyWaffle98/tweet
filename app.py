@@ -1213,7 +1213,7 @@ with tab3:
     def convert_to_excel(formatted_df, df_selected_sheet):
         # Convert the text format to datetime format
         formatted_df['FO.TradeDate'] = pd.to_datetime(formatted_df['FO.TradeDate'], format='%d %b %Y', errors='coerce')
-        
+
         # Create a new workbook and add sheets
         wb = Workbook()
         ws1 = wb.active
@@ -1225,15 +1225,15 @@ with tab3:
         header_style.font = Font(bold=True, color='FFFFFF')
         header_style.fill = PatternFill("solid", fgColor="38B09D")
         header_style.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
-        header_style.border = 'thin'
+        header_style.border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
 
         data_style = NamedStyle(name="data_style")
         data_style.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
-        data_style.border = 'thin'
-        
+        data_style.border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
+
         date_style = NamedStyle(name="date_style", number_format='DD/MM/YYYY')
         date_style.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
-        date_style.border = 'thin'
+        date_style.border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
 
         # Write data to 'Portfolio Sum' sheet
         for col_num, column_title in enumerate(formatted_df.columns, 1):
