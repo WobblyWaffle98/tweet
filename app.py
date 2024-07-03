@@ -1030,7 +1030,7 @@ with tab3:
                 selected_row_value.append(avg_selected_row_values)
 
         # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
-        formatted_df.at[index, 'Market Upper Premium, USD'] = np.mean(selected_row_value)
+        formatted_df.at[index, 'Market Upper Premium, USD'] = round(np.mean(selected_row_value),3)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium, USD')
