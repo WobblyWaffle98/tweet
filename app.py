@@ -988,9 +988,15 @@ with tab3:
         'December,USD': 'O.December'
     }
 
-    def custom_round(number, digits):
-            factor = 10 ** digits
-            return math.floor(number * factor + 0.5) / factor
+    def col_round(x, decimals=3):
+        factor = 10 ** decimals
+        x *= factor
+        frac = x - math.floor(x)
+        if frac < 0.5:
+            result = math.floor(x)
+        else:
+            result = math.ceil(x)
+        return result / factor
 
     # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
@@ -1037,7 +1043,7 @@ with tab3:
         
 
         # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
-        formatted_df.at[index, 'Market Upper Premium, USD'] = custom_round(np.mean(selected_row_value),3)
+        formatted_df.at[index, 'Market Upper Premium, USD'] = col_round(np.mean(selected_row_value),3)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium, USD')
@@ -1084,7 +1090,7 @@ with tab3:
                 selected_row_value.append(avg_selected_row_values)
 
         # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
-        formatted_df.at[index, 'Market Lower Premium, USD'] = custom_round(np.mean(selected_row_value),3)
+        formatted_df.at[index, 'Market Lower Premium, USD'] = col_round(np.mean(selected_row_value),3)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Lower Premium, USD')
