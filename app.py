@@ -910,7 +910,7 @@ with tab3:
             # Multiply the values in common months and update the row in formatted_df
             for month in common_months:
                 formatted_df.at[index, month] = formatted_df.at[index, month] * round(option_row_1[month].iloc[0],3) - formatted_df.at[index, month] * round(option_row_2[month].iloc[0],3) 
-                st.write(formatted_df.at[index, month])
+               
 
     # Now the values in formatted_df are updated according to the conditions specified
 
