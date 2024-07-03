@@ -1248,7 +1248,7 @@ with tab3:
             # Apply custom date format to 'FO.TradeDate' column in the first sheet
             for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
                 worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
-
+                worksheet1.set_column(row_num, row_num, 15, data_format)
 
             # Apply formatting to first sheet (Portfolio Sum)
             for col_num, value in enumerate(formatted_df.columns.values):
