@@ -1083,7 +1083,7 @@ with tab3:
     columns_to_display.append('Market Lower Premium, USD')
 
     # Assuming you have a DataFrame named 'data' containing your dataset
-    formatted_df['Market Net Premium, USD'] = formatted_df['Market Upper Premium, USD'] - formatted_df['Market Lower Premium, USD']
+    formatted_df['Market Net Premium, USD'] = round(formatted_df['Market Upper Premium, USD'],3) - round(formatted_df['Market Lower Premium, USD'],3)
     columns_to_display.append('Market Net Premium, USD')
 
 
