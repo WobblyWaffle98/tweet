@@ -989,6 +989,8 @@ with tab3:
     }
 
     def col_round(x, decimals=3):
+        if np.isnan(x):
+            return x  # Return NaN as is
         factor = 10 ** decimals
         x *= factor
         frac = x - math.floor(x)
