@@ -1220,19 +1220,6 @@ with tab3:
             # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
             formatted_df['FO.TradeDate'] = formatted_df['FO.TradeDate'].dt.strftime('%d/%m/%Y')
 
-
-            # Convert the text format to datetime format
-            formatted_df['FO.StartFixDate'] = pd.to_datetime(formatted_df['FO.StartFixDate'], format='%d %b %Y', errors='coerce')
-
-            # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
-            formatted_df['FO.StartFixDate'] = formatted_df['FO.StartFixDate'].dt.strftime('%d/%m/%Y')
-
-            # Convert the text format to datetime format
-            formatted_df['FO.EndFixDate'] = pd.to_datetime(formatted_df['FO.EndFixDate'], format='%d %b %Y', errors='coerce')
-
-            # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
-            formatted_df['FO.EndFixDate'] = formatted_df['FO.EndFixDate'].dt.strftime('%d/%m/%Y')
-
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
 
@@ -1243,7 +1230,7 @@ with tab3:
             workbook = writer.book
             worksheet1 = writer.sheets['Portfolio Sum']
             worksheet2 = writer.sheets['Option Data']
-            #date_format = workbook.add_format({'num_format': 'd-mmm-yy'})
+            date_format = workbook.add_format({'num_format': 'd-mmm-yy'})
 
             
             # Define cell formats
@@ -1259,8 +1246,8 @@ with tab3:
             data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1})
 
             # Apply custom date format to 'FO.TradeDate' column in the first sheet
-            #for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
-                #worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
+            for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
+                worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
 
 
             # Apply formatting to first sheet (Portfolio Sum)
