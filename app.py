@@ -1202,8 +1202,6 @@ with tab3:
             # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
             formatted_df['FO.TradeDate'] = formatted_df['FO.TradeDate'].dt.strftime('%d/%m/%Y')
 
-            # Display the column FO.TradeDate with the new format
-            st.write(formatted_df['FO.TradeDate'])
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
 
@@ -1214,7 +1212,8 @@ with tab3:
             workbook = writer.book
             worksheet1 = writer.sheets['Portfolio Sum']
             worksheet2 = writer.sheets['Option Data']
-
+            date_format = workbook.add_format({'num_format': 'dd/mm/yyyy'})
+            worksheet1.set_column('C:C', None, date_format) 
             # Define cell formats
             header_format = workbook.add_format({
                 'bold': True,
