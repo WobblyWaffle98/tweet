@@ -1220,6 +1220,19 @@ with tab3:
             # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
             formatted_df['FO.TradeDate'] = formatted_df['FO.TradeDate'].dt.strftime('%d/%m/%Y')
 
+
+            # Convert the text format to datetime format
+            formatted_df['FO.StartFixDate'] = pd.to_datetime(formatted_df['FO.StartFixDate'], format='%d %b %Y', errors='coerce')
+
+            # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
+            formatted_df['FO.StartFixDate'] = formatted_df['FO.StartFixDate'].dt.strftime('%d/%m/%Y')
+
+            # Convert the text format to datetime format
+            formatted_df['FO.EndFixDate'] = pd.to_datetime(formatted_df['FO.EndFixDate'], format='%d %b %Y', errors='coerce')
+
+            # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
+            formatted_df['FO.EndFixDate'] = formatted_df['FO.EndFixDate'].dt.strftime('%d/%m/%Y')
+
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
 
