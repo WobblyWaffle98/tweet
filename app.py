@@ -1021,7 +1021,7 @@ with tab3:
                # Check if selected_row_values is not empty
                 if selected_row_values is not None and len(selected_row_values) > 0:
                     # Calculate the average if multiple values exist
-                    avg_selected_row_values = round(np.mean(selected_row_values),3)
+                    avg_selected_row_values = np.mean(selected_row_values)
                 else:
                     # Handle the case when selected_row_values is empty
                     avg_selected_row_values = np.nan  # or any other default value or handling you prefer
