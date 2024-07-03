@@ -919,7 +919,7 @@ with tab3:
     month_columns = ['O.January','O.February','O.March','O.April','O.May','O.June','O.July',
                         'O.August','O.September', 'O.October','O.November','O.December']
     month_columns_value = ['January,USD', 'February,USD', 'March,USD', 'April,USD', 'May,USD', 'June,USD', 'July,USD', 'August,USD', 'September,USD', 'October,USD', 'November,USD', 'December,USD']
-    
+    month_columns_bbls = ['January,bbl', 'February,bbl', 'March,bbl', 'April,bbl', 'May,bbl', 'June,bbl', 'July,bbl', 'August,bbl', 'September,bbl', 'October,bbl', 'November,bbl', 'December,bbl']
 
     # Assuming 'formatted_df' is your DataFrame
     formatted_df.rename(columns={
@@ -1105,7 +1105,8 @@ with tab3:
 
 
     # Add a new column 'Total' containing the sum of values in the month columns
-    formatted_df['Current Value, USD'] = formatted_df['Market Net Premium, USD'] * formatted_df[month_columns_value].sum(axis=1)
+    formatted_df['Current Value, USD'] = formatted_df['Market Net Premium, USD'] * formatted_df[month_columns_bbls].sum(axis=1)
+    columns_to_display.append('Current Value, USD')
 
 
 
