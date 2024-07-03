@@ -12,6 +12,7 @@ import time
 import xlsxwriter
 from fpdf import FPDF
 import base64
+import math
 
 
 
@@ -987,6 +988,10 @@ with tab3:
         'December,USD': 'O.December'
     }
 
+    def custom_round(number, digits):
+            factor = 10 ** digits
+            return math.floor(number * factor + 0.5) / factor
+
     # Iterate through each row in the DataFrame
     for index, row in formatted_df.iterrows():
         # Initialize a list to store values for the current row
@@ -1029,8 +1034,10 @@ with tab3:
                 # Append the average to selected_row_value
                 selected_row_value.append(avg_selected_row_values)
 
+        
+
         # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
-        formatted_df.at[index, 'Market Upper Premium, USD'] = round(np.mean(selected_row_value),5)
+        formatted_df.at[index, 'Market Upper Premium, USD'] = custom_round(np.mean(selected_row_value),3)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Upper Premium, USD')
@@ -1077,7 +1084,7 @@ with tab3:
                 selected_row_value.append(avg_selected_row_values)
 
         # Assign the calculated average values to the 'Market Upper Premium' column in the DataFrame
-        formatted_df.at[index, 'Market Lower Premium, USD'] = round(np.mean(selected_row_value),3)
+        formatted_df.at[index, 'Market Lower Premium, USD'] = custom_round(np.mean(selected_row_value),3)
 
     # Append the name 'Market Upper Premium' to columns_to_display
     columns_to_display.append('Market Lower Premium, USD')
