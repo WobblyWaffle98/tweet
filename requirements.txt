@@ -8,3 +8,4 @@ datetime
 Xlsxwriter
 fpdf
 kaleido
+openpyxl
