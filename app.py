@@ -1242,6 +1242,11 @@ with tab3:
             })
             data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1})
 
+            # Apply custom date format to 'FO.TradeDate' column in the first sheet
+            for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
+                worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
+
+
             # Apply formatting to first sheet (Portfolio Sum)
             for col_num, value in enumerate(formatted_df.columns.values):
                 worksheet1.write(0, col_num, value, header_format)
@@ -1252,10 +1257,7 @@ with tab3:
                 worksheet2.write(0, col_num, value, header_format)
                 worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
 
-            # Apply custom date format to 'FO.TradeDate' column in the first sheet
-            for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
-                worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
-
+            
 
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
