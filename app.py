@@ -1212,8 +1212,9 @@ with tab3:
             workbook = writer.book
             worksheet1 = writer.sheets['Portfolio Sum']
             worksheet2 = writer.sheets['Option Data']
-            date_format = workbook.add_format({'num_format': 'dd/mm/yyyy'})
-            worksheet1.set_column('C:C', None, date_format) 
+            date_format = workbook.add_format({'num_format': 'd-mmm-yy'})
+
+            
             # Define cell formats
             header_format = workbook.add_format({
                 'bold': True,
@@ -1236,7 +1237,7 @@ with tab3:
                 worksheet2.write(0, col_num, value, header_format)
                 worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
 
-
+            worksheet1.set_column('C:C', None, date_format)
 
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
