@@ -909,7 +909,7 @@ with tab3:
         if not option_row_1.empty and not option_row_2.empty:
             # Multiply the values in common months and update the row in formatted_df
             for month in common_months:
-                formatted_df.at[index, month] = formatted_df.at[index, month] * option_row_1[month].iloc[0] - formatted_df.at[index, month] * option_row_2[month].iloc[0] 
+                formatted_df.at[index, month] = formatted_df.at[index, month] * round(option_row_1[month].iloc[0],3) - formatted_df.at[index, month] * round(option_row_2[month].iloc[0],3) 
 
 
     # Now the values in formatted_df are updated according to the conditions specified
