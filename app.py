@@ -1237,7 +1237,10 @@ with tab3:
                 worksheet2.write(0, col_num, value, header_format)
                 worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
 
-            worksheet1.set_column('C:C', None, date_format)
+            # Apply custom date format to 'FO.TradeDate' column in the first sheet
+            for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
+                worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
+
 
              # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
