@@ -1135,6 +1135,10 @@ with tab3:
 
     # Create a dictionary with unique items as keys and corresponding colors
     Month_colors = dict(zip(unique_items, color_discrete_sequence_2[:len(unique_items)]))
+
+    st.subheader("Mark to Market result")
+    total_sum = formatted_df['Current Value, USD'].sum()
+    st.metric(label='Current Value, USD', value=str(f" {total_sum:,.0f} USD"))
     
     # Calculate Volume executed versus Counterparty
     st.subheader("Current Option Value per Counterparty")
