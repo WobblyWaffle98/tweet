@@ -1138,8 +1138,13 @@ with tab3:
 
     st.subheader("Mark to Market result")
     total_sum = formatted_df['Current Value, USD'].sum()
-    with col1:
+    total_sum_incep = formatted_df['Value at inception, USD'].sum()
+
+    col5,col6 = st.columns(2)
+    with col5:
         st.metric(label='Current Value, USD', value=str(f"USD {total_sum:,.0f} "))
+    with col6:
+        st.metric(label='Inception Value, USD', value=str(f"USD {total_sum_incep:,.0f} "))
     
     # Calculate Volume executed versus Counterparty
     st.subheader("Current Option Value per Counterparty")
