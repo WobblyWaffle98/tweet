@@ -1140,11 +1140,26 @@ with tab3:
     total_sum = formatted_df['Current Value, USD'].sum()
     total_sum_incep = formatted_df['Value at inception, USD'].sum()
 
-    col5,col6 = st.columns(2)
+    # Assuming formatted_df is your DataFrame
+    month_columns = [
+        'January,bbls', 'February,bbls', 'March,bbls', 'April,bbls', 
+        'May,bbls', 'June,bbls', 'July,bbls', 'August,bbls', 
+        'September,bbls', 'October,bbls', 'November,bbls', 'December,bbls'
+    ]
+
+    # Check if there's a value in any of the month columns
+    condition = formatted_df[month_columns].notnull().any(axis=1)
+
+    # Sum the 'Value at inception, USD' where the condition is True
+    total_outstanding_incep = formatted_df.loc[condition, 'Value at inception, USD'].sum()
+
+    col5,col6,col7 = st.columns(3)
     with col5:
         st.metric(label='Current Value, USD', value=str(f"USD {total_sum:,.0f} "))
     with col6:
-        st.metric(label='Inception Value, USD', value=str(f"USD {total_sum_incep:,.0f} "))
+        st.metric(label='Outstanding Inception Value, USD', value=str(f"USD {total_outstanding_incep:,.0f} "))
+    with col7:
+        st.metric(label='Total Inception Value, USD', value=str(f"USD {total_sum_incep:,.0f} "))
     
     # Calculate Volume executed versus Counterparty
     st.subheader("Current Option Value per Counterparty")
