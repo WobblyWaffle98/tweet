@@ -8,6 +8,7 @@ import numpy as np
 import datetime as dt
 from datetime import datetime
 from io import BytesIO
+import io
 import time
 import xlsxwriter
 from fpdf import FPDF
