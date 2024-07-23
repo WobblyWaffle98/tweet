@@ -1269,13 +1269,13 @@ with tab3:
                 'bg_color': '#38B09D'  # Set background color to 38B09D
             })
             data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1})
-            date_format = workbook.add_format({'num_format': 'dd/mm/yyyy'})
+            date_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1,'num_format': 'dd/mm/yyyy'})
 
             # Apply formatting to 'FO.TradeDate' column in the first sheet
             trade_date_col = formatted_df.columns.get_loc('FO.TradeDate')
             for row_num in range(1, len(formatted_df) + 1):
                 worksheet1.write(row_num, trade_date_col, formatted_df.iloc[row_num - 1]['FO.TradeDate'], date_format)
-                worksheet1.set_column(trade_date_col, trade_date_col, 15, data_format)
+                
 
             # Apply formatting to first sheet (Portfolio Sum)
             for col_num, value in enumerate(formatted_df.columns.values):
