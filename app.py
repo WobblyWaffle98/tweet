@@ -575,6 +575,7 @@ def visualize_data(st, filtered_df, strike_price_column, strike_price_name):
                     title='Total Volume according to Strike Levels',
                     xaxis_tickangle=-45,
                     barmode='stack',
+                    showlegend=True,
                     legend=dict(title=strike_price_name, x=1, y=1),
                     
                 )
@@ -841,7 +842,7 @@ with tab3:
     st.divider()
 
      # Display PCHP Data
-    st.title("Trade by trade Evaluation")
+    st.title("MTM Evaluation and Excel")
 
     # Create a formatted copy of the filtered DataFrame to preserve the original data
     formatted_df = filtered_df.copy()
@@ -1155,7 +1156,7 @@ with tab3:
 
     col5,col6,col7 = st.columns(3)
     with col5:
-        st.metric(label='Current Value, USD', value=str(f"USD {total_sum:,.0f} "))
+        st.metric(label='Current Oustanding Value, USD', value=str(f"USD {total_sum:,.0f} "))
     with col6:
         st.metric(label='Outstanding Inception Value, USD', value=str(f"USD {total_outstanding_incep:,.0f} "))
     with col7:
