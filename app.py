@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import numpy as np
 import datetime as dt
 from datetime import datetime
-import io
+from io import BytesIO
 import time
 import xlsxwriter
 from fpdf import FPDF
