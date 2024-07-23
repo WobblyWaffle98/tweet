@@ -1244,8 +1244,14 @@ with tab3:
 
         # Create Excel writer object
         with pd.ExcelWriter(buffer, engine='xlsxwriter', date_format='dd/mm/yyyy') as writer:
+
+            # List of columns to apply date formatting
+            date_columns = ['FO.TradeDate', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']
+
+            # Loop through each column and apply formatting
+            for col in date_columns:
             # Convert the text format to datetime format
-            formatted_df['FO.TradeDate'] = pd.to_datetime(formatted_df['FO.TradeDate'], format='%d %b %Y', errors='coerce')
+                formatted_df[col] = pd.to_datetime(formatted_df[col], format='%d %b %Y', errors='coerce')
 
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
