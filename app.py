@@ -1238,14 +1238,13 @@ with tab3:
     # Download Button
     @st.cache_data
     def convert_to_excel(formatted_df, df_selected_sheet):
+        # Create a buffer to hold the Excel file
+        buffer = BytesIO()
+
         # Create Excel writer object
         with pd.ExcelWriter(buffer, engine='xlsxwriter', date_format='dd/mm/yyyy') as writer:
-
             # Convert the text format to datetime format
             formatted_df['FO.TradeDate'] = pd.to_datetime(formatted_df['FO.TradeDate'], format='%d %b %Y', errors='coerce')
-
-            # Convert the format of dates in the FO.TradeDate column to dd mmm yyyy
-            formatted_df['FO.TradeDate'] = formatted_df['FO.TradeDate'].dt.strftime('%d/%m/%Y')
 
             # Write formatted_df to the first sheet
             formatted_df.to_excel(writer, sheet_name='Portfolio Sum', index=False)
@@ -1257,9 +1256,7 @@ with tab3:
             workbook = writer.book
             worksheet1 = writer.sheets['Portfolio Sum']
             worksheet2 = writer.sheets['Option Data']
-            date_format = workbook.add_format({'num_format': 'd-mmm-yy'})
 
-            
             # Define cell formats
             header_format = workbook.add_format({
                 'bold': True,
@@ -1271,34 +1268,31 @@ with tab3:
                 'bg_color': '#38B09D'  # Set background color to 38B09D
             })
             data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1})
+            date_format = workbook.add_format({'num_format': 'dd/mm/yyyy'})
 
-            # Apply custom date format to 'FO.TradeDate' column in the first sheet
-            for row_num, date_value in enumerate(formatted_df['FO.TradeDate'], start=1):
-                worksheet1.write_datetime(row_num, formatted_df.columns.get_loc('FO.TradeDate'), pd.Timestamp(date_value), date_format)
-                worksheet1.set_column(row_num, row_num, 15, data_format)
+            # Apply formatting to 'FO.TradeDate' column in the first sheet
+            trade_date_col = formatted_df.columns.get_loc('FO.TradeDate')
+            for row_num in range(1, len(formatted_df) + 1):
+                worksheet1.write(row_num, trade_date_col, formatted_df.iloc[row_num - 1]['FO.TradeDate'], date_format)
+            worksheet1.set_column(trade_date_col, trade_date_col, 15, data_format)
 
             # Apply formatting to first sheet (Portfolio Sum)
             for col_num, value in enumerate(formatted_df.columns.values):
                 worksheet1.write(0, col_num, value, header_format)
-                worksheet1.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
+                worksheet1.set_column(col_num, col_num, 15, data_format)  # Set column width to 15
 
             # Apply formatting to second sheet (Option Data)
             for col_num, value in enumerate(df_selected_sheet.columns.values):
                 worksheet2.write(0, col_num, value, header_format)
-                worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 100 pixels
+                worksheet2.set_column(col_num, col_num, 15, data_format)  # Set column width to 15
 
-            
-
-             # Set row height in points (1 point ≈ 0.75 pixels)
+            # Set row height in points (1 point ≈ 0.75 pixels)
             row_height_in_points = 50
             worksheet1.set_default_row(row_height_in_points)  # Set default row height for the first sheet
             worksheet2.set_default_row(row_height_in_points)  # Set default row height for the second sheet
 
             # Freeze the header row
             worksheet1.freeze_panes(1, 0)  # Freeze the first row in the first sheet
-
-            # Close the Pandas Excel writer
-            writer.close()
 
         return buffer.getvalue()
 
