@@ -750,6 +750,7 @@ with tab3:
                     marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
                     text=df_Upper_transposed[strike_price],  # Use y-values as text
                     textposition='outside',
+                    showlegend=True,
                     texttemplate='%{text:.2s}',
                 ))
 
@@ -800,7 +801,7 @@ with tab3:
                     name=f'Strike Price {strike_price}',
                     marker_color=color_discrete_sequence[i % len(color_discrete_sequence)],
                     text=df_Lower_transposed[strike_price],  # Use y-values as text
-                    textposition='outside',
+                    textposition='outside',showlegend=True,
                     texttemplate='%{text:.2s}',
                 ))
 
