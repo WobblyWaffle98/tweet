@@ -1271,10 +1271,19 @@ with tab3:
             data_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1})
             date_format = workbook.add_format({'text_wrap': True, 'valign': 'vcenter', 'align': 'center', 'border': 1,'num_format': 'dd/mm/yyyy'})
 
-            # Apply formatting to 'FO.TradeDate' column in the first sheet
-            trade_date_col = formatted_df.columns.get_loc('FO.TradeDate')
-            for row_num in range(1, len(formatted_df) + 1):
-                worksheet1.write(row_num, trade_date_col, formatted_df.iloc[row_num - 1]['FO.TradeDate'], date_format)
+            # List of columns to apply date formatting
+            date_columns = ['FO.TradeDate', 'FO.StartFixDate', 'FO.EndFixDate', 'FO.Settlement_DeliveryDate']
+
+            # Loop through each column and apply formatting
+            for col in date_columns:
+                if col in formatted_df.columns:
+                    # Get column index
+                    col_index = formatted_df.columns.get_loc(col)
+                    
+                    # Write formatted dates to the worksheet
+                    for row_num in range(1, len(formatted_df) + 1):
+                        date_value = formatted_df.iloc[row_num - 1][col]
+                        worksheet1.write(row_num, col_index, date_value, date_format)
                 
 
             # Apply formatting to first sheet (Portfolio Sum)
