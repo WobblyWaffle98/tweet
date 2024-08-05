@@ -1158,13 +1158,13 @@ with tab3:
 
     col5,col6,col7,col8 = st.columns(4)
     with col5:
-        st.metric(label='Current Oustanding Value, USD', value=str(f"USD {total_sum:,.0f} "))
+        st.metric(label='Current Oustanding Value, USD', value=str(f" {total_sum:,.0f} "))
     with col6:
-        st.metric(label='Outstanding Inception Value, USD', value=str(f"USD {total_outstanding_incep:,.0f} "))
+        st.metric(label='Outstanding Inception Value, USD', value=str(f" {total_outstanding_incep:,.0f} "))
     with col7:
-        st.metric(label='MTM Movements, USD', value=str(f"USD {total_sum - total_outstanding_incep   :,.0f} "))
+        st.metric(label='MTM Movements, USD', value=str(f" {total_sum - total_outstanding_incep   :,.0f} "))
     with col8:
-        st.metric(label='Total Inception Value, USD', value=str(f"USD {total_sum_incep:,.0f} "))
+        st.metric(label='Total Inception Value, USD', value=str(f" {total_sum_incep:,.0f} "))
     
     # Calculate Volume executed versus Counterparty
     st.subheader("Current Option Value per Counterparty")
