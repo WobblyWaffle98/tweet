@@ -1162,7 +1162,7 @@ with tab3:
     with col6:
         st.metric(label='Outstanding Inception Value, USD', value=str(f" {total_outstanding_incep:,.0f} "))
     with col7:
-        st.metric(label='MTM Movements, USD', value=str(f" {total_sum - total_outstanding_incep   :,.0f} "),delta="2" )
+        st.metric(label='MTM Movements, USD', value=str(f" {total_sum - total_outstanding_incep   :,.0f} "),delta="2%",delta_color="inverse")
     with col8:
         st.metric(label='Total Inception Value, USD', value=str(f" {total_sum_incep:,.0f} "))
     
