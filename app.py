@@ -1156,12 +1156,14 @@ with tab3:
     # Sum the 'Value at inception, USD' where the condition is True
     total_outstanding_incep = formatted_df.loc[condition, 'Value at inception, USD'].sum()
 
-    col5,col6,col7 = st.columns(3)
+    col5,col6,col7,col8 = st.columns(4)
     with col5:
         st.metric(label='Current Oustanding Value, USD', value=str(f"USD {total_sum:,.0f} "))
     with col6:
         st.metric(label='Outstanding Inception Value, USD', value=str(f"USD {total_outstanding_incep:,.0f} "))
     with col7:
+        st.metric(label='MTM Movements, USD', value=str(f"USD {total_outstanding_incep - total_sum :,.0f} "))
+    with col8:
         st.metric(label='Total Inception Value, USD', value=str(f"USD {total_sum_incep:,.0f} "))
     
     # Calculate Volume executed versus Counterparty
